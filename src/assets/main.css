@@ -1,0 +1,33 @@
+/* @import "./base.css"; */
+
+:root,
+html,
+body {
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  padding: 2rem;
+
+  font-weight: normal;
+  background-color: #141414;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+/*
+* MEMO: Selection 组件框选的自定义样式
+*/
+.x6-widget-selection-box-node {
+  margin-top: -2px;
+  margin-left: -2px;
+  padding-right: 0;
+  padding-bottom: 0;
+  border: 3.5px solid #3a78db;
+  border-radius: 25px;
+  box-shadow: none;
+}
+.x6-widget-selection-inner {
+  box-shadow: none;
+  border: 2px dashed #3a78db;
+  border-radius: 10px;
+}
