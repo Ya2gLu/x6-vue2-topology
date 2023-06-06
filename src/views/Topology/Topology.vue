@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:23:50
- * @LastEditTime : 2023-06-06 15:28:13
+ * @LastEditTime : 2023-06-06 16:38:56
  * @LastEditors  : ya2glu
  * @Description  : Topology
  * @FilePath     : /x6-vue2-topology/src/views/Topology/Topology.vue
@@ -22,7 +22,7 @@
         <drag-panel v-if="graph" :graph="graph" />
       </div>
       <div class="layout-right" >
-        <side-panel />
+        <side-panel v-if="graph"/>
       </div>
     </div>
     <context-menu ref="ctxMenu" />

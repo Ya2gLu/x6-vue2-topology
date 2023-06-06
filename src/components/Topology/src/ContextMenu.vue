@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-29 16:10:53
- * @LastEditTime : 2023-06-01 09:43:42
+ * @LastEditTime : 2023-06-06 17:19:59
  * @LastEditors  : ya2glu
  * @Description  : ContextMenu
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/ContextMenu.vue
@@ -40,6 +40,11 @@
             content: 'Delete',
             events: {},
           },
+          {
+            key: 'panel',
+            content: 'Panel',
+            events: {}
+          }
         ],
         menuItemsNode: [],
       }

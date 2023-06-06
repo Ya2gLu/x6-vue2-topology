@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:01
- * @LastEditTime : 2023-06-06 15:51:44
+ * @LastEditTime : 2023-06-06 16:39:48
  * @LastEditors  : ya2glu
  * @Description  : 图形拖拽区
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/DragPanel.vue
@@ -102,36 +102,36 @@
             types: type,
           },
           // ports默认不可见
-          // ports: {
-          //   items: [
-          //     {
-          //       group: 'top',
-          //       args: {
-          //         dx: 1.5,
-          //         dy: -1.5,
-          //       },
-          //     },
-          //     {
-          //       group: 'bottom',
-          //       args: {
-          //         dx: 1.5,
-          //         dy: 5,
-          //       },
-          //     },
-          //     {
-          //       group: 'left',
-          //       args: {
-          //         dx: -1.5,
-          //       },
-          //     },
-          //     {
-          //       group: 'right',
-          //       args: {
-          //         dx: 5,
-          //       },
-          //     },
-          //   ],
-          // },
+          ports: {
+            items: [
+              {
+                group: 'top',
+                args: {
+                  dx: 1.5,
+                  dy: -1.5,
+                },
+              },
+              {
+                group: 'bottom',
+                args: {
+                  dx: 1.5,
+                  dy: 5,
+                },
+              },
+              {
+                group: 'left',
+                args: {
+                  dx: -1.5,
+                },
+              },
+              {
+                group: 'right',
+                args: {
+                  dx: 5,
+                },
+              },
+            ],
+          },
         })
 
         this.dnd.start(node, $event)
