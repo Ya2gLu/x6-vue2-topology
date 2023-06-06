@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:01
- * @LastEditTime : 2023-06-02 18:23:47
+ * @LastEditTime : 2023-06-05 17:34:53
  * @LastEditors  : ya2glu
  * @Description  : 图形拖拽区
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/DragPanel.vue
@@ -142,8 +142,8 @@
 
 <style lang="less" scoped>
   .dnd-container {
-    grid-row: 3 / span 3;
-    grid-column: 4 / span 7;
+    grid-row: 3 / span 4;
+    grid-column: 3 / span 8;
     z-index: 99;
 
     border-radius: 20px;

@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:23:50
- * @LastEditTime : 2023-06-02 16:31:40
+ * @LastEditTime : 2023-06-05 17:38:14
  * @LastEditors  : ya2glu
  * @Description  : Topology
  * @FilePath     : /x6-vue2-topology/src/views/Topology/Topology.vue
@@ -21,7 +21,9 @@
       <div class="layout-bottom">
         <drag-panel v-if="graph" :graph="graph" />
       </div>
-      <div class="layout-right"></div>
+      <div class="layout-right">
+        <side-panel v-if="graph"/>
+      </div>
     </div>
     <context-menu ref="ctxMenu" />
   </div>
@@ -29,7 +31,7 @@
 
 <script>
   import { Graph } from '@antv/x6'
-  import { ToolsBar, DragPanel, ContextMenu, TitleBar } from '@/components/Topology'
+  import { ToolsBar, DragPanel, ContextMenu, TitleBar, SidePanel } from '@/components/Topology'
 
   Graph.registerEdge('dag-edge', {
     inherit: 'edge',
@@ -50,6 +52,7 @@
       DragPanel,
       ContextMenu,
       TitleBar,
+      SidePanel
     },
 
     data() {
@@ -124,7 +127,7 @@
                 shape: 'dag-edge',
                 attrs: {
                   line: {
-                    stroke: '#2C2C2C',
+                    stroke: '#343434',
                     strokeDashArray: '5 5',
                     strokeWidth: 2,
                     targetMarker: {
@@ -214,7 +217,7 @@
       .commBorder();
 
       grid-row: 10 / span 3;
-      grid-column: 3 / span 8;
+      grid-column: 3 / span 7;
 
       display: grid;
       grid-template-rows: repeat(8, 1fr);
@@ -225,7 +228,11 @@
       .commBorder();
 
       grid-row: 2 / span 11;
-      grid-column: 11 / span 2;
+      grid-column: 10 / span 4;
+
+      display: grid;
+      grid-template-rows: repeat(24, 1fr);
+      grid-template-columns: repeat(12, 1fr);
     }
   }
 </style>
