@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
- * @LastEditTime : 2023-06-02 18:25:06
+ * @LastEditTime : 2023-06-06 15:36:29
  * @LastEditors  : ya2glu
  * @Description  : TitleBar
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/TitleBar.vue
@@ -12,7 +12,7 @@
     <div class="item-center">2</div>
     <div class="item-right">
       <a-tooltip title="侧边栏" :mouseEnterDelay="0.8">
-        <div class="toggle-right">
+        <div class="toggle-right" @click="toggleSide" :class="{ active: this.$store.state.titleBar.sideToggle }">
           <icon-park class="icons" type="right-bar" theme="outline" size="20" />
         </div>
       </a-tooltip>
@@ -22,6 +22,7 @@
 
 <script>
   import { IconPark } from '@icon-park/vue/es/all'
+  import { mapMutations } from 'vuex'
   export default {
     components: {
       IconPark,
@@ -29,6 +30,11 @@
     data() {
       return {}
     },
+    computed: {},
+    methods: {
+      ...mapMutations('titleBar', ['toggleSide']),
+    },
+    computed: {},
   }
 </script>
 <style lang="less" scoped>
@@ -89,10 +95,10 @@
           justify-content: center;
           align-items: center;
         }
-        &:hover {
-          background-color: rgb(53, 51, 52);
-        }
       }
     }
+  }
+  .active {
+    background-color: rgb(53, 51, 52);
   }
 </style>
