@@ -30,8 +30,8 @@
 </script>
 <style lang="less">
   .side-container {
-    grid-row: 2 / span 22;
-    grid-column: 1 / span 11;
+    grid-row: 3 / span 21;
+    grid-column: 3 / span 20;
     z-index: 99;
 
     border-radius: 20px;

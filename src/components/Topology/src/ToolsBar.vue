@@ -150,8 +150,8 @@
 
 <style lang="less" scoped>
   .tools-container {
-    grid-row: 2 / span 11;
-    grid-column: 4 / span 2;
+    grid-row: 5 / span 16;
+    grid-column: 12 / span 5;
 
     border-radius: 25px;
     box-shadow: -2px 2px 10px 3px #0d0d0d;

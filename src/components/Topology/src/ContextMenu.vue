@@ -27,22 +27,22 @@
         menuItems: [
           {
             key: 'edit',
-            content: 'Edit',
+            content: '编辑',
             events: {},
           },
           {
             key: 'copy',
-            content: 'Copy',
+            content: '复制',
             events: {},
           },
           {
             key: 'delete',
-            content: 'Delete',
+            content: '删除',
             events: {},
           },
           {
             key: 'panel',
-            content: 'Panel',
+            content: '详情',
             events: {}
           }
         ],

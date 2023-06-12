@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:23:50
- * @LastEditTime : 2023-06-06 16:38:56
+ * @LastEditTime : 2023-06-09 18:39:05
  * @LastEditors  : ya2glu
  * @Description  : Topology
  * @FilePath     : /x6-vue2-topology/src/views/Topology/Topology.vue
@@ -75,7 +75,7 @@
               padding: 0,
               attrs: {
                 'stroke-width': 2.5,
-                stroke: '#3264bb',
+                stroke: '#3a78db',
               },
             },
           },
@@ -102,7 +102,7 @@
             min: 0.09,
             max: 1.5,
           },
-          // Node Options
+          // Edge Options
           connecting: {
             snap: {
               radius: 20,
@@ -128,11 +128,12 @@
                 attrs: {
                   line: {
                     stroke: '#343434',
-                    strokeDashArray: '5 5',
+                    strokeDasharray: '5 5',
                     strokeWidth: 2,
+                    // Marker style
                     targetMarker: {
-                      name: 'block',
-                      width: 12,
+                      name: 'path',
+                      width: 5,
                       height: 0,
                     },
                   },
@@ -179,8 +180,8 @@
     position: relative;
 
     display: grid;
-    grid-template-rows: repeat(12, 1fr);
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(24, 1fr);
+    grid-template-columns: repeat(24, 1fr);
 
     #bgc-svg {
       position: absolute;
@@ -198,41 +199,41 @@
       .common(100%, 100%);
       // .commBorder();
 
-      grid-row: 1 / span 1;
-      grid-column: 1 / span 12;
+      grid-row: 1 / span 2;
+      grid-column: 1 / span 24;
     }
     .layout-left {
       .common(100%, 100%);
       .commBorder();
 
-      grid-row: 2 / span 11;
-      grid-column: 1 / span 2;
+      grid-row: 2 / span 23;
+      grid-column: 1 / span 5;
 
       display: grid;
-      grid-template-rows: repeat(15, 1fr);
-      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(24, 1fr);
+      grid-template-columns: repeat(24, 1fr);
     }
     .layout-bottom {
       .common(100%, 100%);
       .commBorder();
 
-      grid-row: 10 / span 3;
-      grid-column: 3 / span 7;
+      grid-row: 20 / span 5;
+      grid-column: 6 / span 12;
 
       display: grid;
-      grid-template-rows: repeat(8, 1fr);
-      grid-template-columns: repeat(13, 1fr);
+      grid-template-rows: repeat(24, 1fr);
+      grid-template-columns: repeat(24, 1fr);
     }
     .layout-right {
       .common(100%, 100%);
       .commBorder();
 
-      grid-row: 2 / span 11;
-      grid-column: 10 / span 4;
+      grid-row: 2 / span 23;
+      grid-column: 18 / span 7;
 
       display: grid;
       grid-template-rows: repeat(24, 1fr);
-      grid-template-columns: repeat(12, 1fr);
+      grid-template-columns: repeat(24, 1fr);
     }
   }
 </style>
