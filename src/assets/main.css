@@ -31,3 +31,14 @@ body {
   border: 2px dashed #3a78db;
   border-radius: 10px;
 }
+/* 
+* MEMO: Edge hover&selected style
+*/
+.x6-edge:hover path:nth-child(2) {
+  stroke: #3a78db;
+  stroke-width: 2.5px;
+}
+.x6-edge-selected path:nth-child(2) {
+  stroke: #3a78db;
+  stroke-width: 2.5px !important;
+}

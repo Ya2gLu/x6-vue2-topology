@@ -142,8 +142,8 @@
 
 <style lang="less" scoped>
   .dnd-container {
-    grid-row: 3 / span 4;
-    grid-column: 3 / span 8;
+    grid-row: 6 / span 12;
+    grid-column: 1 / span 24;
     z-index: 99;
 
     border-radius: 20px;
