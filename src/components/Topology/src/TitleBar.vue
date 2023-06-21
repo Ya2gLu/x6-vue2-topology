@@ -13,7 +13,6 @@
 <template>
   <div class="title-bar-container">
     <div class="item-left">
-<<<<<<< HEAD
       <div class="btn-toggle">
         <icon-park class="icons" type="left-bar" theme="outline" size="20" />
       </div>
@@ -25,13 +24,6 @@
         </div>
       </div>
     </div>
-=======
-      <div class="toggle-left">
-        <icon-park class="icons" type="left-bar" theme="outline" size="20" />
-      </div>
-    </div>
-    <div class="item-center">2</div>
->>>>>>> e400eb53d1d2ba9bb9cc563bc98fde1131445f4e
     <div class="item-right">
       <a-tooltip title="侧边栏" :mouseEnterDelay="0.8">
         <div
