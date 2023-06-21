@@ -54,7 +54,7 @@ Graph.registerEdge("dag-edge", {
 export default {
   name: "Topology",
   components: {
-    ToolsBar,
+    // ToolsBar,
     DragPanel,
     ContextMenu,
     TitleBar,

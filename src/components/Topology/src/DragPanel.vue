@@ -145,7 +145,6 @@ export default {
   grid-row: 6 / span 12;
   grid-column: 3 / span 20;
   z-index: 99;
-
   border-radius: 20px;
   box-shadow: 2px 2px 10px 5px #0d0d0d;
   backdrop-filter: blur(10px);

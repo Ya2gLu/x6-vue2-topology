@@ -1,7 +1,11 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
+<<<<<<< HEAD
  * @LastEditTime : 2023-06-20 09:27:04
+=======
+ * @LastEditTime : 2023-06-09 15:27:10
+>>>>>>> e400eb53d1d2ba9bb9cc563bc98fde1131445f4e
  * @LastEditors  : ya2glu
  * @Description  : TitleBar
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/TitleBar.vue
@@ -9,6 +13,7 @@
 <template>
   <div class="title-bar-container">
     <div class="item-left">
+<<<<<<< HEAD
       <div class="btn-toggle">
         <icon-park class="icons" type="left-bar" theme="outline" size="20" />
       </div>
@@ -20,6 +25,13 @@
         </div>
       </div>
     </div>
+=======
+      <div class="toggle-left">
+        <icon-park class="icons" type="left-bar" theme="outline" size="20" />
+      </div>
+    </div>
+    <div class="item-center">2</div>
+>>>>>>> e400eb53d1d2ba9bb9cc563bc98fde1131445f4e
     <div class="item-right">
       <a-tooltip title="侧边栏" :mouseEnterDelay="0.8">
         <div
