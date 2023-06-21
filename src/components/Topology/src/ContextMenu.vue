@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-29 16:10:53
- * @LastEditTime : 2023-06-06 17:19:59
+ * @LastEditTime : 2023-06-21 10:15:19
  * @LastEditors  : ya2glu
  * @Description  : ContextMenu
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/ContextMenu.vue
@@ -43,8 +43,8 @@
           {
             key: 'panel',
             content: '详情',
-            events: {}
-          }
+            events: {},
+          },
         ],
         menuItemsNode: [],
       }
@@ -74,9 +74,9 @@
       },
 
       handleClick(key) {
-        console.log(`click menu of ${key}`);
+        console.log(`click menu of ${key}`)
         return null
-      }
+      },
     },
   }
 </script>
@@ -95,11 +95,11 @@
 
     min-height: 180px;
     min-width: 120px;
-    
+
     // overflow: hidden;
     background: var(--menu-bg);
     backdrop-filter: blur(10px);
-    
+
     animation: menuAnimation 0.4s 0s both;
     transform-origin: left;
     list-style: none;
@@ -115,7 +115,6 @@
     &-item {
       position: relative;
       padding: 4px;
-      
     }
 
     &-item[data-divider='top'] {
@@ -144,7 +143,7 @@
       border-radius: 4px;
       padding: 6px 24px 6px 7px;
       text-align: left;
-      
+
       display: flex;
       align-items: center;
       font-size: 14px;

@@ -1,0 +1,11 @@
+{
+  "root": true,
+  "extends": [
+    "plugin:vue/essential",
+    "eslint:recommended",
+    "@vue/eslint-config-prettier"
+  ],
+  "rules": {
+    "quotes": "off"
+  }
+}
