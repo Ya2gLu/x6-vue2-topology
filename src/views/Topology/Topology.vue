@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:23:50
- * @LastEditTime : 2023-06-12 14:55:04
+ * @LastEditTime : 2023-06-25 14:50:51
  * @LastEditors  : ya2glu
  * @Description  : Topology
  * @FilePath     : /x6-vue2-topology/src/views/Topology/Topology.vue
@@ -13,13 +13,14 @@
         <div id="svg-container" class="svg-panel" @click="handleGraphClick" />
       </div>
       <div class="layout-top">
-        <title-bar v-if="graph" />
+        <title-bar v-if="graph" :graph="graph" />
       </div>
       <div class="layout-left">
         <!-- <tools-bar v-if="graph" :graph="graph" /> -->
+        <drag-panel v-if="graph" />
       </div>
       <div class="layout-bottom">
-        <drag-panel v-if="graph" :graph="graph" />
+        <online-panel v-if="graph" :graph="graph" />
       </div>
       <div class="layout-right">
         <side-panel v-if="graph" />
@@ -32,33 +33,33 @@
 <script>
 import { Graph } from "@antv/x6";
 import {
-  ToolsBar,
-  DragPanel,
+  OnlinePanel,
   ContextMenu,
   TitleBar,
   SidePanel,
+  DragPanel,
 } from "@/components/Topology";
 
-Graph.registerEdge("dag-edge", {
-  inherit: "edge",
-  attrs: {
-    attrs: {
-      line: {
-        stroke: "#C2C8D5",
-        strokeWidth: 2,
-        targetMarker: null,
-      },
-    },
-  },
-});
+// Graph.registerEdge("dag-edge", {
+//   inherit: "edge",
+//   attrs: {
+//     attrs: {
+//       line: {
+//         stroke: "#C2C8D5",
+//         strokeWidth: 2,
+//         targetMarker: null,
+//       },
+//     },
+//   },
+// });
 export default {
-  name: "Topology",
+  name: "y-topology",
   components: {
-    // ToolsBar,
-    DragPanel,
+    OnlinePanel,
     ContextMenu,
     TitleBar,
     SidePanel,
+    DragPanel,
   },
 
   data() {
@@ -73,8 +74,20 @@ export default {
           thickness: 4,
         },
       },
-
+      // 高亮选项
       highlighting: {
+        // 连接桩可以被连接时在连接桩外围渲染一个包围框
+        magnetAvailable: {
+          name: "stroke",
+          args: {
+            padding: 0,
+            attrs: {
+              "stroke-width": 2.5,
+              stroke: "#3A78DB",
+            },
+          },
+        },
+        // 连接桩吸附连线时在连接桩外围渲染一个包围框
         magnetAdsorbed: {
           name: "stroke",
           args: {
@@ -113,12 +126,15 @@ export default {
           snap: {
             radius: 20,
           },
-          router: "manhattan", // 曼哈顿路由
           highlight: true,
           allowNode: false, // 是否允许连接到画布空白位置的点
           allowLoop: false, // 是否允许创建循环连线，即边的起始点和终止节点为同一节点
-          allowEdge: true, // 是否允许边连接到另一个边
+          allowEdge: false, // 是否允许边连接到另一个边
           allowBlank: false, // 是否允许连接到画布空白位置的点
+          allowPort: true, // 是否允许边连接到连接桩
+          allowMulti: true, // 是否允许在相同的起始节点和终止之间创建多条边
+          router: "manhattan", // 曼哈顿路由
+          // 连接桩样式
           connector: {
             name: "rounded",
             args: {
@@ -127,10 +143,10 @@ export default {
           },
           anchor: "center",
           connectionPoint: "boundary",
-
+          // 创建从节点中拉出的边
           createEdge() {
             return this.createEdge({
-              shape: "dag-edge",
+              shape: "edge",
               attrs: {
                 line: {
                   stroke: "#343434",

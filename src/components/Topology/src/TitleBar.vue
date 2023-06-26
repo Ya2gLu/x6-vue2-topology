@@ -1,11 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
-<<<<<<< HEAD
- * @LastEditTime : 2023-06-20 09:27:04
-=======
- * @LastEditTime : 2023-06-09 15:27:10
->>>>>>> e400eb53d1d2ba9bb9cc563bc98fde1131445f4e
+ * @LastEditTime : 2023-06-26 15:43:21
  * @LastEditors  : ya2glu
  * @Description  : TitleBar
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/TitleBar.vue
@@ -13,25 +9,45 @@
 <template>
   <div class="title-bar-container">
     <div class="item-left">
-      <div class="btn-toggle">
-        <icon-park class="icons" type="left-bar" theme="outline" size="20" />
+      <div
+        border="2 solid rounded-md dark-200"
+        p="y-1 x-2"
+        cursor="pointer"
+        :class="{ active: this.$store.state.titleBar.dragToggle }"
+        @click="toggleRight"
+      >
+        <div
+          class="y-material-symbols:left-panel-open-outline w-2 h-2 p-3"
+        ></div>
       </div>
     </div>
     <div class="item-center">
-      <div v-for="(ico, index) in toolsList" :key="index">
-        <div class="icon-box btn-toggle">
-          <icon-park class="icons" :type="ico.type" theme="outline" size="20" />
-        </div>
+      <div
+        v-for="(i, index) in toolsList"
+        :key="index"
+        :class="{ active: index === selectIndex && isSelection }"
+        border="2 solid rounded-md dark-200"
+        p="y-1 x-2"
+        m="y-0 x-1"
+        cursor="pointer"
+        active="bg-dark-200"
+        @click="onToolsClick(i.type, index)"
+      >
+        <div :class="i.icon" class="w-2 h-2 p-3"></div>
       </div>
     </div>
     <div class="item-right">
       <a-tooltip title="侧边栏" :mouseEnterDelay="0.8">
         <div
-          class="btn-toggle"
-          @click="toggleLeft"
           :class="{ active: this.$store.state.titleBar.sideToggle }"
+          border="2 solid rounded-md dark-200"
+          p="y-1 x-2"
+          cursor="pointer"
+          @click="toggleLeft"
         >
-          <icon-park class="icons" type="right-bar" theme="outline" size="20" />
+          <div
+            class="y-material-symbols:right-panel-open-outline-rounded w-6 h-6 p-3"
+          ></div>
         </div>
       </a-tooltip>
     </div>
@@ -40,60 +56,62 @@
 
 <script>
 import { mapMutations } from "vuex";
-import { IconPark } from "@icon-park/vue/es/all";
+import { Selection } from "@antv/x6-plugin-selection";
+import { Graph } from "@antv/x6";
 export default {
-  components: {
-    IconPark,
-  },
+  components: {},
   props: {
+    graph: {
+      type: Graph,
+    },
     toolsList: {
       type: Array,
       default: () => {
         return [
           {
-            key: "focus",
-            label: "focus",
-            type: "Add-four",
+            icon: "y-mdi:image-filter-center-focus",
+            label: "居中",
+            type: "Focus",
           },
           {
-            key: "selection",
-            label: "selection",
-            type: "Zoom-internal",
+            icon: "y-ph:selection-plus",
+            label: "框选",
+            type: "Selection",
           },
 
           {
-            key: "zoom-in",
-            label: "zoom-in",
+            icon: "y-solar:magnifer-zoom-in-linear",
+            label: "放大",
             type: "Zoom-in",
           },
           {
-            key: "zoom-out",
-            label: "zoom-out",
+            icon: "y-solar:magnifer-zoom-out-linear",
+            label: "缩小",
             type: "Zoom-out",
           },
           {
-            key: "delete",
-            label: "delete",
-            type: "Close-one",
+            icon: "y-material-symbols:delete-outline-rounded",
+            label: "删除",
+            type: "Delete",
           },
           {
-            key: "undo",
-            label: "undo",
+            icon: "y-ic:round-undo",
+            label: "撤销",
             type: "Undo",
           },
           {
-            key: "redo",
-            label: "redo",
+            icon: "y-ic:outline-redo",
+            label: "重做",
             type: "Redo",
           },
           {
-            key: "export",
-            label: "export",
-            type: "Logout",
+            icon: "y-solar:export-linear",
+            label: "导出",
+            type: "Export",
           },
           {
-            key: "keyboard",
-            label: "keyboard",
+            icon: "y-material-symbols:keyboard-onscreen-outline",
+            label: "快捷键",
             type: "Keyboard",
           },
         ];
@@ -101,11 +119,68 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      selectIndex: 0,
+      isSelection: false, // 是否框选
+    };
   },
   computed: {},
+  mounted() {
+    this.initToolsBar();
+
+    this.graph.on("cell:selected", () => {
+      console.log();
+    });
+  },
   methods: {
-    ...mapMutations("titleBar", ["toggleLeft"]),
+    ...mapMutations("titleBar", ["toggleLeft", "toggleRight"]),
+
+    initToolsBar() {
+      if (this.graph) {
+        this.graph.use(
+          new Selection({
+            enabled: true,
+            rubberband: this.isSelection, // 是否启用框选节点功能
+            showNodeSelectionBox: true,
+            pointerEvents: "none",
+          })
+        );
+      }
+    },
+
+    onToolsClick(key, index) {
+      switch (key) {
+        case "Focus":
+          this.graph.centerContent();
+          break;
+        case "Selection":
+          this.isSelection = !this.isSelection;
+          this.selectIndex = index;
+          if (this.graph) {
+            this.graph.toggleRubberband(this.isSelection);
+          }
+          break;
+        case "Zoom-in":
+          this.graph.zoom(0.3);
+          break;
+        case "Zoom-out":
+          this.graph.zoom(-0.3);
+          break;
+        case "Delete":
+          break;
+        case "Undo":
+          break;
+        case "Redo":
+          break;
+        case "Export":
+          break;
+        case "Keyboard":
+          break;
+        default:
+          break;
+      }
+      return null;
+    },
   },
 };
 </script>
@@ -142,6 +217,8 @@ export default {
     display: flex;
     justify-content: start;
     align-items: center;
+
+    padding: 0 10px;
   }
 
   .item-right {
@@ -154,6 +231,7 @@ export default {
     align-items: center;
   }
 }
+
 .icons {
   width: 100%;
   height: 100%;
@@ -165,12 +243,6 @@ export default {
   background-color: rgb(53, 51, 52);
 }
 
-.btn-toggle {
-  cursor: pointer;
-  border: 2px solid rgb(53, 51, 52);
-  border-radius: 10px;
-  padding: 5px 10px;
-}
 .icon-box {
   margin: 0 5px;
 }

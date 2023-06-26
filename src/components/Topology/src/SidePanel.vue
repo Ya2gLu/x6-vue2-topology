@@ -13,43 +13,43 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  export default {
-    data() {
-      return {}
-    },
-    computed: {
-      ...mapState({
-        sideState: state => state.titleBar.sideToggle,
-      }),
-    },
-    mounted() {
-      // console.log('toggleSide', this.$store.state.titleBar.sideToggle)
-    },
-  }
+import { mapState } from "vuex";
+export default {
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapState({
+      sideState: (state) => state.titleBar.sideToggle,
+    }),
+  },
+  mounted() {
+    // console.log('toggleSide', this.$store.state.titleBar.sideToggle)
+  },
+};
 </script>
-<style lang="less">
-  .side-container {
-    grid-row: 3 / span 21;
-    grid-column: 3 / span 20;
-    z-index: 99;
+<style lang="less" scoped>
+.side-container {
+  grid-row: 2 / span 23;
+  grid-column: 2 / span 23;
+  z-index: 99;
 
-    border-radius: 20px;
-    box-shadow: 2px 2px 8px 3px #0d0d0d;
-    backdrop-filter: blur(10px);
-    background-color: rgba(31, 31, 31, 0.3);
+  // border-radius: 20px;
+  // box-shadow: 2px 2px 8px 3px #0d0d0d;
+  // backdrop-filter: blur(10px);
+  background-color: rgba(31, 31, 31, 1);
 
-    padding: 10px;
-  }
-  .slide-fade-enter-active {
-    transition: all 0.3s ease;
-  }
-  .slide-fade-leave-active {
-    transition: all 0.3s ease-in-out;
-  }
-  .slide-fade-enter, .slide-fade-leave-to
+  padding: 10px;
+}
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+.slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active for below version 2.1.8 */ {
-    transform: translateX(10px);
-    opacity: 0;
-  }
+  transform: translateX(10px);
+  opacity: 0;
+}
 </style>
