@@ -1,62 +1,61 @@
 /*
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-31 23:14:01
- * @LastEditTime : 2023-06-01 16:51:03
+ * @LastEditTime : 2023-06-25 09:00:35
  * @LastEditors  : ya2glu
  * @Description  : ports连接桩默认定义
- * @FilePath     : /x6-vue2-topology/src/components/Topology/src/ports.tsx
+ * @FilePath     : /x6-vue2-topology/src/components/Topology/src/utils/ports.ts
  */
 export const ports = {
   groups: {
     top: {
-      position: 'top',
+      position: "top",
       attrs: {
         circle: {
           magnet: true,
-          stroke: '#1565C0',
+          stroke: "#1565C0",
           strokeWidth: 2,
-          fill: '#141414',
+          fill: "#141414",
           r: 3,
         },
-        
       },
       label: {
-        position: 'top',
+        position: "top",
       },
     },
     bottom: {
-      position: 'bottom',
+      position: "bottom",
       attrs: {
         circle: {
           magnet: true,
-          stroke: '#1565C0',
+          stroke: "#1565C0",
           strokeWidth: 2,
-          fill: '#141414',
+          fill: "#141414",
           r: 3,
         },
       },
       label: {
-        position: 'bottom',
+        position: "bottom",
       },
     },
     left: {
-      position: 'left',
+      position: "left",
       attrs: {
         circle: {
           magnet: true,
-          stroke: '#1565C0',
+          stroke: "#1565C0",
           strokeWidth: 2,
-          fill: '#141414',
+          fill: "#141414",
           r: 3,
         },
       },
       label: {
-        position: 'left',
+        position: "left",
       },
     },
     right: {
       position: {
-        name: 'right',
+        name: "right",
         args: {
           x: 0,
           y: 0,
@@ -65,15 +64,15 @@ export const ports = {
       attrs: {
         circle: {
           magnet: true,
-          stroke: '#1565C0',
+          stroke: "#1565C0",
           strokeWidth: 2,
-          fill: '#141414',
+          fill: "#141414",
           r: 3,
         },
       },
       label: {
-        position: 'right',
+        position: "right",
       },
     },
   },
-}
+};
