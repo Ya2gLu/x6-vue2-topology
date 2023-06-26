@@ -8,6 +8,7 @@ import { Tooltip } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 
 import "./assets/main.css";
+import "virtual:uno.css"
 
 Vue.config.productionTip = false;
 Vue.use(Tooltip);
