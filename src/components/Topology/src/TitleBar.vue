@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
- * @LastEditTime : 2023-06-26 15:43:21
+ * @LastEditTime : 2023-06-27 15:28:13
  * @LastEditors  : ya2glu
  * @Description  : TitleBar
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/TitleBar.vue
@@ -9,45 +9,25 @@
 <template>
   <div class="title-bar-container">
     <div class="item-left">
-      <div
-        border="2 solid rounded-md dark-200"
-        p="y-1 x-2"
-        cursor="pointer"
-        :class="{ active: this.$store.state.titleBar.dragToggle }"
-        @click="toggleRight"
-      >
-        <div
-          class="y-material-symbols:left-panel-open-outline w-2 h-2 p-3"
-        ></div>
+      <div border="2 solid rounded-md dark-200" p="y-1 x-2" cursor="pointer"
+        :class="{ active: this.$store.state.titleBar.dragToggle }" @click="toggleRight">
+        <div class="y-material-symbols:left-panel-open-outline  p-2.5"></div>
       </div>
     </div>
     <div class="item-center">
-      <div
-        v-for="(i, index) in toolsList"
-        :key="index"
-        :class="{ active: index === selectIndex && isSelection }"
-        border="2 solid rounded-md dark-200"
-        p="y-1 x-2"
-        m="y-0 x-1"
-        cursor="pointer"
-        active="bg-dark-200"
-        @click="onToolsClick(i.type, index)"
-      >
-        <div :class="i.icon" class="w-2 h-2 p-3"></div>
+      <div v-for="(i, index) in toolsList" :key="index" :class="{ active: index === selectIndex && isSelection }"
+        border="2 solid rounded-md dark-200" p="y-1 x-2" m="y-0 x-1" cursor="pointer" active="bg-dark-200"
+        @click="onToolsClick(i.type, index)">
+        <a-tooltip :title="i.label" :mouseEnterDelay="0.5">
+          <div :class="i.icon" class=" p-2.5"></div>
+        </a-tooltip>
       </div>
     </div>
     <div class="item-right">
-      <a-tooltip title="侧边栏" :mouseEnterDelay="0.8">
-        <div
-          :class="{ active: this.$store.state.titleBar.sideToggle }"
-          border="2 solid rounded-md dark-200"
-          p="y-1 x-2"
-          cursor="pointer"
-          @click="toggleLeft"
-        >
-          <div
-            class="y-material-symbols:right-panel-open-outline-rounded w-6 h-6 p-3"
-          ></div>
+      <a-tooltip title="侧边栏" :mouseEnterDelay="0.5">
+        <div :class="{ active: this.$store.state.titleBar.sideToggle }" border="2 solid rounded-md dark-200" p="y-1 x-2"
+          cursor="pointer" @click="toggleLeft">
+          <div class="y-material-symbols:right-panel-open-outline-rounded  p-2.5"></div>
         </div>
       </a-tooltip>
     </div>
@@ -239,6 +219,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .active {
   background-color: rgb(53, 51, 52);
 }

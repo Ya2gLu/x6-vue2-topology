@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:23:50
- * @LastEditTime : 2023-06-25 14:50:51
+ * @LastEditTime : 2023-06-27 17:27:31
  * @LastEditors  : ya2glu
  * @Description  : Topology
  * @FilePath     : /x6-vue2-topology/src/views/Topology/Topology.vue
@@ -16,8 +16,7 @@
         <title-bar v-if="graph" :graph="graph" />
       </div>
       <div class="layout-left">
-        <!-- <tools-bar v-if="graph" :graph="graph" /> -->
-        <drag-panel v-if="graph" />
+        <drag-panel v-if="graph" :graph="graph"/>
       </div>
       <div class="layout-bottom">
         <online-panel v-if="graph" :graph="graph" />
@@ -40,18 +39,6 @@ import {
   DragPanel,
 } from "@/components/Topology";
 
-// Graph.registerEdge("dag-edge", {
-//   inherit: "edge",
-//   attrs: {
-//     attrs: {
-//       line: {
-//         stroke: "#C2C8D5",
-//         strokeWidth: 2,
-//         targetMarker: null,
-//       },
-//     },
-//   },
-// });
 export default {
   name: "y-topology",
   components: {
