@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:23:50
- * @LastEditTime : 2023-06-27 17:27:31
+ * @LastEditTime : 2023-06-29 10:46:36
  * @LastEditors  : ya2glu
  * @Description  : Topology
  * @FilePath     : /x6-vue2-topology/src/views/Topology/Topology.vue
@@ -19,13 +19,14 @@
         <drag-panel v-if="graph" :graph="graph"/>
       </div>
       <div class="layout-bottom">
-        <online-panel v-if="graph" :graph="graph" />
+        <online-panel v-if="graph" :graph="graph" @handleOnlineNode="handleOnlineNode"/>
       </div>
       <div class="layout-right">
         <side-panel v-if="graph" />
       </div>
     </div>
     <context-menu ref="ctxMenu" />
+    <online-popover ref="popover" />
   </div>
 </template>
 
@@ -37,6 +38,7 @@ import {
   TitleBar,
   SidePanel,
   DragPanel,
+  OnlinePopover
 } from "@/components/Topology";
 
 export default {
@@ -47,10 +49,12 @@ export default {
     TitleBar,
     SidePanel,
     DragPanel,
-  },
+    OnlinePopover
+},
 
   data() {
     return {
+      onlineKey: '', // 记录在线点击的key
       graph: null,
       grid: {
         visible: true,
@@ -157,6 +161,7 @@ export default {
       console.log("edit...");
       return null;
     },
+
     contextMenu({ cell, view, e }) {
       return this.$refs.ctxMenu.openMenu(e);
     },
@@ -165,6 +170,17 @@ export default {
       // 关闭右键菜单
       if (this.$refs.ctxMenu.isOpened) this.$refs.ctxMenu.isOpened = false;
     },
+
+    handleOnlineNode(items, nodePos) {
+      // console.log("handleOnlineNode ->", items, nodePos);
+      if (this.onlineKey !== items.key) {
+        this.onlineKey = items.key
+        return this.$refs.popover.open(items, nodePos)
+      } else {
+        this.onlineKey = ""
+        return this.$refs.popover.close()
+      }
+    }
   },
   watch: {},
 };
@@ -215,7 +231,7 @@ export default {
     .common(100%, 100%);
     .commBorder();
 
-    grid-row: 2 / span 23;
+    grid-row: 3 / span 23;
     grid-column: 1 / span 5;
 
     display: grid;
@@ -237,7 +253,7 @@ export default {
     .common(100%, 100%);
     .commBorder();
 
-    grid-row: 2 / span 23;
+    grid-row: 3 / span 23;
     grid-column: 19 / span 7;
 
     display: grid;

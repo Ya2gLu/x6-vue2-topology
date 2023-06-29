@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-26 17:56:29
- * @LastEditTime : 2023-06-27 17:36:33
+ * @LastEditTime : 2023-06-28 11:47:57
  * @LastEditors  : ya2glu
  * @Description  : 图标拖拽面板
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/DragPanel.vue
@@ -145,7 +145,7 @@ export default {
 
 <style lang="less" scoped>
 .wrapper {
-  grid-row: 2 / span 23;
+  grid-row: 1 / span 24;
   grid-column: 1 / span 24;
   z-index: 99;
 
