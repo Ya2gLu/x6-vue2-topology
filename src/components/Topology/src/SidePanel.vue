@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 14:46:20
- * @LastEditTime : 2023-06-06 15:45:22
+ * @LastEditTime : 2023-06-28 11:48:32
  * @LastEditors  : ya2glu
  * @Description  : SideBar
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/SidePanel.vue
@@ -30,7 +30,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .side-container {
-  grid-row: 2 / span 23;
+  grid-row: 1 / span 24;
   grid-column: 2 / span 23;
   z-index: 99;
 
