@@ -13,7 +13,6 @@
     "@antv/x6-plugin-history": "^2.2.3",
     "@antv/x6-plugin-selection": "^2.1.7",
     "@antv/x6-vue-shape": "^2.0.11",
-    "@icon-park/vue": "^1.4.2",
     "ant-design-vue": "1.7.8",
     "less": "^3.11.1",
     "vue": "^2.7.7",
