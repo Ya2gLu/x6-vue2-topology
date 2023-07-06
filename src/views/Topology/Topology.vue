@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:23:50
- * @LastEditTime : 2023-06-29 10:46:36
+ * @LastEditTime : 2023-07-05 15:29:15
  * @LastEditors  : ya2glu
  * @Description  : Topology
  * @FilePath     : /x6-vue2-topology/src/views/Topology/Topology.vue
@@ -16,17 +16,17 @@
         <title-bar v-if="graph" :graph="graph" />
       </div>
       <div class="layout-left">
-        <drag-panel v-if="graph" :graph="graph"/>
+        <drag-panel v-if="graph" :graph="graph" />
       </div>
       <div class="layout-bottom">
-        <online-panel v-if="graph" :graph="graph" @handleOnlineNode="handleOnlineNode"/>
+        <online-panel v-if="graph" :graph="graph" @handleOnlineNode="handleOnlineNode" />
       </div>
       <div class="layout-right">
         <side-panel v-if="graph" />
       </div>
     </div>
     <context-menu ref="ctxMenu" />
-    <online-popover ref="popover" />
+    <online-popover ref="popover" v-if="graph" :graph="graph" />
   </div>
 </template>
 
@@ -50,7 +50,7 @@ export default {
     SidePanel,
     DragPanel,
     OnlinePopover
-},
+  },
 
   data() {
     return {
@@ -102,14 +102,19 @@ export default {
   methods: {
     initGraph() {
       const that = this;
+      window.__x6_instances__ = [] // 开发时控制台调试使用
       that.graph = new Graph({
         container: document.getElementById("svg-container"),
-        autoResize: true,
-        grid: that.grid,
+        autoResize: true, // 是否监听容器大小改变，并自动更新画布大小
+        grid: that.grid,  // 网格，默认使用 10px 的网格，但不绘制网格背景。
+        panning: { // 支持鼠标右键平移
+          enabled: true,
+          eventTypes: ['rightMouseDown']
+        },
         selecting: true,
         // 设置画布缩放级别
         scaling: {
-          min: 0.09,
+          min: 0.9,
           max: 1.5,
         },
         // Edge Options
@@ -149,6 +154,9 @@ export default {
                     width: 5,
                     height: 0,
                   },
+                  style: {
+                    animation: 'ant-line 31s infinite linear'
+                  }
                 },
               },
             });
@@ -156,6 +164,7 @@ export default {
         },
         highlighting: that.highlighting,
       });
+      window.__x6_instances__.push(that.graph)
     },
     editNode() {
       console.log("edit...");
@@ -191,9 +200,11 @@ export default {
   width: @width;
   height: @height;
 }
+
 .commBorder() {
   border: 1px dashed #7f8c8d;
 }
+
 .main {
   max-width: 100%;
   min-height: 100vh;
@@ -227,9 +238,10 @@ export default {
     grid-row: 1 / span 2;
     grid-column: 1 / span 24;
   }
+
   .layout-left {
     .common(100%, 100%);
-    .commBorder();
+    // .commBorder();
 
     grid-row: 3 / span 23;
     grid-column: 1 / span 5;
@@ -238,9 +250,10 @@ export default {
     grid-template-rows: repeat(24, 1fr);
     grid-template-columns: repeat(24, 1fr);
   }
+
   .layout-bottom {
     .common(100%, 100%);
-    .commBorder();
+    // .commBorder();
 
     grid-row: 20 / span 5;
     grid-column: 6 / span 13;
@@ -249,9 +262,10 @@ export default {
     grid-template-rows: repeat(24, 1fr);
     grid-template-columns: repeat(24, 1fr);
   }
+
   .layout-right {
     .common(100%, 100%);
-    .commBorder();
+    // .commBorder();
 
     grid-row: 3 / span 23;
     grid-column: 19 / span 7;
@@ -260,5 +274,6 @@ export default {
     grid-template-rows: repeat(24, 1fr);
     grid-template-columns: repeat(24, 1fr);
   }
-}
-</style>
+
+
+}</style>

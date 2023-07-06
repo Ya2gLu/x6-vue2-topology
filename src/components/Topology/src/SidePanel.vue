@@ -1,14 +1,14 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 14:46:20
- * @LastEditTime : 2023-06-28 11:48:32
+ * @LastEditTime : 2023-07-03 09:37:15
  * @LastEditors  : ya2glu
  * @Description  : SideBar
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/SidePanel.vue
 -->
 <template>
   <transition name="slide-fade">
-    <div class="side-container" v-show="sideState">侧边栏</div>
+    <div class="side-container border-l-2 border-l-solid border-dark-400" v-show="sideState">侧边栏</div>
   </transition>
 </template>
 
@@ -36,10 +36,11 @@ export default {
 
   // border-radius: 20px;
   // box-shadow: 2px 2px 8px 3px #0d0d0d;
-  // backdrop-filter: blur(10px);
-  background-color: rgba(31, 31, 31, 1);
+  backdrop-filter: blur(10px);
+  background-color: rgba(31, 31, 31, .5);
 
   padding: 10px;
+  // border-left: 2px solid #fff
 }
 .slide-fade-enter-active {
   transition: all 0.3s ease;

@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:11
- * @LastEditTime : 2023-06-02 18:29:58
+ * @LastEditTime : 2023-07-03 23:22:39
  * @LastEditors  : ya2glu
  * @Description  : 左侧ToolsBar
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/ToolsBar.vue
@@ -183,10 +183,10 @@ export default {
         background-color: #141414;
       }
     }
-    .selection {
-      border-radius: 10px;
-      background-color: #141414;
-    }
+    // .selection {
+    //   border-radius: 10px;
+    //   background-color: #141414;
+    // }
   }
 }
 </style>

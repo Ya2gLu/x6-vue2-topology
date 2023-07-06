@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
- * @LastEditTime : 2023-06-27 15:28:13
+ * @LastEditTime : 2023-07-06 11:42:26
  * @LastEditors  : ya2glu
  * @Description  : TitleBar
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/TitleBar.vue
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="item-center">
-      <div v-for="(i, index) in toolsList" :key="index" :class="{ active: index === selectIndex && isSelection }"
+      <div v-for="(i, index) in toolsList" :key="index" :class="{ active: index === selectIndex && isRubberband }"
         border="2 solid rounded-md dark-200" p="y-1 x-2" m="y-0 x-1" cursor="pointer" active="bg-dark-200"
         @click="onToolsClick(i.type, index)">
         <a-tooltip :title="i.label" :mouseEnterDelay="0.5">
@@ -37,6 +37,7 @@
 <script>
 import { mapMutations } from "vuex";
 import { Selection } from "@antv/x6-plugin-selection";
+import { History } from "@antv/x6-plugin-history"
 import { Graph } from "@antv/x6";
 export default {
   components: {},
@@ -101,16 +102,19 @@ export default {
   data() {
     return {
       selectIndex: 0,
-      isSelection: false, // 是否框选
+      isRubberband: false, // 是否框选
     };
   },
   computed: {},
   mounted() {
     this.initToolsBar();
 
-    this.graph.on("cell:selected", () => {
-      console.log();
-    });
+    // 启用历史记录
+    this.graph.use(
+      new History({
+        enabled: true
+      })
+    )
   },
   methods: {
     ...mapMutations("titleBar", ["toggleLeft", "toggleRight"]),
@@ -120,12 +124,33 @@ export default {
         this.graph.use(
           new Selection({
             enabled: true,
-            rubberband: this.isSelection, // 是否启用框选节点功能
-            showNodeSelectionBox: true,
+            rubberband: this.isRubberband, // 是否启用框选节点功能
+            showNodeSelectionBox: true, // 是否显示节点的选择框
+            // 如果打开 showNodeSelectionBox 时，会在节点上方盖一层元素，导致节点的事件无法响应，此时可以配置 pointerEvents: none 来解决，默认值是 auto
             pointerEvents: "none",
           })
         );
       }
+    },
+
+    handleNodesDelete(nodes) {
+
+      if (nodes.length > 1) {
+
+        const cellIds = nodes.map((items) => items.id)
+        return this.graph.removeCells(cellIds)
+
+      } else if (nodes.length == 1) {
+
+        const cellId = nodes[0].id.toString()
+        return this.graph.removeCell(cellId)
+
+      } else {
+
+        return null
+
+      }
+
     },
 
     onToolsClick(key, index) {
@@ -134,10 +159,10 @@ export default {
           this.graph.centerContent();
           break;
         case "Selection":
-          this.isSelection = !this.isSelection;
+          this.isRubberband = !this.isRubberband;
           this.selectIndex = index;
           if (this.graph) {
-            this.graph.toggleRubberband(this.isSelection);
+            this.graph.toggleRubberband(this.isRubberband);
           }
           break;
         case "Zoom-in":
@@ -147,10 +172,14 @@ export default {
           this.graph.zoom(-0.3);
           break;
         case "Delete":
+          const nodes = this.graph.getSelectedCells()
+          this.handleNodesDelete(nodes)
           break;
         case "Undo":
+          this.graph.undo();
           break;
         case "Redo":
+          this.graph.redo();
           break;
         case "Export":
           break;

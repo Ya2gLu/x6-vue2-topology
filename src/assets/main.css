@@ -23,7 +23,7 @@ body {
   padding-right: 0;
   padding-bottom: 0;
   border: 3.5px solid #3a78db;
-  border-radius: 25px;
+  border-radius: 1.5rem;
   box-shadow: none;
 }
 
@@ -44,4 +44,14 @@ body {
 .x6-edge-selected path:nth-child(2) {
   stroke: #3a78db;
   stroke-width: 2.5px !important;
+}
+
+.x6-graph.x6-graph-pannable {
+  cursor: default
+}
+
+@keyframes ant-line {
+  to {
+    stroke-dashoffset: -1000;
+  }
 }

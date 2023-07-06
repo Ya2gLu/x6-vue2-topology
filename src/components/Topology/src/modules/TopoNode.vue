@@ -1,14 +1,15 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:22
- * @LastEditTime : 2023-06-27 17:29:17
+ * @LastEditTime : 2023-07-03 22:21:20
  * @LastEditors  : ya2glu
  * @Description  : 自定义vue节点
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/modules/TopoNode.vue
 -->
 <template>
-  <div class="node">
-    <div class="node-item" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+  <div class="w-66px h-66px flex justify-center items-center bg-dark-400 rounded-2xl" @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave">
+    <div>
       <div :class="type" class="p-4"></div>
     </div>
   </div>
@@ -16,7 +17,7 @@
 
 <script>
 export default {
-  name: "TopoNode",
+  name: "topo-node",
   inject: ["getNode", "getGraph"],
   components: {
   },
@@ -55,25 +56,4 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-.node {
-  width: 68px;
-  height: 68px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-
-  .node-item {
-    width: 100%;
-    height: 100%;
-    background-color: #1b1b1b;
-    border-radius: 20px;
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
-</style>
+<style lang="less" scoped></style>

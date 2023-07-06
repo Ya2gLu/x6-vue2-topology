@@ -1,4 +1,5 @@
 import TopoNode from "../modules/TopoNode.vue";
+import ServerNode from "../modules/ServerNode.vue"
 import { register } from "@antv/x6-vue-shape";
 import { ports } from "./ports";
 
@@ -9,4 +10,11 @@ const topoRegister = () => {
     ports: { ...ports },
   });
 };
-export { topoRegister, TopoNode };
+const serverRegister = () => {
+  return register({
+    shape: "server-vue-node",
+    component: ServerNode,
+    ports: { ...ports }
+  })
+}
+export { topoRegister, serverRegister, TopoNode, ServerNode };

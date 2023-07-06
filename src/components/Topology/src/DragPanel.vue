@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-26 17:56:29
- * @LastEditTime : 2023-06-28 11:47:57
+ * @LastEditTime : 2023-07-03 10:35:04
  * @LastEditors  : ya2glu
  * @Description  : 图标拖拽面板
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/DragPanel.vue
@@ -96,8 +96,8 @@ export default {
       const node = this.graph.createNode({
         shape: "topo-vue-node",
         component: TopoNode,
-        width: 64,
-        height: 64,
+        width: 66,
+        height: 66,
         data: {
           types: type
         },
@@ -108,7 +108,7 @@ export default {
               group: "top",
               args: {
                 dx: 1.5,
-                dy: -1.5,
+                dy: -5,
               },
             },
             {
@@ -121,7 +121,7 @@ export default {
             {
               group: "left",
               args: {
-                dx: -1.5,
+                dx: -5,
               },
             },
             {
