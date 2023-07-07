@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:23:50
- * @LastEditTime : 2023-07-05 15:29:15
+ * @LastEditTime : 2023-07-07 10:07:31
  * @LastEditors  : ya2glu
  * @Description  : Topology
  * @FilePath     : /x6-vue2-topology/src/views/Topology/Topology.vue
@@ -97,6 +97,28 @@ export default {
     this.initGraph();
     // Cell节点右键回调
     this.graph.on("cell:contextmenu", this.contextMenu);
+
+    this.graph.on("node:selected", ({ node }) => {
+      console.log("selected:", this.graph.getConnectedEdges(node));
+      const EdgesArr = this.graph.getConnectedEdges(node);
+      EdgesArr.forEach(ele => {
+        ele.setAttrs({
+          line: {
+            stroke: "#3A78DB"
+          }
+        })
+      });
+    })
+    this.graph.on("node:unselected", ({ node }) => {
+      const EdgesArr = this.graph.getConnectedEdges(node)
+      EdgesArr.forEach(ele => {
+        ele.setAttrs({
+          line: {
+            stroke: "#343434"
+          }
+        })
+      })
+    })
   },
 
   methods: {
@@ -276,4 +298,5 @@ export default {
   }
 
 
-}</style>
+}
+</style>
