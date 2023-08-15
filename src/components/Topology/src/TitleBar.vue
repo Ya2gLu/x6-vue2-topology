@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
- * @LastEditTime : 2023-07-06 11:42:26
+ * @LastEditTime : 2023-07-07 15:48:25
  * @LastEditors  : ya2glu
  * @Description  : TitleBar
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/TitleBar.vue
@@ -201,7 +201,7 @@ export default {
   z-index: 99;
 
   background-color: rgba(31, 31, 31, 0.3);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
   border-bottom: 2px solid rgba(49, 49, 49, 0.3);
 
   display: flex;

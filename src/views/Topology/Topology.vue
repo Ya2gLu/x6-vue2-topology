@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:23:50
- * @LastEditTime : 2023-07-07 10:07:31
+ * @LastEditTime : 2023-07-07 11:10:08
  * @LastEditors  : ya2glu
  * @Description  : Topology
  * @FilePath     : /x6-vue2-topology/src/views/Topology/Topology.vue
@@ -99,7 +99,6 @@ export default {
     this.graph.on("cell:contextmenu", this.contextMenu);
 
     this.graph.on("node:selected", ({ node }) => {
-      console.log("selected:", this.graph.getConnectedEdges(node));
       const EdgesArr = this.graph.getConnectedEdges(node);
       EdgesArr.forEach(ele => {
         ele.setAttrs({
@@ -177,7 +176,7 @@ export default {
                     height: 0,
                   },
                   style: {
-                    animation: 'ant-line 31s infinite linear'
+                    animation: 'ant-line 31s infinite linear',
                   }
                 },
               },

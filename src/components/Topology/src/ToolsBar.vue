@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:11
- * @LastEditTime : 2023-07-03 23:22:39
+ * @LastEditTime : 2023-08-15 08:57:32
  * @LastEditors  : ya2glu
  * @Description  : 左侧ToolsBar
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/ToolsBar.vue
@@ -13,7 +13,7 @@
         @click="onMenuClick(ico.key, index)"
         :class="{ selection: index === selectIndex && isSelection }"
       >
-        <icon-park class="icons" :type="ico.type" theme="outline" size="24" />
+        <!-- <icon-park class="icons" :type="ico.type" theme="outline" size="24" /> -->
       </div>
     </div>
   </div>
@@ -21,12 +21,12 @@
 
 <script>
 import { Graph } from "@antv/x6";
-import { IconPark } from "@icon-park/vue/es/all";
+// import { IconPark } from "@icon-park/vue/es/all";
 import { Selection } from "@antv/x6-plugin-selection";
 export default {
   name: "ToolsBar",
   components: {
-    IconPark,
+    // IconPark,
   },
   props: {
     graph: {

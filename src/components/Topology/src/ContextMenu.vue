@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-29 16:10:53
- * @LastEditTime : 2023-06-25 18:26:50
+ * @LastEditTime : 2023-07-06 15:23:40
  * @LastEditors  : ya2glu
  * @Description  : ContextMenu
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/ContextMenu.vue
@@ -9,7 +9,7 @@
 <template>
   <div ref="ctxMenu" v-show="isOpened">
     <ul class="context-menu">
-      <li class="context-menu-item" v-for="(items, index) in menuItems">
+      <li class="context-menu-item" v-for="(items, index) in menuItems" :key="index">
         <button class="context-menu-button" @click="handleClick(items.key)">
           {{ items.content }}
         </button>
@@ -39,6 +39,7 @@ export default {
         },
         {
           key: "delete",
+          divider: "top",
           content: "删除",
           events: {},
         },
@@ -114,7 +115,7 @@ export default {
 
   display: flex;
   flex-direction: column;
-  z-index: 999999999;
+  z-index: 999;
   box-shadow: 0 0 0 1px var(--menu-border), 0 2px 2px rgb(0 0 0 / 3%),
     0 4px 4px rgb(0 0 0 / 4%), 0 10px 8px rgb(0 0 0 / 5%),
     0 15px 15px rgb(0 0 0 / 6%), 0 30px 30px rgb(0 0 0 / 7%),

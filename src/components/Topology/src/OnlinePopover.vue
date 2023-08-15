@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-27 19:15:15
- * @LastEditTime : 2023-07-05 17:02:58
+ * @LastEditTime : 2023-07-07 19:29:39
  * @LastEditors  : ya2glu
  * @Description  : 在线设备列表Modal
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/OnlinePopover.vue
@@ -28,7 +28,7 @@
             <i class="y-iconamoon:search p-3 cursor-pointer absolute right-3.5" @click="toggleSearch"></i>
           </div>
         </div>
-        <div  class="h-17em overflow-y-scroll rounded-2xl">
+        <div class="h-17em overflow-y-scroll rounded-2xl">
           <div v-for="items in detailList"
             class="flex h-64px my-2 mr-1 bg-dark-800 rounded-2xl items-center cursor-pointer border-1"
             @mousedown="startDrag(items, $event)">
@@ -136,26 +136,26 @@ export default {
                 group: "top",
                 args: {
                   dx: 1.5,
-                  dy: -5,
+                  dy: 2,
                 },
               },
               {
                 group: "bottom",
                 args: {
                   dx: 1.5,
-                  dy: 5,
+                  dy: -2,
                 },
               },
               {
                 group: "left",
                 args: {
-                  dx: -5,
+                  dx: 2,
                 },
               },
               {
                 group: "right",
                 args: {
-                  dx: 5,
+                  dx: -2,
                 },
               },
             ],
@@ -179,10 +179,10 @@ export default {
     open(items, nodePos) {
       // console.log('eee ->', items, nodePos);
       this.params = items;
+      this.isShow = true
       this.$nextTick(() => {
         this.setPosition(nodePos);
       });
-      return (this.isShow = true);
     },
 
     setPosition(nodePos) {

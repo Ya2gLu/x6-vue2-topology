@@ -1,22 +1,14 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-26 17:56:29
- * @LastEditTime : 2023-07-03 10:35:04
+ * @LastEditTime : 2023-07-06 16:19:58
  * @LastEditors  : ya2glu
  * @Description  : 图标拖拽面板
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/DragPanel.vue
 -->
 <template>
   <transition name="slide-fade">
-    <div ref="dnd-container" class="wrapper flex flex-wrap content-start gap-4 p-2" v-show="sideState">
-      <div v-for="(item, i) in nodeList" :key="i">
-        <a-tooltip :title="item.label" :mouseEnterDelay="0.5" placement="bottom">
-          <div class="bg-dark-800 flex justify-center items-center h-64px w-64px rounded-2xl cursor-pointer" @mousedown="startDrag(item.type, $event)">
-            <div :class="item.type" class="p-4 bg-light-200"></div>
-          </div>
-        </a-tooltip>
-      </div>
-    </div>
+    <div ref="dnd-container" class="wrapper flex flex-wrap content-start gap-4 p-2 border-r-2 border-r-solid border-dark-400 " v-show="sideState"></div>
   </transition>
 </template>
 
@@ -35,38 +27,6 @@ export default {
       type: Graph,
       required: true
     },
-    nodeList: {
-      type: Array,
-      default: () => {
-        return [
-          {
-            key: 'computer',
-            type: 'y-ri:computer-line',
-            label: '客户端'
-          },
-          {
-            key: 'server',
-            type: 'y-ri:server-line',
-            label: '服务器'
-          },
-          {
-            key: 'router',
-            type: 'y-tabler:router',
-            label: '路由器',
-          },
-          {
-            key: 'disk',
-            type: 'y-carbon:vmdk-disk',
-            label: '硬盘',
-          },
-          {
-            key: 'terminal',
-            type: 'y-solar:programming-outline',
-            label: '终端',
-          },
-        ]
-      }
-    }
   },
   data() {
     return {
@@ -89,53 +49,6 @@ export default {
         }
       })
     },
-    // 开始拖拽时显示拖拽节点
-    startDrag(type, $event) {
-      console.log("startDrag -->", type, $event);
-      // 创建节点，需要指定节点宽高，不然不会显示拖拽节点
-      const node = this.graph.createNode({
-        shape: "topo-vue-node",
-        component: TopoNode,
-        width: 66,
-        height: 66,
-        data: {
-          types: type
-        },
-        // ports连接桩
-        ports: {
-          items: [
-            {
-              group: "top",
-              args: {
-                dx: 1.5,
-                dy: -5,
-              },
-            },
-            {
-              group: "bottom",
-              args: {
-                dx: 1.5,
-                dy: 5,
-              },
-            },
-            {
-              group: "left",
-              args: {
-                dx: -5,
-              },
-            },
-            {
-              group: "right",
-              args: {
-                dx: 5,
-              },
-            },
-          ],
-        },
-      });
-
-      return this.dnd.start(node, $event);
-    }
   },
   mounted() {
     this.initDnd();
@@ -149,8 +62,8 @@ export default {
   grid-column: 1 / span 24;
   z-index: 99;
 
-  background-color: rgba(31, 31, 31, 1);
-  // padding: 10px;
+  background-color: rgba(31, 31, 31, .5);
+  backdrop-filter: blur(10px);
 }
 
 .slide-fade-enter-active {

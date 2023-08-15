@@ -1,13 +1,13 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:01
- * @LastEditTime : 2023-07-01 23:34:00
+ * @LastEditTime : 2023-07-07 14:36:59
  * @LastEditors  : ya2glu
  * @Description  : 在线设备
  * @FilePath     : /x6-vue2-topology/src/components/Topology/src/OnlinePanel.vue
 -->
 <template>
-  <div class="dnd-container">
+  <div class="dnd-container rounded-2xl shadow-2xl shadow-dark-900">
     <div v-for="(items, i) in onlineList" :key="i" :ref="getRef(i)"
       class="group/item flex flex-col items-center cursor-pointer" @click="handleNodeClick(items, i)">
       <div class="bg-dark-800 h-64px w-64px flex justify-center items-center rounded-2xl group-hover/item:bg-dark-200">
@@ -98,8 +98,8 @@ export default {
   grid-row: 6 / span 12;
   grid-column: 3 / span 20;
   z-index: 99;
-  border-radius: 16px;
-  box-shadow: 2px 2px 10px 5px #0d0d0d;
+  // border-radius: 16px;
+  // box-shadow: 2px 2px 10px 5px #0d0d0d;
   backdrop-filter: blur(10px);
   background-color: rgba(56, 56, 56, 0.3);
 
