@@ -1,14 +1,14 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-26 17:56:29
- * @LastEditTime : 2023-07-06 16:19:58
+ * @LastEditTime : 2023-09-04 19:34:00
  * @LastEditors  : ya2glu
  * @Description  : 图标拖拽面板
- * @FilePath     : /x6-vue2-topology/src/components/Topology/src/DragPanel.vue
+ * @FilePath     : \x6-vue2-topology\src\components\Topology\src\DragPanel.vue
 -->
 <template>
   <transition name="slide-fade">
-    <div ref="dnd-container" class="wrapper flex flex-wrap content-start gap-4 p-2 border-r-2 border-r-solid border-dark-400 " v-show="sideState"></div>
+    <div ref="dnd-container" class="wrapper flex flex-wrap content-start gap-4 p-2 border-r-2 border-r-solid border-dark-400 " v-show="sideState"> drag panel</div>
   </transition>
 </template>
 

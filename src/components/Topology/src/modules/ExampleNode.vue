@@ -1,25 +1,25 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-26 09:12:49
- * @LastEditTime : 2023-05-26 11:33:12
+ * @LastEditTime : 2023-08-15 09:08:40
  * @LastEditors  : ya2glu
  * @Description  : ExampleNode
- * @FilePath     : /x6-vue2-topology/src/components/Topology/src/modules/ExampleNode.vue
+ * @FilePath     : \x6-vue2-topology\src\components\Topology\src\modules\ExampleNode.vue
 -->
 <template>
   <div>
     <div class="container">
-      <icon-park type="Server" theme="outline" size="28" />
+      <!-- <icon-park type="Server" theme="outline" size="28" /> -->
     </div>
   </div>
 </template>
 
 <script>
-  import { IconPark } from '@icon-park/vue/es/all'
+  // import { IconPark } from '@icon-park/vue/es/all'
   export default {
     name: 'ExampleNode',
     components: {
-      IconPark
+      // IconPark
     },
     inject: ['getNode'],
     data() {

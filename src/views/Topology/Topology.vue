@@ -1,10 +1,10 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:23:50
- * @LastEditTime : 2023-07-07 11:10:08
+ * @LastEditTime : 2023-08-16 15:53:50
  * @LastEditors  : ya2glu
  * @Description  : Topology
- * @FilePath     : /x6-vue2-topology/src/views/Topology/Topology.vue
+ * @FilePath     : \x6-vue2-topology\src\views\Topology\Topology.vue
 -->
 <template>
   <div>
@@ -202,7 +202,7 @@ export default {
     },
 
     handleOnlineNode(items, nodePos) {
-      // console.log("handleOnlineNode ->", items, nodePos);
+      console.log(items);
       if (this.onlineKey !== items.key) {
         this.onlineKey = items.key
         return this.$refs.popover.open(items, nodePos)

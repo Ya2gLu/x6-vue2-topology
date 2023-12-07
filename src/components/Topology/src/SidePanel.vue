@@ -1,14 +1,14 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 14:46:20
- * @LastEditTime : 2023-07-03 09:37:15
+ * @LastEditTime : 2023-09-04 17:45:07
  * @LastEditors  : ya2glu
  * @Description  : SideBar
- * @FilePath     : /x6-vue2-topology/src/components/Topology/src/SidePanel.vue
+ * @FilePath     : \x6-vue2-topology\src\components\Topology\src\SidePanel.vue
 -->
 <template>
   <transition name="slide-fade">
-    <div class="side-container border-l-2 border-l-solid border-dark-400" v-show="sideState">侧边栏</div>
+    <div class="side-container border-l-2 border-l-solid border-dark-400" v-show="sideState">side panel</div>
   </transition>
 </template>
 
