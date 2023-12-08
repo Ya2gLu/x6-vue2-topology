@@ -1,29 +1,19 @@
-<!--
- * @Author       : ya2glu@163.com
- * @Date         : 2023-05-24 16:23:50
- * @LastEditTime : 2023-08-16 15:53:50
- * @LastEditors  : ya2glu
- * @Description  : Topology
- * @FilePath     : \x6-vue2-topology\src\views\Topology\Topology.vue
--->
 <template>
-  <div>
-    <div class="main">
-      <div id="bgc-svg">
-        <div id="svg-container" class="svg-panel" @click="handleGraphClick" />
-      </div>
-      <div class="layout-top">
-        <title-bar v-if="graph" :graph="graph" />
-      </div>
-      <div class="layout-left">
-        <drag-panel v-if="graph" :graph="graph" />
-      </div>
-      <div class="layout-bottom">
-        <online-panel v-if="graph" :graph="graph" @handleOnlineNode="handleOnlineNode" />
-      </div>
-      <div class="layout-right">
-        <side-panel v-if="graph" />
-      </div>
+  <div class="main">
+    <div id="bgc-svg">
+      <div id="svg-container" class="svg-panel" @click="handleGraphClick" />
+    </div>
+    <div class="layout-top">
+      <title-bar v-if="graph" :graph="graph" />
+    </div>
+    <div class="layout-left">
+      <drag-panel v-if="graph" :graph="graph" />
+    </div>
+    <div class="layout-bottom">
+      <online-panel v-if="graph" :graph="graph" @handleOnlineNode="handleOnlineNode" />
+    </div>
+    <div class="layout-right">
+      <side-panel v-if="graph" />
     </div>
     <context-menu ref="ctxMenu" />
     <online-popover ref="popover" v-if="graph" :graph="graph" />
@@ -144,12 +134,12 @@ export default {
             radius: 20,
           },
           highlight: true,
-          allowNode: false, // 是否允许连接到画布空白位置的点
-          allowLoop: false, // 是否允许创建循环连线，即边的起始点和终止节点为同一节点
-          allowEdge: false, // 是否允许边连接到另一个边
+          allowNode: false,  // 是否允许连接到画布空白位置的点
+          allowLoop: false,  // 是否允许创建循环连线，即边的起始点和终止节点为同一节点
+          allowEdge: false,  // 是否允许边连接到另一个边
           allowBlank: false, // 是否允许连接到画布空白位置的点
-          allowPort: true, // 是否允许边连接到连接桩
-          allowMulti: true, // 是否允许在相同的起始节点和终止之间创建多条边
+          allowPort: true,   // 是否允许边连接到连接桩
+          allowMulti: true,  // 是否允许在相同的起始节点和终止之间创建多条边
           router: "manhattan", // 曼哈顿路由
           // 连接桩样式
           connector: {
