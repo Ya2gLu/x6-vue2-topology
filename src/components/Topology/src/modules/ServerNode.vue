@@ -1,10 +1,10 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-07-03 09:24:01
- * @LastEditTime : 2023-07-06 10:42:49
+ * @LastEditTime : 2023-12-11 16:43:34
  * @LastEditors  : ya2glu
  * @Description  : Server节点
- * @FilePath     : /x6-vue2-topology/src/components/Topology/src/modules/ServerNode.vue
+ * @FilePath     : \x6-vue2-topology\src\components\Topology\src\modules\ServerNode.vue
 -->
 <template>
   <div class="wrapper">

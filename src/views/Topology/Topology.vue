@@ -1,25 +1,3 @@
-<template>
-  <div class="main">
-    <div id="bgc-svg">
-      <div id="svg-container" class="svg-panel" @click="handleGraphClick" />
-    </div>
-    <div class="layout-top">
-      <title-bar v-if="graph" :graph="graph" />
-    </div>
-    <div class="layout-left">
-      <drag-panel v-if="graph" :graph="graph" />
-    </div>
-    <div class="layout-bottom">
-      <online-panel v-if="graph" :graph="graph" @handleOnlineNode="handleOnlineNode" />
-    </div>
-    <div class="layout-right">
-      <side-panel v-if="graph" />
-    </div>
-    <context-menu ref="ctxMenu" />
-    <online-popover ref="popover" v-if="graph" :graph="graph" />
-  </div>
-</template>
-
 <script>
 import { Graph } from "@antv/x6";
 import {
@@ -206,86 +184,25 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-.common(@width, @height) {
-  width: @width;
-  height: @height;
-}
-
-.commBorder() {
-  border: 1px dashed #7f8c8d;
-}
-
-.main {
-  max-width: 100%;
-  min-height: 100vh;
-
-  width: 100vw;
-  height: 100vh;
-
-  overflow: hidden;
-  position: relative;
-
-  display: grid;
-  grid-template-rows: repeat(24, 1fr);
-  grid-template-columns: repeat(24, 1fr);
-
-  #bgc-svg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-
-    .svg-panel {
-      position: relative;
-      height: 100%;
-      width: 100%;
-    }
-  }
-
-  .layout-top {
-    .common(100%, 100%);
-    // .commBorder();
-
-    grid-row: 1 / span 2;
-    grid-column: 1 / span 24;
-  }
-
-  .layout-left {
-    .common(100%, 100%);
-    // .commBorder();
-
-    grid-row: 3 / span 23;
-    grid-column: 1 / span 5;
-
-    display: grid;
-    grid-template-rows: repeat(24, 1fr);
-    grid-template-columns: repeat(24, 1fr);
-  }
-
-  .layout-bottom {
-    .common(100%, 100%);
-    // .commBorder();
-
-    grid-row: 20 / span 5;
-    grid-column: 6 / span 13;
-
-    display: grid;
-    grid-template-rows: repeat(24, 1fr);
-    grid-template-columns: repeat(24, 1fr);
-  }
-
-  .layout-right {
-    .common(100%, 100%);
-    // .commBorder();
-
-    grid-row: 3 / span 23;
-    grid-column: 19 / span 7;
-
-    display: grid;
-    grid-template-rows: repeat(24, 1fr);
-    grid-template-columns: repeat(24, 1fr);
-  }
-
-
-}
-</style>
+<template>
+  <div class="max-w-full min-h-screen w-screen h-screen overflow-hidden relative grid grid-rows-24 grid-cols-24">
+    <div id="bgc-svg" class="absolute w-full h-full">
+      <div id="svg-container" class="relative h-full w-full" @click="handleGraphClick" />
+    </div>
+    <div class="w-full h-full col-span-24 row-span-2">
+      <title-bar v-if="graph" :graph="graph" />
+    </div>
+    <div class="grid w-full h-full row-start-3 row-span-23 col-start-1 col-span-5 grid-rows-24 grid-cols-24">
+      <drag-panel v-if="graph" :graph="graph" />
+    </div>
+    <div class="grid w-full h-full row-start-20 row-span-5 col-start-6 col-span-13 grid-rows-24 grid-cols-24">
+      <online-panel v-if="graph" :graph="graph" @handleOnlineNode="handleOnlineNode" />
+    </div>
+    <div class="grid w-full h-full row-start-3 row-span-23 col-start-19 col-span-7 grid-rows-24 grid-cols-24">
+      <side-panel v-if="graph" />
+    </div>
+    <context-menu ref="ctxMenu" />
+    <online-popover ref="popover" v-if="graph" :graph="graph" />
+  </div>
+</template>
+<style lang="less" scoped></style>

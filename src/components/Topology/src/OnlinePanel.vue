@@ -1,10 +1,10 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:01
- * @LastEditTime : 2023-07-07 14:36:59
+ * @LastEditTime : 2023-12-11 16:33:14
  * @LastEditors  : ya2glu
  * @Description  : 在线设备
- * @FilePath     : /x6-vue2-topology/src/components/Topology/src/OnlinePanel.vue
+ * @FilePath     : \x6-vue2-topology\src\components\Topology\src\OnlinePanel.vue
 -->
 <template>
   <div class="dnd-container rounded-2xl shadow-2xl shadow-dark-900">

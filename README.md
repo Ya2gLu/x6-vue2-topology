@@ -8,4 +8,4 @@ An example of a network topology based on antv x6 implementation.
 
 ## record
 
-[2023-06-06] - [ x ] toggleSide bar.
+[2023-06-06] - [x] toggleSide bar.
