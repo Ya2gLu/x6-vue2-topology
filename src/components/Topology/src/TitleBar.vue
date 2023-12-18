@@ -1,33 +1,48 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
- * @LastEditTime : 2023-12-08 15:18:45
+ * @LastEditTime : 2023-12-18 16:16:37
  * @LastEditors  : ya2glu
  * @Description  : TitleBar
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\TitleBar.vue
 -->
 <template>
-  <div class="title-bar-container">
-    <div class="item-left">
-      <div border="2 solid rounded-md dark-200" p="y-1 x-2" cursor="pointer"
-        :class="{ active: this.$store.state.titleBar.dragToggle }" @click="toggleRight">
-        <div class="y-material-symbols:left-panel-open-outline  p-2.5"></div>
-      </div>
+  <div flex justify-between items-center h-full w-full z-99  backdrop-blur 
+    class="bg-neutral-900/75 border-b-2 border-b-solid  border-neutral-700/30">
+
+    <div flex justify-end items-center h-full w="22%">
+      <a-tooltip title="Drag" :mouseEnterDelay=".5">
+        <div :class="{ active: this.$store.state.titleBar.dragToggle }"
+          border="1 solid rounded-md dark-200"
+          p="y-1 x-2"
+          cursor="pointer"
+          @click="toggleRight">
+          <i class="y-material-symbols:left-panel-open-outline p-2.5" />
+        </div>
+     </a-tooltip>
     </div>
-    <div class="item-center">
-      <div v-for="(i, index) in toolsList" :key="index" :class="{ active: index === selectIndex && isRubberband }"
-        border="2 solid rounded-md dark-200" p="y-1 x-2" m="y-0 x-1" cursor="pointer" active="bg-dark-200"
+
+    <div flex justify-start items-center p="x-0 y-10" h-full w="55%">
+      <div v-for="(i, index) in toolsList" :key="index"
+        :class="{ active: index === selectIndex && isRubberband }"
+        border="1 solid rounded-md dark-200"
+        p="y-1 x-2"
+        m="x-1"
+        cursor="pointer" 
         @click="onToolsClick(i.type, index)">
         <a-tooltip :title="i.label" :mouseEnterDelay="0.5">
-          <div :class="i.icon" class=" p-2.5"></div>
+          <i :class="i.icon" class="p-2.5" />
         </a-tooltip>
       </div>
     </div>
-    <div class="item-right">
-      <a-tooltip title="侧边栏" :mouseEnterDelay="0.5">
-        <div :class="{ active: this.$store.state.titleBar.sideToggle }" border="2 solid rounded-md dark-200" p="y-1 x-2"
-          cursor="pointer" @click="toggleLeft">
-          <div class="y-material-symbols:right-panel-open-outline-rounded  p-2.5"></div>
+
+    <div flex justify-start items-center h-full w="25%">
+      <a-tooltip title="settings" :mouseEnterDelay="0.5">
+        <div :class="{ active: this.$store.state.titleBar.sideToggle }"
+          border="1 solid rounded-md dark-200" p="y-1 x-2"
+          cursor="pointer"
+          @click="toggleLeft">
+          <i class="y-material-symbols:right-panel-open-outline-rounded  p-2.5" />
         </div>
       </a-tooltip>
     </div>
@@ -194,66 +209,11 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.title-bar-container {
-  height: 100%;
-  width: 100%;
-
-  z-index: 99;
-
-  background-color: rgba(31, 31, 31, 0.75);
-  backdrop-filter: blur(8px);
-  border-bottom: 2px solid rgba(49, 49, 49, 0.3);
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  .item-left {
-    height: 100%;
-    width: 21%;
-    // border: 1px dashed #fff;
-
-    display: flex;
-    justify-content: end;
-    align-items: center;
-  }
-
-  .item-center {
-    height: 100%;
-    width: 55%;
-    // border: 1px dashed #fff;
-
-    display: flex;
-    justify-content: start;
-    align-items: center;
-
-    padding: 0 10px;
-  }
-
-  .item-right {
-    height: 100%;
-    width: 25%;
-    // border: 1px dashed #fff;
-
-    display: flex;
-    justify-content: start;
-    align-items: center;
-  }
-}
-
-.icons {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .active {
-  background-color: rgb(53, 51, 52);
-}
-
-.icon-box {
-  margin: 0 5px;
+  border: 1px solid rgba(0,0,0,0);
+  border-top: 1px solid rgb(51,51,51);
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px 0px rgba(16, 16, 16, 0.25);
+  background: rgba(49, 49, 49, .55);
 }
 </style>
