@@ -8,7 +8,6 @@ import {
   DragPanel,
   OnlinePopover
 } from "@/components/Topology";
-
 export default {
   name: "y-topology",
   components: {
@@ -189,18 +188,10 @@ export default {
     <div id="bgc-svg" class="absolute w-full h-full">
       <div id="svg-container" class="relative h-full w-full" @click="handleGraphClick" />
     </div>
-    <div class="w-full h-full col-span-24 row-span-2">
-      <title-bar v-if="graph" :graph="graph" />
-    </div>
-    <div class="grid w-full h-full row-start-3 row-span-23 col-start-1 col-span-5 grid-rows-24 grid-cols-24">
-      <drag-panel v-if="graph" :graph="graph" />
-    </div>
-    <div class="grid w-full h-full row-start-20 row-span-5 col-start-6 col-span-13 grid-rows-24 grid-cols-24">
-      <online-panel v-if="graph" :graph="graph" @handleOnlineNode="handleOnlineNode" />
-    </div>
-    <div class="grid w-full h-full row-start-3 row-span-23 col-start-19 col-span-7 grid-rows-24 grid-cols-24">
-      <side-panel v-if="graph" />
-    </div>
+    <title-bar v-if="graph" :graph="graph" />
+    <drag-panel v-if="graph" :graph="graph" />
+    <online-panel v-if="graph" :graph="graph" @handleOnlineNode="handleOnlineNode" />
+    <side-panel v-if="graph" />
     <context-menu ref="ctxMenu" />
     <online-popover ref="popover" v-if="graph" :graph="graph" />
   </div>

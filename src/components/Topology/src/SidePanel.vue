@@ -1,14 +1,17 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 14:46:20
- * @LastEditTime : 2023-09-04 17:45:07
+ * @LastEditTime : 2023-12-22 14:01:52
  * @LastEditors  : ya2glu
  * @Description  : SideBar
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\SidePanel.vue
 -->
 <template>
   <transition name="slide-fade">
-    <div class="side-container border-l-2 border-l-solid border-dark-400" v-show="sideState">side panel</div>
+    <div w-full h-full row-start-3 row-span-23 col-start-19 col-span-7 
+      class="border-l-2 border-l-solid border-dark-400 bg-dark-800/50 backdrop-blur" v-show="sideState">
+      <div class="side-container " >side panel</div>
+    </div>
   </transition>
 </template>
 
@@ -42,15 +45,20 @@ export default {
   padding: 10px;
   // border-left: 2px solid #fff
 }
+
 .slide-fade-enter-active {
   transition: all 0.3s ease;
 }
+
 .slide-fade-leave-active {
   transition: all 0.3s ease-in-out;
 }
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active for below version 2.1.8 */ {
+
+.slide-fade-enter,
+.slide-fade-leave-to
+
+/* .slide-fade-leave-active for below version 2.1.8 */
+  {
   transform: translateX(10px);
   opacity: 0;
-}
-</style>
+}</style>

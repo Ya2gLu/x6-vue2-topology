@@ -1,50 +1,42 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
- * @LastEditTime : 2023-12-18 16:16:37
+ * @LastEditTime : 2023-12-22 11:19:15
  * @LastEditors  : ya2glu
  * @Description  : TitleBar
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\TitleBar.vue
 -->
 <template>
-  <div flex justify-between items-center h-full w-full z-99  backdrop-blur 
-    class="bg-neutral-900/75 border-b-2 border-b-solid  border-neutral-700/30">
+  <div w-full h-full col-span-24 row-span-2>
+    <div flex justify-between items-center h-full w-full z-99 backdrop-blur
+      class="bg-neutral-900/75 border-b-2 border-b-solid  border-neutral-700/30">
 
-    <div flex justify-end items-center h-full w="22%">
-      <a-tooltip title="Drag" :mouseEnterDelay=".5">
-        <div :class="{ active: this.$store.state.titleBar.dragToggle }"
-          border="1 solid rounded-md dark-200"
-          p="y-1 x-2"
-          cursor="pointer"
-          @click="toggleRight">
-          <i class="y-material-symbols:left-panel-open-outline p-2.5" />
-        </div>
-     </a-tooltip>
-    </div>
-
-    <div flex justify-start items-center p="x-0 y-10" h-full w="55%">
-      <div v-for="(i, index) in toolsList" :key="index"
-        :class="{ active: index === selectIndex && isRubberband }"
-        border="1 solid rounded-md dark-200"
-        p="y-1 x-2"
-        m="x-1"
-        cursor="pointer" 
-        @click="onToolsClick(i.type, index)">
-        <a-tooltip :title="i.label" :mouseEnterDelay="0.5">
-          <i :class="i.icon" class="p-2.5" />
+      <div flex justify-end items-center h-full w="22%">
+        <a-tooltip title="Drag" :mouseEnterDelay=".5">
+          <div :class="{ active: this.$store.state.titleBar.dragToggle }" border="1 solid rounded-md dark-200" p="y-1 x-2"
+            cursor="pointer" @click="toggleRight">
+            <i class="y-material-symbols:left-panel-open-outline p-2.5" />
+          </div>
         </a-tooltip>
       </div>
-    </div>
 
-    <div flex justify-start items-center h-full w="25%">
-      <a-tooltip title="settings" :mouseEnterDelay="0.5">
-        <div :class="{ active: this.$store.state.titleBar.sideToggle }"
-          border="1 solid rounded-md dark-200" p="y-1 x-2"
-          cursor="pointer"
-          @click="toggleLeft">
-          <i class="y-material-symbols:right-panel-open-outline-rounded  p-2.5" />
+      <div flex justify-start items-center p="x-0 y-10" h-full w="55%">
+        <div v-for="(i, index) in toolsList" :key="index" :class="{ active: index === selectIndex && isRubberband }"
+          border="1 solid rounded-md dark-200" p="y-1 x-2" m="x-1" cursor="pointer" @click="onToolsClick(i.type, index)">
+          <a-tooltip :title="i.label" :mouseEnterDelay="0.5">
+            <i :class="i.icon" class="p-2.5" />
+          </a-tooltip>
         </div>
-      </a-tooltip>
+      </div>
+
+      <div flex justify-start items-center h-full w="25%">
+        <a-tooltip title="settings" :mouseEnterDelay="0.5">
+          <div :class="{ active: this.$store.state.titleBar.sideToggle }" border="1 solid rounded-md dark-200" p="y-1 x-2"
+            cursor="pointer" @click="toggleLeft">
+            <i class="y-material-symbols:right-panel-open-outline-rounded  p-2.5" />
+          </div>
+        </a-tooltip>
+      </div>
     </div>
   </div>
 </template>
@@ -210,8 +202,8 @@ export default {
 </script>
 <style lang="less" scoped>
 .active {
-  border: 1px solid rgba(0,0,0,0);
-  border-top: 1px solid rgb(51,51,51);
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-top: 1px solid rgb(51, 51, 51);
   border-radius: 6px;
   box-shadow: 0px 2px 6px 0px rgba(16, 16, 16, 0.25);
   background: rgba(49, 49, 49, .55);
