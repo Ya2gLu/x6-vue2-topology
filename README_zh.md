@@ -31,4 +31,18 @@ yarn dev
 - [xterm](https://xtermjs.org/)
 
 ## 问题记录
-- [ ] unocss下使用`Attributify`如何处理动态类的绑定?
+
+<details>
+  <summary>unocss下使用`Attributify`如何处理动态类的绑定?</summary>
+  现阶段，没有方法用`Attributify`的方式来绑定动态类，使用vue默认的方式就可以了。
+</details>
+
+<details>
+  <summary>文件的保存离开的逻辑？</summary>
+</details> 
+
+## 开发小记
+
+- [🕛23/12/22]:
+  - [🪛重构] 应该添加一个`📁Layouts`目录用来解耦布局和组件。
+  - [💡实现] 使用`details`和`summary`标签实现简单的下拉缩进式的Tree列表
