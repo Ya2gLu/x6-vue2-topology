@@ -4,8 +4,10 @@ import presetUno from "@unocss/preset-uno";
 import presetAttributify from "@unocss/preset-attributify";
 export default defineConfig({
   presets: [
-    presetAttributify({}),
-    presetUno(),
+    presetAttributify({/* preset options */}),
+    presetUno({
+      
+    }),
     presetIcons({
       prefix: "y-",
       extraProperties: {

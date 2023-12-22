@@ -13,6 +13,17 @@ export default {
       type: Graph,
       required: true
     },
+    list: {
+      type: Array,
+      // required: true,
+      default: () => {
+        return [{
+          id: 1,
+          summary: '基础形状',
+          children: []
+        }]
+      }
+    },
   },
   data() {
     return {
@@ -39,27 +50,43 @@ export default {
   mounted() {
     this.initDnd();
   },
-};
+}
 </script>
 
 <template>
   <transition name="slide-fade">
-    <div ref="dnd-container"
-      class="wrapper flex flex-wrap content-start gap-4 p-2 border-r-2 border-r-solid border-dark-400 "
-      v-show="sideState">
+    <div row-start-3 row-span-23 col-start-1 col-span-5 w-full h-full z-99
+      class=" bg-dark-800/50 border-r-2 border-r-solid border-dark-400 backdrop-blur" v-show="sideState">
+      <div h-full flex flex-col justify-between>
+        <div flex flex-col>
+          <template v-for="d in list">
+            <details w-full>
+              <summary list-none px-2 py-1 mx-2 m-t-2 text-neutral-500 rounded my-2
+                class="hover:outline-neutral-600/30 hover:outline hover:outline-1 hover:bg-neutral-800/30 hover:backdrop-blur hover:text-neutral-400">
+                {{ d.summary }}
+              </summary>
+              <div flex justify-start mx-2 min-h-30>
+                <div w-10 h-10 bg-gradient-to-t from-dark-800 to-dark-300 rounded flex justify-center items-center outline outline-1 outline-dark-100>
+                  <i class="y-material-symbols-light:crop-square-outline w-3/4 h-3/4" />
+                </div>
+              </div>
+            </details>
+          </template>
+        </div>
+        <div>
+          <details class="w-full">
+            <summary
+              class="list-none px-4 py-2 border-t-solid border-t-2 border-dark-400 text-neutral-500 hover:bg-neutral-800/30 hover:backdrop-blur">
+              设备列表
+            </summary>
+            <div min-h-70 grow>context</div>
+          </details>
+        </div>
+      </div>
     </div>
   </transition>
 </template>
 <style lang="less" scoped>
-.wrapper {
-  grid-row: 1 / span 24;
-  grid-column: 1 / span 24;
-  z-index: 99;
-
-  background-color: rgba(31, 31, 31, .5);
-  backdrop-filter: blur(10px);
-}
-
 .slide-fade-enter-active {
   transition: all 0.3s ease;
 }
