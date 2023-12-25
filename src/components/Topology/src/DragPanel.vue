@@ -20,6 +20,15 @@ export default {
         return [{
           id: 1,
           summary: '基础形状',
+          children: [
+            {
+              id: 1,
+              type: 'y-material-symbols-light:crop-square-outline'
+            }
+          ]
+        }, {
+          id: 2,
+          summary: '拓扑形状',
           children: []
         }]
       }
@@ -28,6 +37,8 @@ export default {
   data() {
     return {
       dnd: null,
+      status: null,
+      cIndex: -1,
     };
   },
   computed: {
@@ -46,6 +57,11 @@ export default {
         }
       })
     },
+    toggleState(e, id) {
+      console.log('<details> state:', e);
+      this.status = e.newState
+      this.cIndex = id
+    },
   },
   mounted() {
     this.initDnd();
@@ -59,19 +75,21 @@ export default {
       class=" bg-dark-800/50 border-r-2 border-r-solid border-dark-400 backdrop-blur" v-show="sideState">
       <div h-full flex flex-col justify-between>
         <div flex flex-col>
-          <template v-for="d in list">
-            <details w-full>
-              <summary list-none px-2 py-1 mx-2 m-t-2 text-neutral-500 rounded my-2
-                class="hover:outline-neutral-600/30 hover:outline hover:outline-1 hover:bg-neutral-800/30 hover:backdrop-blur hover:text-neutral-400">
-                {{ d.summary }}
-              </summary>
-              <div flex justify-start mx-2 min-h-30>
-                <div w-10 h-10 bg-gradient-to-t from-dark-800 to-dark-300 rounded flex justify-center items-center outline outline-1 outline-dark-100>
-                  <i class="y-material-symbols-light:crop-square-outline w-3/4 h-3/4" />
+          <details v-for="(d, index) in list" @toggle="toggleState($event, d.id)" :key="d.id" w-full>
+            <summary list-none px-2 py-1 mx-2 text-neutral-500 rounded :class="{ 'm-t-2': index === 0 }"
+              class="hover:outline-neutral-600/30 hover:outline hover:outline-1 hover:bg-neutral-800/30 hover:backdrop-blur hover:text-neutral-400">
+              {{ d.summary }}
+              <i class="align-middle" :class="cIndex === d.id && status === 'open' ? 'y-icon-park-solid:down-one' : 'y-icon-park-solid:right-one'"></i>
+            </summary>
+            <div flex justify-start mx-2 m-t-2 min-h-20>
+              <template v-if="d.children">
+                <div v-for="i in d.children" w-10 h-10 bg-gradient-to-t from-dark-800 to-dark-300 rounded flex
+                  justify-center items-center outline outline-1 outline-dark-100>
+                  <i class="w-3/4 h-3/4" :class="i.type"></i>
                 </div>
-              </div>
-            </details>
-          </template>
+              </template>
+            </div>
+          </details>
         </div>
         <div>
           <details class="w-full">
@@ -79,7 +97,12 @@ export default {
               class="list-none px-4 py-2 border-t-solid border-t-2 border-dark-400 text-neutral-500 hover:bg-neutral-800/30 hover:backdrop-blur">
               设备列表
             </summary>
-            <div min-h-70 grow>context</div>
+            <div min-h-70 mx-2>
+              <details>
+                <summary list-none>test</summary>
+                Lorem, ipsum.
+              </details>
+            </div>
           </details>
         </div>
       </div>

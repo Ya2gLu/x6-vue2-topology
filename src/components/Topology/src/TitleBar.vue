@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
- * @LastEditTime : 2023-12-22 11:19:15
+ * @LastEditTime : 2023-12-25 14:07:06
  * @LastEditors  : ya2glu
  * @Description  : TitleBar
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\TitleBar.vue
@@ -15,7 +15,7 @@
         <a-tooltip title="Drag" :mouseEnterDelay=".5">
           <div :class="{ active: this.$store.state.titleBar.dragToggle }" border="1 solid rounded-md dark-200" p="y-1 x-2"
             cursor="pointer" @click="toggleRight">
-            <i class="y-material-symbols:left-panel-open-outline p-2.5" />
+            <i class="y-material-symbols:left-panel-open-outline p-2.5"></i>
           </div>
         </a-tooltip>
       </div>
@@ -24,7 +24,7 @@
         <div v-for="(i, index) in toolsList" :key="index" :class="{ active: index === selectIndex && isRubberband }"
           border="1 solid rounded-md dark-200" p="y-1 x-2" m="x-1" cursor="pointer" @click="onToolsClick(i.type, index)">
           <a-tooltip :title="i.label" :mouseEnterDelay="0.5">
-            <i :class="i.icon" class="p-2.5" />
+            <i :class="i.icon" class="p-2.5" ></i>
           </a-tooltip>
         </div>
       </div>
@@ -33,7 +33,7 @@
         <a-tooltip title="settings" :mouseEnterDelay="0.5">
           <div :class="{ active: this.$store.state.titleBar.sideToggle }" border="1 solid rounded-md dark-200" p="y-1 x-2"
             cursor="pointer" @click="toggleLeft">
-            <i class="y-material-symbols:right-panel-open-outline-rounded  p-2.5" />
+            <i class="y-material-symbols:right-panel-open-outline-rounded  p-2.5"></i>
           </div>
         </a-tooltip>
       </div>
