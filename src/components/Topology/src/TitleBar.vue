@@ -1,9 +1,9 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
- * @LastEditTime : 2023-12-25 14:07:06
+ * @LastEditTime : 2024-01-02 17:05:05
  * @LastEditors  : ya2glu
- * @Description  : TitleBar
+ * @Description  : 标题工具栏
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\TitleBar.vue
 -->
 <template>
@@ -141,21 +141,14 @@ export default {
     },
 
     handleNodesDelete(nodes) {
-
       if (nodes.length > 1) {
-
         const cellIds = nodes.map((items) => items.id)
         return this.graph.removeCells(cellIds)
-
       } else if (nodes.length == 1) {
-
         const cellId = nodes[0].id.toString()
         return this.graph.removeCell(cellId)
-
       } else {
-
         return null
-
       }
 
     },

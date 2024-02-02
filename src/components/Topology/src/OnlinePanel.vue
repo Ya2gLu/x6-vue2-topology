@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:01
- * @LastEditTime : 2023-12-22 11:31:15
+ * @LastEditTime : 2024-01-22 09:43:36
  * @LastEditors  : ya2glu
  * @Description  : 在线设备
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\OnlinePanel.vue
@@ -14,7 +14,7 @@
         <div class="bg-dark-800 h-64px w-64px flex justify-center items-center rounded-2xl group-hover/item:bg-dark-200">
           <div :class="items.type" class="p-4 bg-light-400"></div>
         </div>
-        <div class="text-light-400 pt-1" :class="{ active: i === selectIndex }">{{ items.label }}</div>
+        <!-- <div class="text-light-400 pt-1" :class="{ active: i === selectIndex }">{{ items.label }}</div> -->
       </div>
     </div>
   </div>

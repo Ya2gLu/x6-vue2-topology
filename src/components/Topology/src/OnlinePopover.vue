@@ -1,3 +1,12 @@
+<!--
+ * @Author       : ya2glu@163.com
+ * @Date         : 2023-06-29 11:07:09
+ * @LastEditTime : 2024-01-29 17:25:54
+ * @LastEditors  : ya2glu
+ * @Description  : 在线设备弹框
+ * @FilePath     : \x6-vue2-topology\src\components\Topology\src\OnlinePopover.vue
+-->
+
 <script>
 import { Dnd } from "@antv/x6-plugin-dnd"
 import { TopoNode, topoRegister, ServerNode, serverRegister } from "./utils/registerShape"
@@ -63,7 +72,6 @@ export default {
     this.initDnd()
   },
   methods: {
-
     initDnd() {
       this.dnd = new Dnd({
         target: this.graph,
@@ -166,10 +174,14 @@ export default {
       //TODO: 处理图标：图标设置成前端处理，遍历动态添加，后端不用维护
       this.detailList = items.list
     },
-
+    /**
+     * 监听鼠标滚轮内容横向滚动
+     * @param {Event} event DOM Event
+     */
     handleScrollX(event) {
-      const content = this.$refs.contentXRef
-      const delta = Math.sign(event.deltaY)
+      let content = this.$refs.contentXRef
+      // Math.sign()返回一个数字的符号，即正数，负数和0
+      let delta = Math.sign(event.deltaY)
       content.scrollLeft += delta * 10
     },
 
@@ -187,7 +199,7 @@ export default {
 </script>
 <template>
   <transition name="slide-fade" mode="out-in">
-    <div ref="popover" class="wrapper w-18em h-26em bg-dark-400 z-99 rounded-2xl" v-show="isShow">
+    <div ref="popover" class="wrapper w-18em h-26em bg-dark-400 z-99 rounded-2xl" v-if="isShow">
       <div class="p-2">
         <div ref="contentXRef" class="flex overflow-x-hidden rounded-2xl" @wheel="handleScrollX">
           <div v-for="(items, idx) in deviceList" :key="idx"
