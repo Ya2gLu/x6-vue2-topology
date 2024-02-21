@@ -1,8 +1,9 @@
+English | [简体中文](./README_zh.md)
 # x6-vue2-topology
 
 An example of a network topology based on antv x6 implementation.
 
-![](src\assets\screenshot01.png)
+![](https://github.com/Ya2gLu/x6-vue2-topology/blob/main/src/assets/screenshot01.png)
 
 ## refer
 

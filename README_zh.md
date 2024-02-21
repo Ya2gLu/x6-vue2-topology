@@ -1,8 +1,9 @@
+[English](./README.md) | 简体中文
 ## 简介
 
 x6-vue2-topology 是一个简单的网络拓扑图示例😀。
 
-![](src\assets\screenshot01.png)
+![](https://github.com/Ya2gLu/x6-vue2-topology/blob/main/src/assets/screenshot01.png)
 
 ## 一些想法
 
