@@ -2,6 +2,8 @@
 
 An example of a network topology based on antv x6 implementation.
 
+![](src\assets\screenshot01.png)
+
 ## refer
 
 [Antd X6](https://x6.antv.antgroup.com/)
