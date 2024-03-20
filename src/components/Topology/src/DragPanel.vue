@@ -90,7 +90,7 @@ export default {
      * @param {object} record 当前点击项
      */
     toggleState(e, record) {
-      record.status = e.newState
+      return record.status = e.newState
     },
   },
   mounted() {
@@ -137,10 +137,9 @@ export default {
             </summary>
             <div min-h-70 mx-2>
               <details>
-                <summary list-none>test</summary>
+                <summary class="list-none px-4">test</summary>
                 <details>
-                  <summary list-none>subtitle</summary>
-                  sublist
+                  <summary class="list-none px-6">subtitle</summary>
                 </details>
               </details>
             </div>
