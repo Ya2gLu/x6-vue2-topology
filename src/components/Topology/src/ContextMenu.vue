@@ -80,7 +80,7 @@ export default {
 .context-menu {
   --menu-border: rgba(255, 255, 255, 0.08);
   --menu-bg: linear-gradient(
-    45deg,
+    90deg,
     rgba(5, 9, 14, 0.2) 0%,
     rgba(5, 9, 14, 0.7) 100%
   );
@@ -108,11 +108,8 @@ export default {
   display: flex;
   flex-direction: column;
   z-index: 999;
-  box-shadow: 0 0 0 1px var(--menu-border), 0 2px 2px rgb(0 0 0 / 3%),
-    0 4px 4px rgb(0 0 0 / 4%), 0 10px 8px rgb(0 0 0 / 5%),
-    0 15px 15px rgb(0 0 0 / 6%), 0 30px 30px rgb(0 0 0 / 7%),
-    0 70px 65px rgb(0 0 0 / 9%);
-
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.8),
+              0 5px 10px rgba(0, 0, 0, 0.7);
   &-item {
     position: relative;
     padding: 4px;

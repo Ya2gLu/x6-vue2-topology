@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-29 11:07:09
- * @LastEditTime : 2024-01-29 17:25:54
+ * @LastEditTime : 2024-03-06 18:20:37
  * @LastEditors  : ya2glu
  * @Description  : 在线设备弹框
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\OnlinePopover.vue
@@ -68,14 +68,14 @@ export default {
   },
   computed: {},
   mounted() {
-    // 实例化拖拽
     this.initDnd()
   },
   methods: {
     initDnd() {
       this.dnd = new Dnd({
         target: this.graph,
-        dndContainer: this.$refs.popover,
+        // 在初始化dnd时，由于popover还未渲染，所以无法得到dom实例。
+        // dndContainer: this.$refs.popover,
         getDragNode: (node) => {
           return node.clone();
         }
@@ -156,7 +156,12 @@ export default {
       if (!nodePos) {
         return null;
       } else {
+
         const popover = this.$refs.popover;
+
+        // 在open事件触发时，popover dom渲染，再一次从dnd实例中设置dndContainer即可。
+        this.dnd.options.dndContainer = popover;
+
         const { x, y, width } = nodePos;
         const pHeight = popover.getBoundingClientRect().height || 364;
         const finalX = x - width - 25;
@@ -197,6 +202,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <transition name="slide-fade" mode="out-in">
     <div ref="popover" class="wrapper w-18em h-26em bg-dark-400 z-99 rounded-2xl" v-if="isShow">
@@ -233,6 +239,7 @@ export default {
     </div>
   </transition>
 </template>
+
 <style lang="less" scoped>
 .active {
   background-color: #3A78DB;
