@@ -293,7 +293,7 @@
     magic-string "^0.30.1"
     postcss "^8.4.25"
 
-"@unocss/preset-attributify@0.53.6", "@unocss/preset-attributify@^0.53.3":
+"@unocss/preset-attributify@0.53.6":
   version "0.53.6"
   resolved "https://registry.yarnpkg.com/@unocss/preset-attributify/-/preset-attributify-0.53.6.tgz#d36ef072739c0c8cc602e0b3e22f8e47b919ef66"
   integrity sha512-mjYQTFMbT9d/bghxh+O02u06YiOxZUSI+XsepwRt28LUSRtM/MjQm1v/7uvCfyNgA3cfIFUB3MxkIprWIShDZQ==

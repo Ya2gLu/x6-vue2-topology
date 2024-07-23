@@ -3,19 +3,20 @@
  * @Date         : 2023-06-02 16:09:11
  * @LastEditTime : 2024-01-02 17:05:05
  * @LastEditors  : ya2glu
- * @Description  : 标题工具栏
+ * @Description  : title components
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\TitleBar.vue
 -->
 <template>
+  <!-- title container -->
   <div w-full h-full col-span-24 row-span-2>
     <div flex justify-between items-center h-full w-full z-99 backdrop-blur
-      class="bg-neutral-900/75 border-b-2 border-b-solid  border-neutral-700/30">
+      class="bg-neutral-850/75 border-b-2 border-b-solid  border-neutral-700/30">
 
       <div flex justify-end items-center h-full w="22%">
         <a-tooltip title="Drag" :mouseEnterDelay=".5">
           <div :class="{ active: this.$store.state.titleBar.dragToggle }" border="1 solid rounded-md dark-200" p="y-1 x-2"
             cursor="pointer" @click="toggleRight">
-            <i class="y-material-symbols:left-panel-open-outline p-2.5"></i>
+            <i class="y-material-symbols-light:play-shapes-outline p-2.5"></i>
           </div>
         </a-tooltip>
       </div>
@@ -33,7 +34,7 @@
         <a-tooltip title="settings" :mouseEnterDelay="0.5">
           <div :class="{ active: this.$store.state.titleBar.sideToggle }" border="1 solid rounded-md dark-200" p="y-1 x-2"
             cursor="pointer" @click="toggleLeft">
-            <i class="y-material-symbols:right-panel-open-outline-rounded  p-2.5"></i>
+            <i class="y-icon-park-outline:setting-config  p-2.5"></i>
           </div>
         </a-tooltip>
       </div>

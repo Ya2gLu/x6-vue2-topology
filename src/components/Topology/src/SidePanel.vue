@@ -9,7 +9,7 @@
 <template>
   <transition name="slide-fade">
     <div w-full h-full row-start-3 row-span-23 col-start-19 col-span-7 
-      class="border-l-2 border-l-solid border-dark-400 bg-dark-800/50 backdrop-blur" v-show="sideState">
+      class="border-l-2 border-l-solid border-dark-400 bg-dark-400/50 backdrop-blur" v-show="sideState">
       <div class="side-container " >side panel</div>
     </div>
   </transition>

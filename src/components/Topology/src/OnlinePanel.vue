@@ -3,23 +3,9 @@
  * @Date         : 2023-05-24 16:21:01
  * @LastEditTime : 2024-01-22 09:43:36
  * @LastEditors  : ya2glu
- * @Description  : 在线设备
+ * @Description  : online components
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\OnlinePanel.vue
 -->
-<template>
-  <div grid grid-rows-24 grid-cols-24 w-full h-full row-start-20 row-span-5 col-start-6 col-span-13>
-    <div class="dnd-container rounded-2xl shadow-2xl shadow-dark-900">
-      <div v-for="(items, i) in onlineList" :key="i" :ref="getRef(i)"
-        class="group/item flex flex-col items-center cursor-pointer" @click="handleNodeClick(items, i)">
-        <div class="bg-dark-800 h-64px w-64px flex justify-center items-center rounded-2xl group-hover/item:bg-dark-200">
-          <div :class="items.type" class="p-4 bg-light-400"></div>
-        </div>
-        <!-- <div class="text-light-400 pt-1" :class="{ active: i === selectIndex }">{{ items.label }}</div> -->
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
 import { Graph } from "@antv/x6";
 export default {
@@ -94,6 +80,23 @@ export default {
   },
 };
 </script>
+
+<template>
+  <!-- online container -->
+  <div grid grid-rows-12 grid-cols-12 w-full h-full row-start-20 row-span-3 col-start-6 col-span-12>
+    <!-- dnd container -->
+    <div class="dnd-container rounded-2xl shadow-2xl shadow-dark-900 ">
+      <div v-for="(items, i) in onlineList" :key="i" :ref="getRef(i)"
+        class="group/item flex flex-col items-center cursor-pointer" @click="handleNodeClick(items, i)">
+        <div
+          class="bg-dark-800 h-64px w-64px flex justify-center items-center rounded-2xl group-hover/item:bg-dark-200">
+          <div :class="items.type" class="p-4 bg-light-400"></div>
+        </div>
+        <!-- <div class="text-light-400 pt-1" :class="{ active: i === selectIndex }">{{ items.label }}</div> -->
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="less" scoped>
 .dnd-container {
