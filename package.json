@@ -23,7 +23,6 @@
   "devDependencies": {
     "@iconify/json": "^2.2.82",
     "@rushstack/eslint-patch": "^1.1.0",
-    "@unocss/preset-attributify": "^0.53.3",
     "@unocss/preset-icons": "^0.53.3",
     "@unocss/preset-uno": "^0.53.3",
     "@vitejs/plugin-legacy": "^2.0.0",
