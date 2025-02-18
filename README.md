@@ -5,7 +5,7 @@ An example of a network topology based on antv x6 implementation.
 
 ![](https://github.com/Ya2gLu/x6-vue2-topology/blob/main/src/assets/screenshot01.png)
 
-## refer
+## refers
 
 [Antd X6](https://x6.antv.antgroup.com/)
 
