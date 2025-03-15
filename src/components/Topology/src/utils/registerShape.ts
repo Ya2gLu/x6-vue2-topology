@@ -1,4 +1,4 @@
-import TopoNode from "../modules/TopoNode.vue";
+import TopoNode from "../modules/VueCustomNode.vue";
 import ServerNode from "../modules/ServerNode.vue"
 import { register } from "@antv/x6-vue-shape";
 import { ports } from "./ports";

@@ -1,3 +1,11 @@
+<!--
+ * @Author       : ya2glu@163.com
+ * @Date         : 2023-06-27 14:24:18
+ * @LastEditTime : 2025-03-15 13:49:30
+ * @LastEditors  : ya2glu
+ * @Description  : 右键菜单
+ * @FilePath     : \x6-vue2-topology\src\components\Topology\src\ContextMenu.vue
+-->
 <template>
   <div ref="ctxMenu" v-show="isOpened">
     <ul class="context-menu">

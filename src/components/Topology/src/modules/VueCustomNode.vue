@@ -1,10 +1,10 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:22
- * @LastEditTime : 2023-12-11 17:04:13
+ * @LastEditTime : 2025-03-15 21:08:33
  * @LastEditors  : ya2glu
  * @Description  : 自定义vue节点
- * @FilePath     : \x6-vue2-topology\src\components\Topology\src\modules\TopoNode.vue
+ * @FilePath     : \x6-vue2-topology\src\components\Topology\src\modules\VueCustomNode.vue
 -->
 <template>
   <div>
