@@ -8,6 +8,7 @@ export default defineConfig({
     presetUno({
       
     }),
+    // @unocss/preset-icons
     presetIcons({
       prefix: "y-",
       extraProperties: {

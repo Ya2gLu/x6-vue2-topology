@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "x6-vue2-topology",
   "version": "0.0.0",
   "scripts": {
