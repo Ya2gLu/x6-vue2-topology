@@ -31,25 +31,29 @@ export default {
               id: 1,
               name: 'rect',
               label: '矩形',
-              type: 'y-material-symbols-light:square-outline'
+              icon: 'y-material-symbols-light:square-outline',
+              isTopo: false
             },
             {
               id: 2,
               name: 'square',
-              label: '正方形',
-              type: 'y-material-symbols-light:square-outline-rounded'
+              label: '圆角矩形',
+              icon: 'y-material-symbols-light:square-outline-rounded',
+              isTopo: false
             },
             {
               id: 3,
               name: 'line',
               label: '直线',
-              type: 'y-tabler:slash'
+              icon: 'y-tabler:slash',
+              isTopo: false
             },
             {
               id: 4,
               name: 'arrow',
               label: '箭头',
-              type: 'y-mynaui:arrow-long-up-right'
+              icon: 'y-mynaui:arrow-long-up-right',
+              isTopo: false
             }
 
           ]
@@ -62,49 +66,57 @@ export default {
               id: 1,
               name: 'router',
               label: '路由器',
-              type: 'y-material-symbols-light:router-outline',
+              icon: 'y-solar:wi-fi-router-minimalistic-linear',
+              isTopo: true
             },
             {
               id: 2,
               name: 'switch',
               label: '交换机',
-              type: 'y-clarity:network-switch-line'
+              icon: 'y-clarity:network-switch-outline-badged',
+              isTopo: true
             },
             {
               id: 3,
               name: 'server',
               label: '服务器',
-              type: 'y-ph:computer-tower-light'
+              icon: 'y-solar:server-2-line-duotone',
+              isTopo: true
             },
             {
               id: 4,
               name: 'pc',
               label: '电脑',
-              type: 'y-heroicons:computer-desktop'
+              icon: 'y-majesticons:desktop-computer-line',
+              isTopo: true
             },
             {
               id: 5,
               name: 'laptop',
               label: '笔记本电脑',
-              type: 'y-material-symbols-light:computer-outline'
+              icon: 'y-material-symbols-light:computer-outline',
+              isTopo: true
             },
             {
               id: 6,
               name: 'mobile',
               label: '手机',
-              type: 'y-circum:mobile-3'
+              icon: 'y-circum:mobile-3',
+              isTopo: true
             },
             {
               id: 7,
               name: 'firewall',
               label: '防火墙',
-              type: 'y-material-symbols:local-fire-department-rounded'
+              icon: 'y-mdi:wall-fire',
+              isTopo: true
             },
             {
               id: 8,
               name: 'wifi',
               label: '无线网络',
-              type: 'y-material-symbols-light:wifi-sharp'
+              icon: 'y-material-symbols-light:wifi-sharp',
+              isTopo: true
             }
           ]
         }]
@@ -150,7 +162,7 @@ export default {
     initDnd() {
       this.dnd = new Dnd({
         target: this.graph,
-        dndContainer: this.$refs.ShapeContainer,
+        // dndContainer: this.$refs.ShapeContainer,
         // 拖拽开始时，获取被拖拽的节点
         getDragNode: (node) => {
           return node.clone();
@@ -165,8 +177,53 @@ export default {
      */
     startDrag(items, e) {
       console.log(`[LOG-LINE-145]_[20:18:19] Output:`, items, e);
+      let node = {};
+      if (items.isTopo) {
+        node = this.graph.createNode({
+          shape: 'topo-vue-node',
+          component: TopoNode,
+          width: 66,
+          height: 66,
+          data: {
+            record: items
+          },
+          ports: {
+            items: [
+              {
+                group: "top",
+                args: {
+                  dx: 1.5,
+                  dy: 2,
+                },
+              },
+              {
+                group: "bottom",
+                args: {
+                  dx: 1.5,
+                  dy: -2,
+                },
+              },
+              {
+                group: "left",
+                args: {
+                  dx: 2,
+                },
+              },
+              {
+                group: "right",
+                args: {
+                  dx: -2,
+                },
+              },
 
-
+            ]
+          }
+        })
+        return this.dnd.start(node, e);
+      } else {
+        //TODO: 基础形状的图形节点
+        return null;
+      }
     },
     /**
      * 下拉内容显示切换
@@ -205,7 +262,9 @@ export default {
               <template v-if="shape.children">
                 <div v-for="i in shape.children" @mousedown="startDrag(i, $event)" w-10 h-10 mx-2 my-2 bg-gradient-to-t
                   from-dark-800 to-dark-300 rounded flex justify-center items-center outline outline-2 outline-dark-100>
-                  <i class="w-3/4 h-3/4" :class="i.type"></i>
+                  <a-tooltip :title="i.label" :mouseEnterDelay="0.5" placement="bottom">
+                    <i class="w-3/4 h-3/4" :class="i.icon"></i>
+                  </a-tooltip>
                 </div>
               </template>
             </div>

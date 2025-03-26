@@ -10,8 +10,8 @@
   <div class="wrapper">
     <div class="node-wrapper w-160px h-66px flex items-center bg-dark-400 rounded-2xl" @mouseenter="onMouseEnter"
       @mouseleave="onMouseleave">
-      <div :class="item.icon" class="p-4 mx-4"></div>
-      <div>{{ item.label }}</div>
+      <div :class="record.icon" class="p-4 mx-4"></div>
+      <div>{{ record.label }}</div>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
   inject: ["getNode", "getGraph"],
   data() {
     return {
-      item: this.getNode().data.item
+      record: this.getNode().data.record
     }
   },
   mounted() { },

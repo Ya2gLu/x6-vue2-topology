@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-29 11:07:09
- * @LastEditTime : 2025-03-15 21:47:08
+ * @LastEditTime : 2025-03-26 18:28:44
  * @LastEditors  : ya2glu
  * @Description  : 在线设备弹框
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\OnlinePopover.vue
@@ -31,7 +31,7 @@ export default {
             type: "routers",
             label: "路由器",
             icon: "y-solar:wi-fi-router-minimalistic-linear",
-            list: [{ key: "1", label: "router-n1c1", icon: "y-solar:wi-fi-router-minimalistic-linear", isInteraction: true }, { key: "2", label: "router-n1c2" }, { key: "3", label: "n1c3" }, { key: '4', label: "n1c4" }],
+            list: [{ key: "1", label: "router-n1c1", icon: "y-solar:wi-fi-router-minimalistic-linear", isInteraction: true }, { key: "2", label: "router-n1c2", icon: "y-solar:wi-fi-router-minimalistic-linear", }, { key: "3", label: "n1c3" }, { key: '4', label: "n1c4" }],
           },
           {
             type: "switches",
@@ -48,7 +48,7 @@ export default {
           {
             type: "mobiles",
             label: "手机",
-            icon: "y-ph:device-mobile-camera-light",
+            icon: "y-circum:mobile-3",
             list: []
           }
         ];
@@ -104,7 +104,7 @@ export default {
           width: 160,
           height: 66,
           data: {
-            item: items
+            record: items
           },
           ports: {
             items: [
@@ -144,11 +144,40 @@ export default {
           width: 66,
           height: 66,
           data: {
-            types: items.icon
-          }
+            record: items
+          },
+          ports: {
+            items: [
+              {
+                group: "top",
+                args: {
+                  dx: 1.5,
+                  dy: 2,
+                },
+              },
+              {
+                group: "bottom",
+                args: {
+                  dx: 1.5,
+                  dy: -2,
+                },
+              },
+              {
+                group: "left",
+                args: {
+                  dx: 2,
+                },
+              },
+              {
+                group: "right",
+                args: {
+                  dx: -2,
+                },
+              },
+            ],
+          },
         })
       }
-      // const label = node.
       return this.dnd.start(node, e);
     },
 
@@ -230,7 +259,7 @@ export default {
             class="flex h-64px my-2 mr-1 bg-dark-800 rounded-2xl items-center cursor-pointer border-1"
             @mousedown="startDrag(items, $event)">
             <div class="px-4">
-              <div class="y-solar:wi-fi-router-minimalistic-linear p-4"></div>
+              <div :class="items.icon" class="p-4"></div>
             </div>
             <div>{{ items.label }}</div>
           </div>

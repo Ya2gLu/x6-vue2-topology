@@ -1,20 +1,20 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:22
- * @LastEditTime : 2025-03-15 21:08:33
+ * @LastEditTime : 2025-03-26 18:12:49
  * @LastEditors  : ya2glu
- * @Description  : 自定义vue节点
- * @FilePath     : \x6-vue2-topology\src\components\Topology\src\modules\VueCustomNode.vue
+ * @Description  : 拓扑节点
+ * @FilePath     : \x6-vue2-topology\src\components\Topology\src\modules\TopoNode.vue
 -->
 <template>
   <div>
     <div class="w-66px h-66px flex justify-center items-center bg-dark-400 rounded-2xl" @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave">
       <div>
-        <div :class="type" class="p-4">vue</div>
+        <div :class="record.icon" class="p-4"></div>
       </div>
     </div>
-    <!-- <div>{{ item.label }}</div> -->
+    <!-- <div>{{ record.label }}</div> -->
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
   props: {},
   data() {
     return {
-      type: this.getNode().data.types,
+      record: this.getNode().data.record,
     };
   },
   mounted() { },
@@ -35,6 +35,7 @@ export default {
   methods: {
     // 鼠标进入矩形区域时显示连接桩
     onMouseEnter() {
+      // console.log('getNode', this.getNode());
       const node = this.getNode();
       const ports = node.getPorts();
       ports.forEach((port) => {
