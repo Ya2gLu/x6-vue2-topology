@@ -1,6 +1,7 @@
 const state = () => ({
   sideToggle: false,
   dragToggle: false,
+  textToggle: false,
 });
 
 const getters = {};
@@ -15,6 +16,10 @@ const mutations = {
   toggleRight(state) {
     state.dragToggle = !state.dragToggle;
     return state.dragToggle;
+  },
+  toggleText(state) {
+    state.textToggle = !state.textToggle;
+    return state.textToggle;
   },
 };
 

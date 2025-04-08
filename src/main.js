@@ -7,6 +7,7 @@ import store from "./store";
 import { Tooltip } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 
+// import "./assets/base.css"
 import "./assets/main.css";
 import "virtual:uno.css"
 

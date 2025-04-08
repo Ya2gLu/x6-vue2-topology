@@ -1,57 +1,59 @@
-/* @import "./base.css"; */
-
+:root {
+  --base-br: 1.5rem;
+  --base-border: 2px solid #3a78db;
+}
 :root,
 html,
 body {
-  /* max-width: 1280px; */
-  margin: 0 auto;
-  padding: 2rem;
+	/* max-width: 1280px; */
+	margin: 0 auto;
+	padding: 2rem;
 
-  font-weight: normal;
-  background-color: #141414;
-  margin: 0;
-  padding: 0;
-  color: #fff;
+	font-weight: normal;
+	background-color: #141414;
+	margin: 0;
+	padding: 0;
+	color: #fff;
 }
 
 /*
 * MEMO: Selection 组件框选的自定义样式
 */
 .x6-widget-selection-box-node {
-  margin-top: -2px;
-  margin-left: -2px;
-  padding-right: 0;
-  padding-bottom: 0;
-  border: 3.5px solid #3a78db;
-  border-radius: 1.5rem;
-  box-shadow: none;
+	margin-top: -2px;
+	margin-left: -2px;
+	padding-right: 0;
+	padding-bottom: 0;
+	border: var(--base-border); 
+	border-radius: var(--base-br);
+	box-shadow: none;
 }
-
+/* 多个组件选中后的样式 */
 .x6-widget-selection-inner {
-  box-shadow: none;
-  border: 2px dashed #3a78db;
-  border-radius: 10px;
+	box-shadow: none;
+	border: 2px dashed #3a78db;
+	border-radius: 10px;
 }
 
 /* 
 * MEMO: Edge hover&selected style
 */
 .x6-edge:hover path:nth-child(2) {
-  stroke: #3a78db;
-  stroke-width: 2.5px;
+	stroke: #3a78db;
+	stroke-width: 2.5px;
 }
 
 .x6-edge-selected path:nth-child(2) {
-  stroke: #3a78db;
-  stroke-width: 2.5px !important;
+	stroke: #3a78db;
+	stroke-width: 2.5px !important;
 }
 
 .x6-graph.x6-graph-pannable {
-  cursor: default
+	cursor: default;
 }
 
 @keyframes ant-line {
-  to {
-    stroke-dashoffset: -1000;
-  }
+	to {
+		stroke-dashoffset: -1000;
+	}
 }

@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
- * @LastEditTime : 2024-01-02 17:05:05
+ * @LastEditTime : 2025-04-08 19:36:41
  * @LastEditors  : ya2glu
  * @Description  : title components
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\TitleBar.vue
@@ -14,26 +14,27 @@
 
       <div flex justify-end items-center h-full w="22%">
         <a-tooltip title="Drag" :mouseEnterDelay=".5">
-          <div :class="{ active: this.$store.state.titleBar.dragToggle }" border="1 solid rounded-md dark-200" p="y-1 x-2"
-            cursor="pointer" @click="toggleRight">
+          <div :class="{ active: this.$store.state.titleBar.dragToggle }" border="1 solid rounded-md dark-200"
+            p="y-1 x-2" cursor="pointer" @click="toggleRight">
             <i class="y-material-symbols-light:play-shapes-outline p-2.5"></i>
           </div>
         </a-tooltip>
       </div>
 
       <div flex justify-start items-center p="x-0 y-10" h-full w="55%">
-        <div v-for="(i, index) in toolsList" :key="index" :class="{ active: index === selectIndex && isRubberband }"
-          border="1 solid rounded-md dark-200" p="y-1 x-2" m="x-1" cursor="pointer" @click="onToolsClick(i.type, index)">
+        <div v-for="(i, index) in toolsList" :key="index" :class="textActive(i, index)"
+          border="1 solid rounded-md dark-200" p="y-1 x-2" m="x-1" cursor="pointer"
+          @click="onToolsClick(i.type, index)">
           <a-tooltip :title="i.label" :mouseEnterDelay="0.5">
-            <i :class="i.icon" class="p-2.5" ></i>
+            <i :class="i.icon" class="p-2.5"></i>
           </a-tooltip>
         </div>
       </div>
 
       <div flex justify-start items-center h-full w="25%">
         <a-tooltip title="settings" :mouseEnterDelay="0.5">
-          <div :class="{ active: this.$store.state.titleBar.sideToggle }" border="1 solid rounded-md dark-200" p="y-1 x-2"
-            cursor="pointer" @click="toggleLeft">
+          <div :class="{ active: this.$store.state.titleBar.sideToggle }" border="1 solid rounded-md dark-200"
+            p="y-1 x-2" cursor="pointer" @click="toggleLeft">
             <i class="y-icon-park-outline:setting-config  p-2.5"></i>
           </div>
         </a-tooltip>
@@ -57,6 +58,11 @@ export default {
       type: Array,
       default: () => {
         return [
+          {
+            icon: "y-iconamoon:type-duotone",
+            label: '文本',
+            type: 'text'
+          },
           {
             icon: "y-mdi:image-filter-center-focus",
             label: "居中",
@@ -113,8 +119,15 @@ export default {
       isRubberband: false, // 是否框选
     };
   },
-  computed: {},
+  computed: {
+  },
   mounted() {
+
+    if (!this.graph) {
+      console.error("The graph instance is required for the TitleBar component.");
+      return;
+    }
+
     this.initToolsBar();
 
     // 启用历史记录
@@ -123,14 +136,24 @@ export default {
         enabled: true
       })
     )
+
   },
   methods: {
-    ...mapMutations("titleBar", ["toggleLeft", "toggleRight"]),
-
+    ...mapMutations("titleBar", ["toggleRight", "toggleLeft", "toggleText"]),
+    textActive(i, index) {
+      return {
+        active: this.$store.state.titleBar.textToggle && i.type == "text" || this.isRubberband && index == this.selectIndex
+      }
+    },
+    /**
+     * 初始化工具栏功能
+     * @description 该方法在 mounted 生命周期中调用，用于初始化工具栏功能
+     */
     initToolsBar() {
       if (this.graph) {
         this.graph.use(
           new Selection({
+            className: "selection",
             enabled: true,
             rubberband: this.isRubberband, // 是否启用框选节点功能
             showNodeSelectionBox: true, // 是否显示节点的选择框
@@ -140,7 +163,10 @@ export default {
         );
       }
     },
-
+    /**
+     * 删除选中的节点方法
+     * @param nodes {Array} 需要删除的节点数组
+     */
     handleNodesDelete(nodes) {
       if (nodes.length > 1) {
         const cellIds = nodes.map((items) => items.id)
@@ -149,13 +175,19 @@ export default {
         const cellId = nodes[0].id.toString()
         return this.graph.removeCell(cellId)
       } else {
-        return null
+        return null;
       }
-
     },
-
+    /**
+     * 点击工具栏的操作按钮时触发的方法
+     * @param key 操作类型
+     * @param index 
+     */
     onToolsClick(key, index) {
       switch (key) {
+        case "text":
+          this.toggleText()
+          break;
         case "Focus":
           this.graph.centerContent();
           break;
@@ -192,7 +224,7 @@ export default {
       return null;
     },
   },
-};
+}
 </script>
 <style lang="less" scoped>
 .active {

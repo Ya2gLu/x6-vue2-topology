@@ -1,7 +1,7 @@
 /*
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-31 23:14:01
- * @LastEditTime : 2025-03-24 22:27:02
+ * @LastEditTime : 2025-04-08 17:24:12
  * @LastEditors  : ya2glu
  * @Description  : ports连接桩默认定义
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\utils\ports.ts
