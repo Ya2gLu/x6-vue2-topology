@@ -1,10 +1,11 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:11
- * @LastEditTime : 2023-08-15 08:57:32
+ * @LastEditTime : 2025-04-08 18:01:17
  * @LastEditors  : ya2glu
  * @Description  : 左侧ToolsBar
- * @FilePath     : /x6-vue2-topology/src/components/Topology/src/ToolsBar.vue
+ * MEMO: 当前组件未使用
+ * @FilePath     : \x6-vue2-topology\src\components\Topology\src\ToolsBar.vue
 -->
 <template>
   <div class="tools-container">
@@ -108,7 +109,7 @@ export default {
             // className:'selection-box',
             enabled: true,
             rubberband: true,
-            showNodeSelectionBox: true,
+            showNodeSelectionBox: false,
             pointerEvents: "none",
           })
         );

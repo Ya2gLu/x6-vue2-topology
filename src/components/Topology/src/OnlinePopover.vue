@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-29 11:07:09
- * @LastEditTime : 2025-03-26 18:28:44
+ * @LastEditTime : 2025-04-08 14:22:06
  * @LastEditors  : ya2glu
  * @Description  : 在线设备弹框
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\OnlinePopover.vue
@@ -95,7 +95,7 @@ export default {
     },
 
     startDrag(items, e) {
-      console.log("drag items -->", items, e);
+      // console.log("drag items -->", items, e);
       let node = {}
       if (items.isInteraction === true) {
         node = this.graph.createNode({

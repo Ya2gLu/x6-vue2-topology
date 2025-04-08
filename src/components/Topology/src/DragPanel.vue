@@ -162,7 +162,7 @@ export default {
     initDnd() {
       this.dnd = new Dnd({
         target: this.graph,
-        // dndContainer: this.$refs.ShapeContainer,
+        dndContainer: this.$refs.ShapeContainer,
         // 拖拽开始时，获取被拖拽的节点
         getDragNode: (node) => {
           return node.clone();
@@ -176,7 +176,6 @@ export default {
      * @description 拖拽开始时，获取被拖拽的节点
      */
     startDrag(items, e) {
-      console.log(`[LOG-LINE-145]_[20:18:19] Output:`, items, e);
       let node = {};
       if (items.isTopo) {
         node = this.graph.createNode({
@@ -242,7 +241,7 @@ export default {
 
 <template>
   <transition name="slide-fade">
-    <div row-start-3 row-span-23 col-start-1 col-span-5 w-full h-full z-99
+    <div ref="ShapeContainer" row-start-3 row-span-23 col-start-1 col-span-5 w-full h-full z-99
       class=" bg-dark-400/50 border-r-2 border-r-solid border-dark-400 backdrop-blur" v-show="sideState">
       <div h-full flex flex-col justify-between>
         <!-- 图形列表开始 -->
@@ -250,8 +249,7 @@ export default {
           <!-- 
             TIPS: 使用<details>标签和<summary>标签实现下拉列表，详情见:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
            -->
-          <details ref="ShapeContainer" v-for="(shape, index) in shapeList" @toggle="toggleState($event, shape)"
-            :key="shape.id" w-full>
+          <details v-for="(shape, index) in shapeList" @toggle="toggleState($event, shape)" :key="shape.id" w-full>
             <summary list-none px-2 py-1 mx-2 text-neutral-500 select-none rounded :class="{ 'm-t-2': index === 0 }"
               class="hover:outline-neutral-600/30 hover:outline hover:outline-1 hover:bg-neutral-800/30 hover:backdrop-blur hover:text-neutral-400">
               {{ shape.summary }}

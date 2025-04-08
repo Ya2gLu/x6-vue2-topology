@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-07-03 09:24:01
- * @LastEditTime : 2023-12-11 16:43:34
+ * @LastEditTime : 2025-04-06 17:55:58
  * @LastEditors  : ya2glu
  * @Description  : Server节点
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\modules\ServerNode.vue
@@ -27,27 +27,37 @@ export default {
   },
   mounted() { },
   methods: {
-    // 鼠标进入节点区域时显示连接桩
+    /**
+     * 鼠标移入节点时的处理函数
+     * @returns {void}
+     */
     onMouseEnter() {
       const node = this.getNode();
       const ports = node.getPorts();
+      // 设置ports的样式，突出显示连接桩
       ports.forEach((port) => {
         node.setPortProp(port.id, "attrs/circle", {
           fill: "#141414",
           stroke: "#1565c0",
         })
       })
+      return;
     },
-    // 鼠标离开节点区域时隐藏连接桩
+    /**
+     * 鼠标移出节点时的处理函数
+     * @returns {void}
+     */
     onMouseleave() {
       const node = this.getNode();
       const ports = node.getPorts();
+      // 还原ports的样式，恢复默认外观
       ports.forEach((port) => {
         node.setPortProp(port.id, 'attrs/circle', {
           stroke: "transparent",
           fill: "transparent"
         })
       })
+      return;
     }
   },
 }
