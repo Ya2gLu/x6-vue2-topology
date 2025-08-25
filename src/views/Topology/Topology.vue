@@ -88,6 +88,7 @@ export default {
         this.toggleText();
 
         // 添加文本节点
+        // TODO: 使用自定义vue节点创建text文本块
         this.createTextNode(x, y);
       }
 
@@ -119,7 +120,6 @@ export default {
         selectionDom.style.borderRadius = '0';
         selectionDom.style.border = '1px dashed #3A78DB';
         // console.log('selectionDom:', selectionDom); 
-        
       }
     })
 

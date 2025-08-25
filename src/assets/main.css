@@ -1,6 +1,6 @@
 :root {
   --base-br: 1.5rem;
-  --base-border: 2px solid #3a78db;
+  --base-border: 3px solid #3a78db;
 }
 :root,
 html,
@@ -31,7 +31,7 @@ body {
 /* 多个组件选中后的样式 */
 .x6-widget-selection-inner {
 	box-shadow: none;
-	border: 2px dashed #3a78db;
+	border: 2.5px dashed #3a78db;
 	border-radius: 10px;
 }
 

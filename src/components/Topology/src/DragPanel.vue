@@ -221,9 +221,42 @@ export default {
         return this.dnd.start(node, e);
       } else {
         //TODO: 基础形状的图形节点
-        return null;
+        console.log('基础形状', items);
+        return items.name == '' ? console.error('shape参数名为空！') : this.createBaseShape(items.name);
       }
     },
+
+    createBaseShape(shapeName) {
+      if (shapeName == "" || shapeName.length == 0) return;
+      const that = this;
+      const ShapeType = {
+        rect: rightAngleRect,
+        square: radiusRect,
+        line: noLine,
+        arrow: ArrowLine
+      }
+
+      function rightAngleRect() {
+        console.log('rect..');
+        // that.graph.addNode({})
+      };
+
+      function radiusRect() {
+        console.log('square.');
+      };
+
+      function noLine() {
+        console.log('line...');
+      };
+
+      function ArrowLine() {
+        console.log('Arrow...');
+      };
+
+      const handleShape = ShapeType[shapeName]
+      return handleShape();
+    },
+
     /**
      * 下拉内容显示切换
      * @param {$event} e 标签内置事件
