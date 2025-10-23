@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
- * @LastEditTime : 2025-04-08 19:36:41
+ * @LastEditTime : 2025-04-10 16:49:38
  * @LastEditors  : ya2glu
  * @Description  : title components
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\TitleBar.vue
@@ -184,6 +184,7 @@ export default {
      * @param index 
      */
     onToolsClick(key, index) {
+      // TODO: 如果后续继续添加值，可以使用对象映射来优化switch
       switch (key) {
         case "text":
           this.toggleText()
