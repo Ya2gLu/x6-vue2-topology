@@ -1,3 +1,4 @@
+@import "@/components/Topology/src/style/selection.css";
 :root {
   --base-br: 1.5rem;
   --base-border: 3px solid #3a78db;
@@ -16,24 +17,6 @@ body {
 	color: #fff;
 }
 
-/*
-* MEMO: Selection 组件框选的自定义样式
-*/
-.x6-widget-selection-box-node {
-	margin-top: -2px;
-	margin-left: -2px;
-	padding-right: 0;
-	padding-bottom: 0;
-	border: var(--base-border); 
-	border-radius: var(--base-br);
-	box-shadow: none;
-}
-/* 多个组件选中后的样式 */
-.x6-widget-selection-inner {
-	box-shadow: none;
-	border: 2.5px dashed #3a78db;
-	border-radius: 10px;
-}
 
 /* 
 * MEMO: Edge hover&selected style
