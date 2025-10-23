@@ -1,17 +1,16 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:22
- * @LastEditTime : 2025-03-26 18:12:49
+ * @LastEditTime : 2025-10-23 20:41:11
  * @LastEditors  : ya2glu
  * @Description  : 拓扑节点
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\modules\TopoNode.vue
 -->
 <template>
   <div>
-    <div class="w-66px h-66px flex justify-center items-center bg-dark-400 rounded-2xl" @mouseenter="onMouseEnter"
-      @mouseleave="onMouseLeave">
+    <div class="w-[70px] h-[70px] flex justify-center items-center bg-dark-400 rounded-xl" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
       <div>
-        <div :class="record.icon" class="p-4"></div>
+        <div :class="record.icon" class="w-10 h-10"></div>
       </div>
     </div>
     <!-- <div>{{ record.label }}</div> -->
@@ -35,7 +34,6 @@ export default {
   methods: {
     // 鼠标进入矩形区域时显示连接桩
     onMouseEnter() {
-      // console.log('getNode', this.getNode());
       const node = this.getNode();
       const ports = node.getPorts();
       ports.forEach((port) => {

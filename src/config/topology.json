@@ -1,0 +1,89 @@
+{
+  "grid": {
+    "visible": true,
+    "size": 18,
+    "type": "dot",
+    "args": {
+      "color": "#373536",
+      "thickness": 2
+    }
+  },
+  "highlighting": {
+    "magnetAvailable": {
+      "name": "stroke",
+      "args": {
+        "padding": 0,
+        "attrs": {
+          "stroke-width": 2.5,
+          "stroke": "#3A78DB"
+        }
+      }
+    },
+    "magnetAdsorbed": {
+      "name": "stroke",
+      "args": {
+        "padding": 0,
+        "attrs": {
+          "stroke-width": 2.5,
+          "stroke": "#3a78db"
+        }
+      }
+    }
+  },
+  "panning": {
+    "enabled": true,
+    "eventTypes": ["rightMouseDown"]
+  },
+  "selecting": true,
+  "scaling": {
+    "min": 0.9,
+    "max": 1.5
+  },
+  "connecting": {
+    "snap": { "radius": 20 },
+    "highlight": true,
+    "allowNode": false,
+    "allowLoop": false,
+    "allowEdge": false,
+    "allowBlank": false,
+    "allowPort": true,
+    "allowMulti": true,
+    "router": "manhattan",
+    "connector": {
+      "name": "rounded",
+      "args": { "radius": 8 }
+    },
+    "anchor": "center",
+    "connectionPoint": "boundary"
+  },
+  "edgeDefaultAttrs": {
+    "line": {
+      "stroke": "#343434",
+      "strokeDasharray": "5 5",
+      "strokeWidth": 2,
+      "targetMarker": { "name": "path", "width": 5, "height": 0 },
+      "style": { "animation": "ant-line 31s infinite linear" }
+    }
+  },
+  "textNode": {
+    "shape": "text-block",
+    "width": 80,
+    "height": 30,
+    "attrs": {
+      "body": { "fill": "transparent", "stroke": "transparent", "strokeWidth": 0 },
+      "label": { "fill": "#fff", "fontSize": 18 }
+    },
+    "tool": {
+      "name": "node-editor",
+      "args": {
+        "attrs": { "color": "#fff", "fontSize": 18, "backgroundColor": "transparent" }
+      }
+    },
+    "selection": {
+      "borderRadius": 0,
+      "border": "1px dashed #3A78DB"
+    }
+  }
+}
+
+

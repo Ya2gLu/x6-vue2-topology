@@ -10,6 +10,7 @@ import {
 } from "@/components/Topology";
 import { textShapeRegister, TextShape } from "../../components/Topology/src/utils/registerShape";
 import { mapMutations } from "vuex";
+import topoConfig from "@/config/topology.json";
 textShapeRegister() // 注册文本节点形状，必须在 Graph 实例化前注册
 export default {
   name: "y-topology",
@@ -27,40 +28,9 @@ export default {
     return {
       onlineKey: '', // 记录在线点击的key
       graph: null,
-      grid: {
-        visible: true,
-        size: 18,
-        type: "dot",
-        args: {
-          color: "#373536",
-          thickness: 2,
-        },
-      },
+      grid: topoConfig.grid,
       // 高亮选项
-      highlighting: {
-        // 连接桩可以被连接时在连接桩外围渲染一个包围框
-        magnetAvailable: {
-          name: "stroke",
-          args: {
-            padding: 0,
-            attrs: {
-              "stroke-width": 2.5,
-              stroke: "#3A78DB",
-            },
-          },
-        },
-        // 连接桩吸附连线时在连接桩外围渲染一个包围框
-        magnetAdsorbed: {
-          name: "stroke",
-          args: {
-            padding: 0,
-            attrs: {
-              "stroke-width": 2.5,
-              stroke: "#3a78db",
-            },
-          },
-        },
-      },
+      highlighting: topoConfig.highlighting,
     };
   },
 
@@ -107,18 +77,22 @@ export default {
       EdgesArr.forEach(ele => {
         ele.setAttrs({
           line: {
-            stroke: "#3A78DB"
+            stroke: topoConfig.edgeDefaultAttrs.line.stroke
           }
         })
       });
       // 判断节点类型
       // 1.判断节点类型
-      if(node.shape == "text-block"){
+      if (node.shape == "text-block") {
         // 2.设置文本节点选中的样式
-        // TODO: 重构为css变量判断
+        // 使用CSS变量和类名来设置样式，而不是直接操作DOM
         const selectionDom = document.querySelector('.x6-widget-selection-box-node');
-        selectionDom.style.borderRadius = '0';
-        selectionDom.style.border = '1px dashed #3A78DB';
+        if (selectionDom) {
+          // 应用文本节点的特殊选择样式
+          selectionDom.style.setProperty('--text-selection-border-radius', String(topoConfig.textNode.selection.borderRadius));
+          selectionDom.style.setProperty('--text-selection-border', topoConfig.textNode.selection.border);
+          selectionDom.classList.add('text-node-selection');
+        }
         // console.log('selectionDom:', selectionDom); 
       }
     })
@@ -139,7 +113,7 @@ export default {
 
     this.graph.on("cell:change:attrs", ({ cell, current, previous }) => {
       console.log('节点触发');
-      if(cell.isNode() && cell.shape == "text-block"){
+      if (cell.isNode() && cell.shape == "text-block") {
         const newText = current.text.text || previous.text.text;
         console.log('文本节点内容更改为:', newText);
         cell.setAttrs({
@@ -160,38 +134,13 @@ export default {
         container: document.getElementById("svg-container"),
         autoResize: true, // 是否监听容器大小改变，并自动更新画布大小
         grid: that.grid,  // 网格，默认使用 10px 的网格，但不绘制网格背景。
-        panning: { // 支持鼠标右键平移
-          enabled: true,
-          eventTypes: ['rightMouseDown']
-        },
-        selecting: true,
+        panning: topoConfig.panning, // 支持鼠标右键平移
+        selecting: topoConfig.selecting,
         // 设置画布缩放级别
-        scaling: {
-          min: 0.9,
-          max: 1.5,
-        },
+        scaling: topoConfig.scaling,
         // Edge Options
         connecting: {
-          snap: {
-            radius: 20,
-          },
-          highlight: true,
-          allowNode: false,  // 是否允许连接到画布空白位置的点
-          allowLoop: false,  // 是否允许创建循环连线，即边的起始点和终止节点为同一节点
-          allowEdge: false,  // 是否允许边连接到另一个边
-          allowBlank: false, // 是否允许连接到画布空白位置的点
-          allowPort: true,   // 是否允许边连接到连接桩
-          allowMulti: true,  // 是否允许在相同的起始节点和终止之间创建多条边
-          router: "manhattan", // 曼哈顿路由
-          // 连接桩样式
-          connector: {
-            name: "rounded",
-            args: {
-              radius: 8,
-            },
-          },
-          anchor: "center",
-          connectionPoint: "boundary",
+          ...topoConfig.connecting,
           /**
            * 创建从节点中拉出的边 
            */
@@ -199,20 +148,7 @@ export default {
             return this.createEdge({
               shape: "edge",
               attrs: {
-                line: {
-                  stroke: "#343434",
-                  strokeDasharray: "5 5",
-                  strokeWidth: 2,
-                  // Marker style
-                  targetMarker: {
-                    name: "path",
-                    width: 5,
-                    height: 0,
-                  },
-                  style: {
-                    animation: 'ant-line 31s infinite linear',
-                  }
-                },
+                ...topoConfig.edgeDefaultAttrs
               },
             });
           },
@@ -221,7 +157,6 @@ export default {
       });
       window.__x6_instances__.push(that.graph)
     },
-
 
     editNode() {
       console.log("edit...");
@@ -255,34 +190,15 @@ export default {
       }
 
       this.graph.addNode({
-        shape: 'text-block', // 使用注册的文本形状
+        shape: topoConfig.textNode.shape, // 使用注册的文本形状
         // component: TextShape,
         x: x || 100, // 默认位置
         y: y || 100,
-        width: 80,
-        height: 30,
-        attrs: {
-          body: {
-            fill: 'transparent',
-            stroke: 'transparent',
-            strokeWidth: 0,
-          },
-          label: {
-            fill: '#fff',
-            fontSize: 18,
-          }
-        },
+        width: topoConfig.textNode.width,
+        height: topoConfig.textNode.height,
+        attrs: topoConfig.textNode.attrs,
         tools: [
-          {
-            name: 'node-editor',
-            args: {
-              attrs: {
-                color: '#fff',
-                fontSize: 18,
-                backgroundColor: 'transparent',
-              }
-            }
-          }
+          topoConfig.textNode.tool
         ]
       });
     },
@@ -296,7 +212,7 @@ export default {
   <div class="max-w-full min-h-screen w-screen h-screen overflow-hidden relative grid grid-rows-24 grid-cols-24">
     <!-- background container -->
     <div id="bgc-svg" class="absolute w-full h-full">
-      <div id="svg-container" class="relative h-full w-full" />
+      <div id="svg-container" class="relative h-full w-full"></div>
     </div>
     <!-- titlebar component -->
     <title-bar v-if="graph" :graph="graph" />
