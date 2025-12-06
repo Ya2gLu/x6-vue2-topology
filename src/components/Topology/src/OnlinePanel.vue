@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-05-24 16:21:01
- * @LastEditTime : 2024-01-22 09:43:36
+ * @LastEditTime : 2025-12-06 17:24:21
  * @LastEditors  : ya2glu
  * @Description  : online components
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\OnlinePanel.vue
@@ -85,35 +85,48 @@ export default {
   <!-- online container -->
   <div grid grid-rows-12 grid-cols-12 w-full h-full row-start-20 row-span-3 col-start-6 col-span-12>
     <!-- dnd container -->
-    <div class="dnd-container rounded-2xl shadow-2xl shadow-dark-900 ">
-      <div v-for="(items, i) in onlineList" :key="i" :ref="getRef(i)"
-        class="group/item flex flex-col items-center cursor-pointer" @click="handleNodeClick(items, i)">
-        <div
-          class="bg-dark-800 h-64px w-64px flex justify-center items-center rounded-2xl group-hover/item:bg-dark-200">
-          <div :class="items.type" class="p-4 bg-light-400"></div>
+    <div 
+      class="row-start-6 row-span-12 col-start-3 col-span-20 z-[99] flex items-center justify-around p-6 gap-6 rounded-3xl border border-white/10 backdrop-blur-[20px] backdrop-saturate-[180%] bg-[linear-gradient(135deg,rgba(30,30,30,0.85)_0%,rgba(20,20,20,0.9)_100%)] shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.05)_inset,0_1px_0_rgba(255,255,255,0.1)_inset]">
+      <div 
+        v-for="(items, i) in onlineList" 
+        :key="i" 
+        :ref="getRef(i)"
+        class="group flex flex-col items-center justify-center cursor-pointer p-4 rounded-2xl min-w-20 will-change-transform"
+        :class="[
+          'transition-transform duration-300 ease-out hover:-translate-y-1',
+          i === selectIndex ? 'device-item-active' : ''
+        ]"
+        @click="handleNodeClick(items, i)">
+        <div 
+          class="w-16 h-16 flex items-center justify-center bg-white/5 border border-white/10 rounded-2xl relative overflow-hidden will-change-[background-color,border-color,box-shadow,transform]"
+          :class="[
+            'transition-[background-color,border-color,box-shadow] duration-300 ease-out',
+            'group-hover:bg-[linear-gradient(135deg,rgba(58,120,219,0.2)_0%,rgba(58,120,219,0.15)_100%)]',
+            'group-hover:border-[rgba(58,120,219,0.5)]',
+            'group-hover:shadow-[0_8px_24px_rgba(58,120,219,0.25),0_0_0_1px_rgba(58,120,219,0.2)_inset]',
+            i === selectIndex ? 'bg-[linear-gradient(135deg,rgba(58,120,219,0.3)_0%,rgba(58,120,219,0.2)_100%)] border-[#3A78DB] shadow-[0_0_0_2px_rgba(58,120,219,0.3),0_8px_24px_rgba(58,120,219,0.35),0_0_0_1px_rgba(58,120,219,0.2)_inset]' : ''
+          ]">
+          <div 
+            class="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.1)_0%,transparent_100%)] pointer-events-none will-change-opacity"
+            :class="[
+              'transition-opacity duration-300 ease-out',
+              i === selectIndex ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+            ]"></div>
+          <i 
+            :class="[
+              items.type,
+              'text-[1.75rem] text-white/90 z-[1] relative will-change-[transform,opacity,filter]',
+              'transition-[transform,opacity,filter] duration-300 ease-out',
+              i === selectIndex ? 'opacity-100 drop-shadow-[0_0_8px_rgba(58,120,219,0.6)]' : 'opacity-85 group-hover:scale-110 group-hover:opacity-100'
+            ]"></i>
         </div>
-        <!-- <div class="text-light-400 pt-1" :class="{ active: i === selectIndex }">{{ items.label }}</div> -->
+        <div class="hidden">
+          {{ items.label }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<style lang="less" scoped>
-.dnd-container {
-  grid-row: 6 / span 12;
-  grid-column: 3 / span 20;
-  z-index: 99;
-  // border-radius: 16px;
-  // box-shadow: 2px 2px 10px 5px #0d0d0d;
-  backdrop-filter: blur(10px);
-  background-color: rgba(56, 56, 56, 0.3);
-
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.active {
-  color: #3A78DB;
-}
+<style scoped>
 </style>

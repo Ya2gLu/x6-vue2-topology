@@ -209,9 +209,9 @@ export default {
 
 <template>
   <!-- root container -->
-  <div class="max-w-full min-h-screen w-screen h-screen overflow-hidden relative grid grid-rows-24 grid-cols-24">
+  <div class="topology-container max-w-full min-h-screen w-screen h-screen overflow-hidden relative grid grid-rows-24 grid-cols-24">
     <!-- background container -->
-    <div id="bgc-svg" class="absolute w-full h-full">
+    <div id="bgc-svg" class="absolute w-full h-full" style="z-index: 0;">
       <div id="svg-container" class="relative h-full w-full"></div>
     </div>
     <!-- titlebar component -->
@@ -226,4 +226,10 @@ export default {
     <online-popover ref="popover" v-if="graph" :graph="graph" />
   </div>
 </template>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.topology-container {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+}
+</style>

@@ -32,6 +32,11 @@
       </div>
 
       <div flex justify-start items-center h-full w="25%">
+        <a-tooltip :title="this.$store.state.titleBar.theme === 'dark' ? '切换到浅色模式' : '切换到深色模式'" :mouseEnterDelay="0.5">
+          <div border="1 solid rounded-md dark-200" p="y-1 x-2" cursor="pointer" @click="toggleTheme" m="r-1">
+            <i :class="this.$store.state.titleBar.theme === 'dark' ? 'y-solar:sun-bold' : 'y-solar:moon-bold'" class="p-2.5"></i>
+          </div>
+        </a-tooltip>
         <a-tooltip title="settings" :mouseEnterDelay="0.5">
           <div :class="{ active: this.$store.state.titleBar.sideToggle }" border="1 solid rounded-md dark-200"
             p="y-1 x-2" cursor="pointer" @click="toggleLeft">
@@ -137,9 +142,12 @@ export default {
       })
     )
 
+    const theme = this.$store.state.titleBar.theme;
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+
   },
   methods: {
-    ...mapMutations("titleBar", ["toggleRight", "toggleLeft", "toggleText"]),
+    ...mapMutations("titleBar", ["toggleRight", "toggleLeft", "toggleText", "toggleTheme", "setTheme"]),
     textActive(i, index) {
       return {
         active: this.$store.state.titleBar.textToggle && i.type == "text" || this.isRubberband && index == this.selectIndex

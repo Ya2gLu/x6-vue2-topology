@@ -14,6 +14,9 @@ import "virtual:uno.css"
 Vue.config.productionTip = false;
 Vue.use(Tooltip);
 
+const theme = store.state.titleBar.theme;
+document.documentElement.classList.toggle('dark', theme === 'dark');
+
 new Vue({
   router,
   store,
