@@ -11,6 +11,7 @@ import {
 import { textShapeRegister, TextShape } from "../../components/Topology/src/utils/registerShape";
 import { mapMutations } from "vuex";
 import topoConfig from "@/config/topology.json";
+import { getCssVar } from "@/theme/applyTheme";
 textShapeRegister() // 注册文本节点形状，必须在 Graph 实例化前注册
 export default {
   name: "y-topology",
@@ -28,7 +29,6 @@ export default {
     return {
       onlineKey: '', // 记录在线点击的key
       graph: null,
-      grid: topoConfig.grid,
       // 高亮选项
       highlighting: topoConfig.highlighting,
     };
@@ -105,7 +105,7 @@ export default {
       EdgesArr.forEach(ele => {
         ele.setAttrs({
           line: {
-            stroke: "#343434"
+            stroke: topoConfig.edgeDefaultAttrs.line.stroke
           }
         })
       })
@@ -127,13 +127,36 @@ export default {
 
   methods: {
     ...mapMutations("titleBar", ["toggleText"]),
+    getGridOptions() {
+      const g = topoConfig.grid;
+      const color = getCssVar("--graph-grid-color") || g.args.color;
+      return {
+        ...g,
+        args: {
+          ...g.args,
+          color,
+        },
+      };
+    },
+
+    syncGraphPaperAndGrid() {
+      if (!this.graph) {
+        return;
+      }
+      const paper = getCssVar("--app-bg");
+      if (paper) {
+        this.graph.drawBackground({ color: paper });
+      }
+      this.graph.drawGrid(this.getGridOptions());
+    },
+
     initGraph() {
       const that = this;
       window.__x6_instances__ = [] // 开发时控制台调试使用
       that.graph = new Graph({
         container: document.getElementById("svg-container"),
         autoResize: true, // 是否监听容器大小改变，并自动更新画布大小
-        grid: that.grid,  // 网格，默认使用 10px 的网格，但不绘制网格背景。
+        grid: that.getGridOptions(),
         panning: topoConfig.panning, // 支持鼠标右键平移
         selecting: topoConfig.selecting,
         // 设置画布缩放级别
@@ -156,6 +179,7 @@ export default {
         highlighting: that.highlighting,
       });
       window.__x6_instances__.push(that.graph)
+      that.syncGraphPaperAndGrid();
     },
 
     editNode() {
@@ -203,15 +227,19 @@ export default {
       });
     },
   },
-  watch: {},
+  watch: {
+    "$store.state.titleBar.theme"() {
+      this.syncGraphPaperAndGrid();
+    },
+  },
 };
 </script>
 
 <template>
   <!-- root container -->
-  <div class="max-w-full min-h-screen w-screen h-screen overflow-hidden relative grid grid-rows-24 grid-cols-24">
+  <div class="topology-container max-w-full min-h-screen w-screen h-screen overflow-hidden relative grid grid-rows-24 grid-cols-24">
     <!-- background container -->
-    <div id="bgc-svg" class="absolute w-full h-full">
+    <div id="bgc-svg" class="absolute w-full h-full" style="z-index: 0;">
       <div id="svg-container" class="relative h-full w-full"></div>
     </div>
     <!-- titlebar component -->
@@ -226,4 +254,10 @@ export default {
     <online-popover ref="popover" v-if="graph" :graph="graph" />
   </div>
 </template>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.topology-container {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+}
+</style>

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import Home from "../views/Home.vue"
 import Topology from "../views/Topology/Topology.vue"
 
 Vue.use(VueRouter);
@@ -11,6 +12,11 @@ const router = new VueRouter({
     {
       path: "/",
       name: "home",
+      component: Home,
+    },
+    {
+      path: "/topology",
+      name: "topology",
       component: Topology,
     },
   ],

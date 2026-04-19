@@ -63,10 +63,22 @@ export default {
       subTitle: '',
       isShow: false,
       showSearch: false,
-      selectionIndex: -1
+      selectionIndex: -1,
+      searchKeyword: '' // 搜索关键词
     };
   },
-  computed: {},
+  computed: {
+    // 过滤后的设备列表
+    filteredDetailList() {
+      if (!this.searchKeyword.trim()) {
+        return this.detailList;
+      }
+      const keyword = this.searchKeyword.toLowerCase();
+      return this.detailList.filter(item => 
+        item.label && item.label.toLowerCase().includes(keyword)
+      );
+    }
+  },
   mounted() {
     this.initDnd()
   },
@@ -192,7 +204,8 @@ export default {
         this.dnd.options.dndContainer = popover;
 
         const { x, y, width } = nodePos;
-        const pHeight = popover.getBoundingClientRect().height || 364;
+        // 使用固定高度 26rem = 416px (1rem = 16px)
+        const pHeight = 416;
         const finalX = x - width - 25;
         const finalY = y - pHeight - 20;
         popover.setAttribute(
@@ -221,11 +234,17 @@ export default {
 
     toggleSearch() {
       this.showSearch = !this.showSearch
-      if (this.showSearch == true) {
+      if (this.showSearch) {
         this.$nextTick(() => {
-          this.$refs.searchRef.focus()
+          this.$refs.searchRef?.focus()
         })
+      } else {
+        this.searchKeyword = ''
       }
+    },
+
+    handleSearch() {
+      // 搜索逻辑已通过 computed 属性 filteredDetailList 处理
     },
 
   },
@@ -234,34 +253,88 @@ export default {
 
 <template>
   <transition name="slide-fade" mode="out-in">
-    <div ref="popover" class="wrapper w-18em h-26em bg-dark-400 z-99 rounded-2xl" v-if="isShow">
-      <div class="p-2">
-        <div ref="contentXRef" class="flex overflow-x-hidden rounded-2xl" @wheel="handleScrollX">
-          <div v-for="(items, idx) in deviceList" :key="idx"
-            class="bg-dark-800 w-64px h-64px mx-1 mb-2 flex flex-shrink-0 justify-center items-center rounded-2xl cursor-pointer"
-            @click="handleDeviceClick(items, idx)" :class="{ active: idx === selectionIndex }">
-            <div :class="items.icon" class="p-4"></div>
-          </div>
-        </div>
-        <div class="border-t-2 border-t-solid border-t-dark-50"></div>
-        <div class="flex justify-between items-center my-1">
-          <div>{{ subTitle }}</div>
-          <div class="flex items-center justify-center h-8">
-            <transition name="search">
-              <input ref="searchRef" v-if="showSearch" name="search" placeholder="请输入搜索关键字"
-                class="search-box bg-transparent w-0 h-8 pl-3 border-dark-800 outline-none border-2 border-solid rounded-xl" />
-            </transition>
-            <i class="y-iconamoon:search p-3 cursor-pointer absolute right-3.5" @click="toggleSearch"></i>
-          </div>
-        </div>
-        <div class="h-17em overflow-y-scroll rounded-2xl">
-          <div v-for="items in detailList"
-            class="flex h-64px my-2 mr-1 bg-dark-800 rounded-2xl items-center cursor-pointer border-1"
-            @mousedown="startDrag(items, $event)">
-            <div class="px-4">
-              <div :class="items.icon" class="p-4"></div>
+    <div 
+      ref="popover" 
+      class="popover-wrapper z-99" 
+      v-if="isShow"
+    >
+      <div class="popover-container">
+        <!-- 设备类型选择区域 -->
+        <div class="device-types-section">
+          <div 
+            ref="contentXRef" 
+            class="device-types-scroll" 
+            @wheel="handleScrollX"
+          >
+            <div 
+              v-for="(items, idx) in deviceList" 
+              :key="idx"
+              class="device-type-item"
+              :class="{ 'device-type-active': idx === selectionIndex }"
+              @click="handleDeviceClick(items, idx)"
+            >
+              <div :class="items.icon" class="device-type-icon"></div>
+              <div class="device-type-label">{{ items.label }}</div>
             </div>
-            <div>{{ items.label }}</div>
+          </div>
+        </div>
+
+        <!-- 分隔线 -->
+        <div class="divider"></div>
+
+        <!-- 标题和搜索区域 -->
+        <div class="header-section">
+          <div class="header-title">{{ subTitle || '请选择设备类型' }}</div>
+          <div class="search-container">
+            <transition name="search-expand">
+              <input 
+                ref="searchRef" 
+                v-if="showSearch" 
+                name="search" 
+                placeholder="搜索设备..." 
+                class="search-input"
+                v-model="searchKeyword"
+                @input="handleSearch"
+              />
+            </transition>
+            <div 
+              class="search-icon-wrapper"
+              :class="{ 'search-active': showSearch }"
+              @click="toggleSearch"
+            >
+              <i class="y-iconamoon:search search-icon"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- 设备列表区域 -->
+        <div class="device-list-section">
+          <div 
+            v-if="filteredDetailList.length === 0" 
+            class="empty-state"
+          >
+            <div class="empty-icon">📦</div>
+            <div class="empty-text">{{ searchKeyword ? '未找到匹配的设备' : '暂无设备' }}</div>
+          </div>
+          <div 
+            v-for="(item, index) in filteredDetailList"
+            :key="item.key || index"
+            class="device-item"
+            @mousedown="startDrag(item, $event)"
+          >
+            <div class="device-item-icon-wrapper">
+              <div 
+                :class="item.icon || deviceList[selectionIndex]?.icon" 
+                class="device-item-icon"
+              ></div>
+            </div>
+            <div class="device-item-content">
+              <div class="device-item-label">{{ item.label }}</div>
+              <div v-if="item.description" class="device-item-desc">{{ item.description }}</div>
+            </div>
+            <div class="device-item-drag-hint">
+              <i class="y-material-symbols:drag-indicator drag-hint-icon"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -270,53 +343,371 @@ export default {
 </template>
 
 <style lang="less" scoped>
-.active {
-  background-color: #3A78DB;
-}
-
-.wrapper {
+.popover-wrapper {
   position: fixed;
   top: var(--top);
   left: var(--left);
+  width: 18rem;
+  height: 26rem;
+  background: var(--panel-float-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--panel-edge);
+  border-radius: 1rem;
+  box-shadow: var(--panel-float-shadow);
+  overflow: hidden;
 }
 
+.popover-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0.75rem;
+  gap: 0.75rem;
+}
+
+/* 设备类型选择区域 */
+.device-types-section {
+  flex-shrink: 0;
+}
+
+.device-types-scroll {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--panel-scrollbar-thumb) transparent;
+  
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--panel-scrollbar-thumb);
+    border-radius: 2px;
+    
+    &:hover {
+      background: var(--panel-scrollbar-thumb-hover);
+    }
+  }
+}
+
+.device-type-item {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  min-width: 4.5rem;
+  padding: 0.75rem 0.5rem;
+  background: var(--panel-tile-bg);
+  border: 1px solid var(--panel-tile-border);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    background: var(--panel-tile-hover-bg);
+    border-color: rgba(58, 120, 219, 0.5);
+    transform: translateY(-2px);
+    box-shadow: var(--panel-tile-hover-shadow);
+  }
+  
+  &.device-type-active {
+    background: linear-gradient(135deg, rgba(58, 120, 219, 0.3) 0%, rgba(58, 120, 219, 0.2) 100%);
+    border-color: var(--accent);
+    box-shadow: 
+      0 0 0 2px rgba(58, 120, 219, 0.2),
+      0 4px 12px rgba(58, 120, 219, 0.3);
+  }
+}
+
+.device-type-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  color: var(--panel-icon);
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+.device-type-item:hover .device-type-icon,
+.device-type-active .device-type-icon {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.device-type-label {
+  font-size: 0.75rem;
+  color: var(--panel-icon-muted);
+  text-align: center;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.device-type-active .device-type-label {
+  color: var(--panel-icon);
+  font-weight: 500;
+}
+
+/* 分隔线 */
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--panel-divider) 20%,
+    var(--panel-divider) 80%,
+    transparent 100%
+  );
+  margin: 0 -0.75rem;
+}
+
+/* 标题和搜索区域 */
+.header-section {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--panel-icon);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.search-input {
+  width: 10rem;
+  height: 2rem;
+  padding: 0 0.75rem;
+  background: var(--panel-tile-bg);
+  border: 1px solid var(--panel-tile-border);
+  border-radius: 0.5rem;
+  color: var(--panel-icon);
+  font-size: 0.75rem;
+  outline: none;
+  transition: all 0.3s ease;
+  
+  &::placeholder {
+    color: var(--panel-icon-muted);
+  }
+  
+  &:focus {
+    background: var(--panel-tile-hover-bg);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(58, 120, 219, 0.1);
+  }
+}
+
+.search-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--panel-tile-bg);
+  border: 1px solid var(--panel-tile-border);
+  
+  &:hover {
+    background: var(--panel-tile-hover-bg);
+    border-color: rgba(58, 120, 219, 0.5);
+  }
+  
+  &.search-active {
+    background: rgba(58, 120, 219, 0.2);
+    border-color: var(--accent);
+  }
+}
+
+.search-icon {
+  font-size: 1rem;
+  color: var(--panel-icon-muted);
+  transition: color 0.3s ease;
+}
+
+.search-icon-wrapper:hover .search-icon,
+.search-active .search-icon {
+  color: var(--panel-icon);
+}
+
+/* 设备列表区域 */
+.device-list-section {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--panel-scrollbar-thumb) transparent;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--panel-scrollbar-thumb);
+    border-radius: 3px;
+    
+    &:hover {
+      background: var(--panel-scrollbar-thumb-hover);
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  color: var(--panel-icon-muted);
+}
+
+.empty-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.6;
+}
+
+.empty-text {
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.device-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: var(--panel-tile-bg);
+  border: 1px solid var(--panel-tile-border);
+  border-radius: 0.75rem;
+  cursor: grab;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    background: var(--panel-tile-hover-bg);
+    border-color: rgba(58, 120, 219, 0.5);
+    transform: translateX(4px);
+    box-shadow: var(--panel-tile-hover-shadow);
+  }
+  
+  &:active {
+    cursor: grabbing;
+    transform: translateX(2px) scale(0.98);
+  }
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.device-item-icon-wrapper {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--panel-tile-bg);
+  border-radius: 0.5rem;
+  border: 1px solid var(--panel-tile-border);
+}
+
+.device-item-icon {
+  font-size: 1.25rem;
+  color: var(--panel-icon);
+  opacity: 0.9;
+}
+
+.device-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.device-item-label {
+  font-size: 0.875rem;
+  color: var(--panel-icon);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.device-item-desc {
+  font-size: 0.75rem;
+  color: var(--panel-icon-muted);
+  margin-top: 0.125rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.device-item-drag-hint {
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.device-item:hover .device-item-drag-hint {
+  opacity: 0.5;
+}
+
+.drag-hint-icon {
+  font-size: 1rem;
+  color: var(--panel-icon-muted);
+}
+
+/* 过渡动画 */
 .slide-fade-enter-active {
-  transition: all 0.5s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .slide-fade-leave-active {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .slide-fade-enter,
 .slide-fade-leave-to {
-  transform: translateY(10px);
+  transform: translateY(10px) scale(0.95);
   opacity: 0;
 }
 
-.search-box {
-  width: 10rem;
-  transition: width 0.3s ease;
+.search-expand-enter-active,
+.search-expand-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.search-enter {
-  width: 0;
-}
-
-.search-enter-to {
-  width: 10rem;
-}
-
-.search-enter-active,
-.search-leave-active {
-  transition: width 0.3s ease;
-}
-
-.search-leave {
-  width: 10rem
-}
-
-.search-leave-to {
-  width: 0;
+.search-expand-enter,
+.search-expand-leave-to {
+  width: 0 !important;
+  opacity: 0;
+  margin-right: 0;
 }
 </style>

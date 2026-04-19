@@ -8,15 +8,17 @@
 -->
 <template>
   <div class="wrapper">
-    <div class="node-wrapper w-160px h-66px flex items-center bg-dark-400 rounded-2xl" @mouseenter="onMouseEnter"
+    <div class="node-wrapper w-160px h-66px flex items-center bg-[var(--node-surface)] text-[var(--app-fg)] rounded-2xl" @mouseenter="onMouseEnter"
       @mouseleave="onMouseleave">
-      <div :class="record.icon" class="p-4 mx-4"></div>
+      <div :class="record.icon" class="p-4 mx-4 text-[var(--app-fg)]"></div>
       <div>{{ record.label }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import { getCssVar } from "@/theme/applyTheme";
+
 export default {
   name: "server-node",
   inject: ["getNode", "getGraph"],
@@ -37,8 +39,8 @@ export default {
       // 设置ports的样式，突出显示连接桩
       ports.forEach((port) => {
         node.setPortProp(port.id, "attrs/circle", {
-          fill: "#141414",
-          stroke: "#1565c0",
+          fill: getCssVar("--node-port-fill-hover"),
+          stroke: getCssVar("--node-port-stroke-hover"),
         })
       })
       return;
