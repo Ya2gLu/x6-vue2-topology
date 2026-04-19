@@ -86,7 +86,7 @@ export default {
   <div grid grid-rows-12 grid-cols-12 w-full h-full row-start-20 row-span-3 col-start-6 col-span-12>
     <!-- dnd container -->
     <div 
-      class="row-start-6 row-span-12 col-start-3 col-span-20 z-[99] flex items-center justify-around p-6 gap-6 rounded-3xl border border-white/10 backdrop-blur-[20px] backdrop-saturate-[180%] bg-[linear-gradient(135deg,rgba(30,30,30,0.85)_0%,rgba(20,20,20,0.9)_100%)] shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.05)_inset,0_1px_0_rgba(255,255,255,0.1)_inset]">
+      class="online-panel-shell row-start-6 row-span-12 col-start-3 col-span-20 z-[99] flex items-center justify-around p-6 gap-6 rounded-3xl">
       <div 
         v-for="(items, i) in onlineList" 
         :key="i" 
@@ -98,16 +98,12 @@ export default {
         ]"
         @click="handleNodeClick(items, i)">
         <div 
-          class="w-16 h-16 flex items-center justify-center bg-white/5 border border-white/10 rounded-2xl relative overflow-hidden will-change-[background-color,border-color,box-shadow,transform]"
+          class="online-panel-well w-16 h-16 flex items-center justify-center rounded-2xl relative overflow-hidden will-change-[background-color,border-color,box-shadow,transform]"
           :class="[
-            'transition-[background-color,border-color,box-shadow] duration-300 ease-out',
-            'group-hover:bg-[linear-gradient(135deg,rgba(58,120,219,0.2)_0%,rgba(58,120,219,0.15)_100%)]',
-            'group-hover:border-[rgba(58,120,219,0.5)]',
-            'group-hover:shadow-[0_8px_24px_rgba(58,120,219,0.25),0_0_0_1px_rgba(58,120,219,0.2)_inset]',
-            i === selectIndex ? 'bg-[linear-gradient(135deg,rgba(58,120,219,0.3)_0%,rgba(58,120,219,0.2)_100%)] border-[#3A78DB] shadow-[0_0_0_2px_rgba(58,120,219,0.3),0_8px_24px_rgba(58,120,219,0.35),0_0_0_1px_rgba(58,120,219,0.2)_inset]' : ''
+            'transition-[background-color,border-color,box-shadow] duration-300 ease-out'
           ]">
           <div 
-            class="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.1)_0%,transparent_100%)] pointer-events-none will-change-opacity"
+            class="online-panel-gloss absolute inset-0 pointer-events-none will-change-opacity"
             :class="[
               'transition-opacity duration-300 ease-out',
               i === selectIndex ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
@@ -115,7 +111,7 @@ export default {
           <i 
             :class="[
               items.type,
-              'text-[1.75rem] text-white/90 z-[1] relative will-change-[transform,opacity,filter]',
+              'online-panel-icon text-[1.75rem] z-[1] relative will-change-[transform,opacity,filter]',
               'transition-[transform,opacity,filter] duration-300 ease-out',
               i === selectIndex ? 'opacity-100 drop-shadow-[0_0_8px_rgba(58,120,219,0.6)]' : 'opacity-85 group-hover:scale-110 group-hover:opacity-100'
             ]"></i>
@@ -128,5 +124,45 @@ export default {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
+.online-panel-shell {
+  background: var(--panel-float-bg);
+  border: 1px solid var(--panel-edge);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--panel-float-shadow);
+}
+
+.online-panel-well {
+  background: var(--panel-tile-bg);
+  border: 1px solid var(--panel-tile-border);
+  .group:hover:not(.device-item-active) & {
+    background: linear-gradient(
+      135deg,
+      rgba(58, 120, 219, 0.2) 0%,
+      rgba(58, 120, 219, 0.15) 100%
+    );
+    border-color: rgba(58, 120, 219, 0.5);
+    box-shadow: 0 8px 24px rgba(58, 120, 219, 0.25),
+      0 0 0 1px rgba(58, 120, 219, 0.2) inset;
+  }
+  .group.device-item-active & {
+    background: linear-gradient(
+      135deg,
+      rgba(58, 120, 219, 0.3) 0%,
+      rgba(58, 120, 219, 0.2) 100%
+    );
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(58, 120, 219, 0.3), 0 8px 24px rgba(58, 120, 219, 0.35),
+      0 0 0 1px rgba(58, 120, 219, 0.2) inset;
+  }
+}
+
+.online-panel-gloss {
+  background: var(--panel-well-gloss);
+}
+
+.online-panel-icon {
+  color: var(--panel-icon);
+}
 </style>

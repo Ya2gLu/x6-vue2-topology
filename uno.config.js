@@ -20,6 +20,7 @@ const getAllIcons = () => {
 };
 
 export default defineConfig({
+  darkMode: "class",
   presets: [
     presetAttributify({/* preset options */}),
     presetUno({

@@ -166,7 +166,7 @@ export default {
 <template>
   <transition name="slide-fade">
     <div ref="ShapeContainer" row-start-3 row-span-23 col-start-1 col-span-5 w-full h-full z-99
-      class="bg-[linear-gradient(135deg,rgba(30,30,30,0.85)_0%,rgba(20,20,20,0.9)_100%)] border-r-2 border-r-solid border-white/10 backdrop-blur-[20px] backdrop-saturate-[180%] shadow-[0_0_20px_rgba(0,0,0,0.3)]"
+      class="drag-panel-shell"
       v-show="sideState">
       <div h-full flex flex-col justify-between overflow-y-auto overflow-x-hidden>
         <!-- 图形列表开始 -->
@@ -175,11 +175,11 @@ export default {
             TIPS: 使用<details>标签和<summary>标签实现下拉列表，详情见:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
            -->
           <details v-for="(shape, index) in shapeList" @toggle="toggleState($event, shape)" :key="shape.id" w-full
-            class="group">
+            class="group drag-panel-details">
             <summary :class="[
-              'list-none px-3 py-2 mx-2 text-neutral-400 select-none rounded-lg cursor-pointer',
+              'drag-panel-summary list-none px-3 py-2 mx-2 select-none rounded-lg cursor-pointer',
               'transition-all duration-300 ease-out will-change-[background-color,color,transform]',
-              'hover:bg-white/5 hover:text-neutral-300 hover:translate-x-1',
+              'hover:translate-x-1',
               'active:scale-[0.98]',
               index === 0 ? 'mt-2' : ''
             ]">
@@ -195,15 +195,13 @@ export default {
               :class="shape.status === 'open' ? 'opacity-100' : 'opacity-0'">
               <template v-if="shape.children">
                 <div v-for="i in shape.children" @mousedown="startDrag(i, $event)" :class="[
-                  'w-10 h-10 mx-2 my-2 rounded-lg flex justify-center items-center cursor-grab active:cursor-grabbing',
-                  'bg-gradient-to-br from-white/10 to-white/5 border border-white/10',
+                  'drag-panel-tile w-10 h-10 mx-2 my-2 rounded-lg flex justify-center items-center cursor-grab active:cursor-grabbing',
                   'transition-all duration-300 ease-out will-change-[transform,background-color,border-color,box-shadow]',
-                  'hover:scale-110 hover:bg-gradient-to-br hover:from-white/20 hover:to-white/10',
-                  'hover:border-white/20 hover:shadow-[0_4px_12px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.1)_inset]',
+                  'hover:scale-110',
                   'active:scale-95'
                 ]">
                   <a-tooltip :title="i.label" :mouseEnterDelay="0.3" placement="right">
-                    <i :class="['w-3/4 h-3/4 text-white/90 transition-transform duration-300 ease-out', i.icon]"></i>
+                    <i :class="['drag-panel-tile-icon w-3/4 h-3/4 transition-transform duration-300 ease-out', i.icon]"></i>
                   </a-tooltip>
                 </div>
               </template>
@@ -212,12 +210,11 @@ export default {
         </div>
         <!-- 图形列表结束 -->
         <!-- 设备列表下拉开始 -->
-        <div class="border-t border-white/10">
-          <details class="w-full group">
+        <div class="drag-panel-divider border-t border-solid">
+          <details class="drag-panel-details w-full group">
             <summary :class="[
-              'list-none px-4 py-3 text-neutral-400 cursor-pointer',
-              'transition-all duration-300 ease-out will-change-[background-color,color]',
-              'hover:bg-white/5 hover:text-neutral-300'
+              'drag-panel-summary list-none px-4 py-3 cursor-pointer',
+              'transition-all duration-300 ease-out will-change-[background-color,color]'
             ]">
               <span class="flex items-center justify-between font-medium">
                 <span>{{ secondTitle }}</span>
@@ -226,13 +223,13 @@ export default {
               </span>
             </summary>
             <div class="min-h-70 mx-2 py-2 transition-all duration-300 ease-out">
-              <details class="group/sub">
+              <details class="drag-panel-details group/sub">
                 <summary
-                  :class="['list-none px-4 py-2 text-neutral-500 cursor-pointer rounded-lg transition-all duration-300 ease-out hover:bg-white/5 hover:text-neutral-400']">
+                  :class="['drag-panel-summary drag-panel-summary-sub list-none px-4 py-2 cursor-pointer rounded-lg transition-all duration-300 ease-out']">
                   test</summary>
-                <details class="group/sub2">
+                <details class="drag-panel-details group/sub2">
                   <summary
-                    :class="['list-none px-6 py-1.5 text-neutral-500 cursor-pointer rounded-lg transition-all duration-300 ease-out hover:bg-white/5 hover:text-neutral-400']">
+                    :class="['drag-panel-summary drag-panel-summary-sub list-none px-6 py-1.5 cursor-pointer rounded-lg transition-all duration-300 ease-out']">
                     subtitle</summary>
                 </details>
               </details>
@@ -245,6 +242,75 @@ export default {
   </transition>
 </template>
 <style lang="less" scoped>
+.drag-panel-shell {
+  background: var(--panel-bg);
+  border-right: 2px solid var(--panel-edge);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--panel-shadow-drag);
+}
+
+.drag-panel-summary {
+  color: var(--panel-icon-muted);
+  &:hover {
+    color: var(--panel-icon);
+    background: var(--panel-summary-hover-bg);
+  }
+}
+
+.drag-panel-summary-sub {
+  opacity: 0.95;
+}
+
+.drag-panel-tile {
+  background: var(--panel-tile-bg);
+  border: 1px solid var(--panel-tile-border);
+  &:hover {
+    background: var(--panel-tile-hover-bg);
+    border-color: var(--panel-tile-hover-border);
+    box-shadow: var(--panel-tile-hover-shadow);
+  }
+}
+
+.drag-panel-tile-icon {
+  color: var(--panel-icon);
+}
+
+.drag-panel-divider {
+  border-top-color: var(--panel-divider);
+  border-bottom-color: var(--panel-divider);
+  border-left-color: var(--panel-divider);
+  border-right-color: var(--panel-divider);
+  border-top-width: 1px;
+  border-bottom-width: 0px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-style: solid;
+}
+
+.drag-panel-details {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.drag-panel-details > summary {
+  border: none;
+  outline: none;
+  list-style: none;
+  appearance: none;
+  &::-webkit-details-marker {
+    display: none;
+  }
+  &::marker {
+    content: none;
+  }
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+}
+
 .slide-fade-enter-active {
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -266,7 +332,7 @@ export default {
 /* 优化滚动条样式 */
 :deep(.overflow-y-auto) {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  scrollbar-color: var(--panel-scrollbar-thumb) transparent;
 }
 
 :deep(.overflow-y-auto)::-webkit-scrollbar {
@@ -278,12 +344,12 @@ export default {
 }
 
 :deep(.overflow-y-auto)::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--panel-scrollbar-thumb);
   border-radius: 3px;
   transition: background-color 0.3s ease;
 }
 
 :deep(.overflow-y-auto)::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: var(--panel-scrollbar-thumb-hover);
 }
 </style>

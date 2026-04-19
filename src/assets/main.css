@@ -1,20 +1,45 @@
 @import "@/components/Topology/src/style/selection.css";
 :root {
+  --app-bg: #141414;
+  --app-fg: #ffffff;
+  --accent: #3a78db;
   --base-br: 1.5rem;
   --base-border: 3px solid #3a78db;
+  --selection-inner-border: 2.5px dashed #3a78db;
+  --node-surface: #404040;
+  --node-port-fill-hover: #141414;
+  --node-port-stroke-hover: #3a78db;
+  --panel-bg: linear-gradient(135deg, rgba(30, 30, 30, 0.85) 0%, rgba(20, 20, 20, 0.9) 100%);
+  --panel-edge: rgba(255, 255, 255, 0.1);
+  --panel-shadow-drag: 0 0 20px rgba(0, 0, 0, 0.3);
+  --panel-float-bg: linear-gradient(135deg, rgba(30, 30, 30, 0.85) 0%, rgba(20, 20, 20, 0.9) 100%);
+  --panel-float-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 1px 0 rgba(255, 255, 255, 0.1) inset;
+  --panel-icon: rgba(255, 255, 255, 0.92);
+  --panel-icon-muted: rgba(255, 255, 255, 0.55);
+  --panel-divider: rgba(255, 255, 255, 0.1);
+  --panel-tile-bg: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  --panel-tile-border: rgba(255, 255, 255, 0.1);
+  --panel-tile-hover-bg: linear-gradient(to bottom right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  --panel-tile-hover-border: rgba(255, 255, 255, 0.2);
+  --panel-tile-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  --panel-summary-hover-bg: rgba(255, 255, 255, 0.05);
+  --panel-well-gloss: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  --panel-scrollbar-thumb: rgba(255, 255, 255, 0.2);
+  --panel-scrollbar-thumb-hover: rgba(255, 255, 255, 0.3);
+  --graph-grid-color: #373536;
 }
 :root,
 html,
 body {
-	/* max-width: 1280px; */
 	margin: 0 auto;
 	padding: 2rem;
 
 	font-weight: normal;
-	background-color: #141414;
+	background-color: var(--app-bg);
 	margin: 0;
 	padding: 0;
-	color: #fff;
+	color: var(--app-fg);
 }
 
 
@@ -22,12 +47,12 @@ body {
 * MEMO: Edge hover&selected style
 */
 .x6-edge:hover path:nth-child(2) {
-	stroke: #3a78db;
+	stroke: var(--accent);
 	stroke-width: 2.5px;
 }
 
 .x6-edge-selected path:nth-child(2) {
-	stroke: #3a78db;
+	stroke: var(--accent);
 	stroke-width: 2.5px !important;
 }
 

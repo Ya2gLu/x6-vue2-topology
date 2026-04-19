@@ -142,9 +142,6 @@ export default {
       })
     )
 
-    const theme = this.$store.state.titleBar.theme;
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-
   },
   methods: {
     ...mapMutations("titleBar", ["toggleRight", "toggleLeft", "toggleText", "toggleTheme", "setTheme"]),

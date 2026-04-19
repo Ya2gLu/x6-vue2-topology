@@ -349,15 +349,12 @@ export default {
   left: var(--left);
   width: 18rem;
   height: 26rem;
-  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+  background: var(--panel-float-bg);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--panel-edge);
   border-radius: 1rem;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-    0 1px 0 rgba(255, 255, 255, 0.1) inset;
+  box-shadow: var(--panel-float-shadow);
   overflow: hidden;
 }
 
@@ -381,7 +378,7 @@ export default {
   overflow-y: hidden;
   padding-bottom: 0.25rem;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  scrollbar-color: var(--panel-scrollbar-thumb) transparent;
   
   &::-webkit-scrollbar {
     height: 4px;
@@ -392,11 +389,11 @@ export default {
   }
   
   &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--panel-scrollbar-thumb);
     border-radius: 2px;
     
     &:hover {
-      background: rgba(255, 255, 255, 0.3);
+      background: var(--panel-scrollbar-thumb-hover);
     }
   }
 }
@@ -410,22 +407,22 @@ export default {
   width: 4.5rem;
   min-width: 4.5rem;
   padding: 0.75rem 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--panel-tile-bg);
+  border: 1px solid var(--panel-tile-border);
   border-radius: 0.75rem;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--panel-tile-hover-bg);
     border-color: rgba(58, 120, 219, 0.5);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(58, 120, 219, 0.2);
+    box-shadow: var(--panel-tile-hover-shadow);
   }
   
   &.device-type-active {
     background: linear-gradient(135deg, rgba(58, 120, 219, 0.3) 0%, rgba(58, 120, 219, 0.2) 100%);
-    border-color: #3A78DB;
+    border-color: var(--accent);
     box-shadow: 
       0 0 0 2px rgba(58, 120, 219, 0.2),
       0 4px 12px rgba(58, 120, 219, 0.3);
@@ -435,6 +432,7 @@ export default {
 .device-type-icon {
   font-size: 1.5rem;
   margin-bottom: 0.25rem;
+  color: var(--panel-icon);
   opacity: 0.9;
   transition: all 0.3s ease;
 }
@@ -447,14 +445,14 @@ export default {
 
 .device-type-label {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--panel-icon-muted);
   text-align: center;
   white-space: nowrap;
   transition: color 0.3s ease;
 }
 
 .device-type-active .device-type-label {
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--panel-icon);
   font-weight: 500;
 }
 
@@ -464,8 +462,8 @@ export default {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.1) 20%,
-    rgba(255, 255, 255, 0.1) 80%,
+    var(--panel-divider) 20%,
+    var(--panel-divider) 80%,
     transparent 100%
   );
   margin: 0 -0.75rem;
@@ -483,7 +481,7 @@ export default {
 .header-title {
   font-size: 0.875rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--panel-icon);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -500,21 +498,21 @@ export default {
   width: 10rem;
   height: 2rem;
   padding: 0 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--panel-tile-bg);
+  border: 1px solid var(--panel-tile-border);
   border-radius: 0.5rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--panel-icon);
   font-size: 0.75rem;
   outline: none;
   transition: all 0.3s ease;
   
   &::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--panel-icon-muted);
   }
   
   &:focus {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #3A78DB;
+    background: var(--panel-tile-hover-bg);
+    border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(58, 120, 219, 0.1);
   }
 }
@@ -528,29 +526,29 @@ export default {
   border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--panel-tile-bg);
+  border: 1px solid var(--panel-tile-border);
   
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--panel-tile-hover-bg);
     border-color: rgba(58, 120, 219, 0.5);
   }
   
   &.search-active {
     background: rgba(58, 120, 219, 0.2);
-    border-color: #3A78DB;
+    border-color: var(--accent);
   }
 }
 
 .search-icon {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--panel-icon-muted);
   transition: color 0.3s ease;
 }
 
 .search-icon-wrapper:hover .search-icon,
 .search-active .search-icon {
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--panel-icon);
 }
 
 /* 设备列表区域 */
@@ -561,7 +559,7 @@ export default {
   overflow-x: hidden;
   padding-right: 0.25rem;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  scrollbar-color: var(--panel-scrollbar-thumb) transparent;
   
   &::-webkit-scrollbar {
     width: 6px;
@@ -572,11 +570,11 @@ export default {
   }
   
   &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--panel-scrollbar-thumb);
     border-radius: 3px;
     
     &:hover {
-      background: rgba(255, 255, 255, 0.3);
+      background: var(--panel-scrollbar-thumb-hover);
     }
   }
 }
@@ -587,7 +585,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--panel-icon-muted);
 }
 
 .empty-icon {
@@ -607,17 +605,17 @@ export default {
   gap: 0.75rem;
   padding: 0.75rem;
   margin-bottom: 0.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--panel-tile-bg);
+  border: 1px solid var(--panel-tile-border);
   border-radius: 0.75rem;
   cursor: grab;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
   &:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--panel-tile-hover-bg);
     border-color: rgba(58, 120, 219, 0.5);
     transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--panel-tile-hover-shadow);
   }
   
   &:active {
@@ -637,13 +635,14 @@ export default {
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--panel-tile-bg);
   border-radius: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--panel-tile-border);
 }
 
 .device-item-icon {
   font-size: 1.25rem;
+  color: var(--panel-icon);
   opacity: 0.9;
 }
 
@@ -654,7 +653,7 @@ export default {
 
 .device-item-label {
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--panel-icon);
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -663,7 +662,7 @@ export default {
 
 .device-item-desc {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--panel-icon-muted);
   margin-top: 0.125rem;
   white-space: nowrap;
   overflow: hidden;
@@ -682,7 +681,7 @@ export default {
 
 .drag-hint-icon {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--panel-icon-muted);
 }
 
 /* 过渡动画 */

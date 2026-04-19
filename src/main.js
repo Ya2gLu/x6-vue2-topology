@@ -11,11 +11,12 @@ import "ant-design-vue/dist/antd.css";
 import "./assets/main.css";
 import "virtual:uno.css"
 
+import { applyTheme } from "@/theme/applyTheme";
+
 Vue.config.productionTip = false;
 Vue.use(Tooltip);
 
-const theme = store.state.titleBar.theme;
-document.documentElement.classList.toggle('dark', theme === 'dark');
+applyTheme(store.state.titleBar.theme);
 
 new Vue({
   router,

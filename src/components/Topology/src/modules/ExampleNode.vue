@@ -38,7 +38,8 @@
   .container {
     width: 64px;
     height: 64px;
-    background-color: #1b1b1b;
+    background-color: var(--node-surface);
+    color: var(--app-fg);
     border-radius: 15px;
 
     display: flex;

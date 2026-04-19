@@ -1,15 +1,10 @@
-const getInitialTheme = () => {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    return localStorage.getItem('theme') || 'dark';
-  }
-  return 'dark';
-};
+import { applyTheme, getStoredTheme, normalizeTheme } from "@/theme/applyTheme";
 
 const state = () => ({
   sideToggle: false,
   dragToggle: false,
   textToggle: false,
-  theme: getInitialTheme(),
+  theme: getStoredTheme(),
 });
 
 const getters = {};
@@ -30,23 +25,20 @@ const mutations = {
     return state.textToggle;
   },
   toggleTheme(state) {
-    state.theme = state.theme === 'dark' ? 'light' : 'dark';
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('theme', state.theme);
+    state.theme = state.theme === "dark" ? "light" : "dark";
+    if (typeof window !== "undefined" && window.localStorage) {
+      localStorage.setItem("theme", state.theme);
     }
-    if (typeof document !== 'undefined') {
-      document.documentElement.classList.toggle('dark', state.theme === 'dark');
-    }
+    applyTheme(state.theme);
     return state.theme;
   },
   setTheme(state, theme) {
-    state.theme = theme;
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('theme', theme);
+    const id = normalizeTheme(theme);
+    state.theme = id;
+    if (typeof window !== "undefined" && window.localStorage) {
+      localStorage.setItem("theme", id);
     }
-    if (typeof document !== 'undefined') {
-      document.documentElement.classList.toggle('dark', theme === 'dark');
-    }
+    applyTheme(id);
   },
 };
 

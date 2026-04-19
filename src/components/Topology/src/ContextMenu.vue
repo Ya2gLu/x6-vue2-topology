@@ -86,16 +86,6 @@ export default {
 
 <style lang="less" scoped>
 .context-menu {
-  --menu-border: rgba(255, 255, 255, 0.08);
-  --menu-bg: linear-gradient(
-    90deg,
-    rgba(5, 9, 14, 0.2) 0%,
-    rgba(5, 9, 14, 0.7) 100%
-  );
-  --item-border: rgba(255, 255, 255, 0.1);
-  --item-color: #fff;
-  --item-bg-hover: rgba(255, 255, 255, 0.1);
-
   position: fixed;
   top: var(--top);
   left: var(--left);
@@ -103,9 +93,10 @@ export default {
   min-height: 180px;
   min-width: 120px;
 
-  // overflow: hidden;
-  background: var(--menu-bg);
-  backdrop-filter: blur(10px);
+  background: var(--panel-float-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--panel-edge);
 
   animation: menuAnimation 0.4s 0s both;
   transform-origin: left;
@@ -116,8 +107,7 @@ export default {
   display: flex;
   flex-direction: column;
   z-index: 999;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.8),
-              0 5px 10px rgba(0, 0, 0, 0.7);
+  box-shadow: var(--panel-float-shadow);
   &-item {
     position: relative;
     padding: 4px;
@@ -137,12 +127,12 @@ export default {
   }
 
   &-item[data-divider] {
-    border-color: var(--item-border);
+    border-color: var(--panel-divider);
   }
 
   &-button {
-    color: var(--item-color);
-    background: 0;
+    color: var(--panel-icon);
+    background: transparent;
     border: 0;
     white-space: nowrap;
     width: 100%;
@@ -159,7 +149,7 @@ export default {
     cursor: pointer;
 
     &:hover {
-      background-color: var(--item-bg-hover);
+      background-color: var(--panel-summary-hover-bg);
     }
   }
 }

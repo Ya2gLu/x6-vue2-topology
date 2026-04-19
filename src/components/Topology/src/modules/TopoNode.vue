@@ -8,9 +8,9 @@
 -->
 <template>
   <div>
-    <div class="w-[70px] h-[70px] flex justify-center items-center bg-dark-400 rounded-xl" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+    <div class="w-[70px] h-[70px] flex justify-center items-center bg-[var(--node-surface)] text-[var(--app-fg)] rounded-xl" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
       <div>
-        <div :class="record.icon" class="w-10 h-10"></div>
+        <div :class="record.icon" class="w-10 h-10 text-[var(--app-fg)]"></div>
       </div>
     </div>
     <!-- <div>{{ record.label }}</div> -->
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { getCssVar } from "@/theme/applyTheme";
+
 export default {
   name: "topo-node",
   inject: ["getNode", "getGraph"],
@@ -38,8 +40,8 @@ export default {
       const ports = node.getPorts();
       ports.forEach((port) => {
         node.setPortProp(port.id, "attrs/circle", {
-          fill: "#141414",
-          stroke: "#1565C0",
+          fill: getCssVar("--node-port-fill-hover"),
+          stroke: getCssVar("--node-port-stroke-hover"),
         });
       });
     },
