@@ -1,7 +1,7 @@
 <!--
  * @Author       : ya2glu@163.com
  * @Date         : 2023-06-02 16:09:11
- * @LastEditTime : 2025-04-10 16:49:38
+ * @LastEditTime : 2026-09-10 09:19:25
  * @LastEditors  : ya2glu
  * @Description  : title components
  * @FilePath     : \x6-vue2-topology\src\components\Topology\src\TitleBar.vue
@@ -10,7 +10,7 @@
   <!-- title container -->
   <div w-full h-full col-span-24 row-span-2>
     <div flex justify-between items-center h-full w-full z-99 backdrop-blur
-      class="bg-neutral-850/75 border-b-2 border-b-solid  border-neutral-700/30">
+      class="title-bar bg-neutral-850/75 border-b-2 border-b-solid  border-neutral-700/30">
 
       <div flex justify-end items-center h-full w="22%">
         <a-tooltip title="Drag" :mouseEnterDelay=".5">
@@ -144,7 +144,7 @@ export default {
 
   },
   methods: {
-    ...mapMutations("titleBar", ["toggleRight", "toggleLeft", "toggleText", "toggleTheme", "setTheme"]),
+    ...mapMutations("titleBar", ["toggleRight", "toggleLeft", "toggleText", "toggleTheme", "setTheme", "setTextToggle"]),
     textActive(i, index) {
       return {
         active: this.$store.state.titleBar.textToggle && i.type == "text" || this.isRubberband && index == this.selectIndex
@@ -189,11 +189,25 @@ export default {
      * @param index 
      */
     onToolsClick(key, index) {
-      // TODO: 如果后续继续添加值，可以使用对象映射来优化switch
+      // 1.高亮当前文本按钮
+      // 2.当鼠标在编辑区双击时，插入文本框
+      if (key === "text") {
+        if (this.isRubberband) {
+          this.isRubberband = false;
+          if (this.graph) {
+            this.graph.toggleRubberband(false);
+          }
+        }
+        this.selectIndex = -1;
+        this.toggleText();
+        return null;
+      }
+
+      if (this.$store.state.titleBar.textToggle) {
+        this.setTextToggle(false);
+      }
+
       switch (key) {
-        case "text":
-          this.toggleText()
-          break;
         case "Focus":
           this.graph.centerContent();
           break;
@@ -239,5 +253,32 @@ export default {
   border-radius: 6px;
   box-shadow: 0px 2px 6px 0px rgba(16, 16, 16, 0.25);
   background: rgba(49, 49, 49, .55);
+}
+
+// 浅色模式：柔化工具栏分隔线与按钮颜色
+:root:not(.dark) .title-bar {
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+
+  [border] {
+    color: rgba(0, 0, 0, 0.55);
+    border-color: rgba(0, 0, 0, 0.12);
+    background-color: rgba(0, 0, 0, 0.025);
+    transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease,
+      box-shadow 0.3s ease;
+
+    &:hover {
+      color: rgba(0, 0, 0, 0.72);
+      border-color: rgba(0, 0, 0, 0.18);
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    &.active,
+    &.active:hover {
+      color: var(--accent);
+      border: 1px solid rgba(58, 120, 219, 0.45);
+      background: rgba(58, 120, 219, 0.1);
+      box-shadow: 0 2px 8px rgba(58, 120, 219, 0.12);
+    }
+  }
 }
 </style>

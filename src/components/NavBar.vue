@@ -161,8 +161,8 @@ export default {
     border: 1px solid rgba(255, 255, 255, 0.15);
 
     :root:not(.dark) & {
-      background: rgba(0, 0, 0, 0.06);
-      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.09);
     }
 
     .action-icon {
@@ -170,7 +170,8 @@ export default {
       color: rgba(255, 255, 255, 0.8);
 
       :root:not(.dark) & {
-        color: rgba(0, 0, 0, 0.7);
+        color: rgba(0, 0, 0, 0.55);
+        transition: color 0.3s ease;
       }
     }
 
@@ -181,9 +182,13 @@ export default {
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
       :root:not(.dark) & {
-        background: rgba(0, 0, 0, 0.08);
-        border-color: rgba(0, 0, 0, 0.15);
+        background: rgba(0, 0, 0, 0.06);
+        border-color: rgba(0, 0, 0, 0.12);
       }
+    }
+
+    :root:not(.dark) &:hover .action-icon {
+      color: rgba(0, 0, 0, 0.72);
     }
   }
 }

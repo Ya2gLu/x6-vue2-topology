@@ -20,13 +20,20 @@ export const shapeList = [
       },
       {
         id: 3,
+        name: 'circle',
+        label: '圆形',
+        icon: 'y-material-symbols-light:circle-outline',
+        isTopo: false
+      },
+      {
+        id: 4,
         name: 'line',
         label: '直线',
         icon: 'y-tabler:slash',
         isTopo: false
       },
       {
-        id: 4,
+        id: 5,
         name: 'arrow',
         label: '箭头',
         icon: 'y-mynaui:arrow-long-up-right',

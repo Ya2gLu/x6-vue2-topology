@@ -165,4 +165,33 @@ export default {
 .online-panel-icon {
   color: var(--panel-icon);
 }
+
+// 浅色模式：柔化蓝色悬停/激活光晕，降低与背景的对比
+:root:not(.dark) {
+  .group:hover:not(.device-item-active) .online-panel-well {
+    background: linear-gradient(
+      135deg,
+      rgba(58, 120, 219, 0.14) 0%,
+      rgba(58, 120, 219, 0.09) 100%
+    );
+    border-color: rgba(58, 120, 219, 0.38);
+    box-shadow: 0 8px 24px rgba(58, 120, 219, 0.16),
+      0 0 0 1px rgba(58, 120, 219, 0.14) inset;
+  }
+
+  .group.device-item-active .online-panel-well {
+    background: linear-gradient(
+      135deg,
+      rgba(58, 120, 219, 0.18) 0%,
+      rgba(58, 120, 219, 0.12) 100%
+    );
+    border-color: rgba(58, 120, 219, 0.65);
+    box-shadow: 0 0 0 2px rgba(58, 120, 219, 0.2), 0 8px 24px rgba(58, 120, 219, 0.2),
+      0 0 0 1px rgba(58, 120, 219, 0.12) inset;
+  }
+
+  .device-item-active .online-panel-icon {
+    filter: drop-shadow(0 0 6px rgba(58, 120, 219, 0.35));
+  }
+}
 </style>

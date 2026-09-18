@@ -66,19 +66,10 @@
     }
   },
   "textNode": {
-    "shape": "text-block",
-    "width": 80,
-    "height": 30,
-    "attrs": {
-      "body": { "fill": "transparent", "stroke": "transparent", "strokeWidth": 0 },
-      "label": { "fill": "#fff", "fontSize": 18 }
-    },
-    "tool": {
-      "name": "node-editor",
-      "args": {
-        "attrs": { "color": "#fff", "fontSize": 18, "backgroundColor": "transparent" }
-      }
-    },
+    "shape": "vue-text-shape",
+    "width": 120,
+    "height": 40,
+    "data": { "text": "双击编辑" },
     "selection": {
       "borderRadius": 0,
       "border": "1px dashed #3A78DB"

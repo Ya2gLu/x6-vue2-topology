@@ -53,6 +53,7 @@ export default defineConfig({
     // DragPanel.vue 中使用的图标
     'y-icon-park-solid:down-one',
     'y-icon-park-solid:right-one',
+    'y-material-symbols-light:circle-outline',
     'y-material-symbols-light:play-shapes-outline',
     // TitleBar.vue 中使用的图标
     'y-iconamoon:type-duotone',

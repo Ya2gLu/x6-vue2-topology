@@ -24,6 +24,9 @@ const mutations = {
     state.textToggle = !state.textToggle;
     return state.textToggle;
   },
+  setTextToggle(state, value) {
+    state.textToggle = !!value;
+  },
   toggleTheme(state) {
     state.theme = state.theme === "dark" ? "light" : "dark";
     if (typeof window !== "undefined" && window.localStorage) {

@@ -29,6 +29,10 @@ export default {
     return {
       onlineKey: '', // 记录在线点击的key
       graph: null,
+      // DragPanel 选中的基础图形；存在时可在画布空白处拖动绘制。
+      selectedBaseShape: null,
+      // 当前拖动创建的临时 Cell，用于 mousemove 更新和 mouseup 收尾。
+      baseShapeDraft: null,
       // 高亮选项
       highlighting: topoConfig.highlighting,
     };
@@ -38,31 +42,22 @@ export default {
 
     this.initGraph();
     /**
-     * 监听画布鼠标点击事件
+     * 监听画布空白区域点击事件
      */
-    this.graph.on("blank:click", ({ e }) => {
-      // 画布空白区域点击事件，关闭右键菜单
+    this.graph.on("blank:click", ({ x, y }) => {
       if (this.$refs.ctxMenu && this.$refs.ctxMenu.isOpened) {
         this.$refs.ctxMenu.isOpened = false;
       }
+      if (this.$store.state.titleBar.textToggle) {
+        this.createTextNode(x, y);
+        this.toggleText();
+      }
     });
 
-    /**
-     * 监听画布双击事件
-     */
-    this.graph.on("blank:dblclick", ({ e, x, y }) => {
-      // 点击画布时取消文本编辑状态
-      console.log('画布双击...', x, y);
-      if (this.$store.state.titleBar.textToggle) {
-
-        this.toggleText();
-
-        // 添加文本节点
-        // TODO: 使用自定义vue节点创建text文本块
-        this.createTextNode(x, y);
-      }
-
-    })
+    // 基础图形的绘制生命周期：按下创建、移动更新、松开完成。
+    this.graph.on("blank:mousedown", this.startBaseShapeDraw);
+    this.graph.on("blank:mousemove", this.updateBaseShapeDraw);
+    this.graph.on("blank:mouseup", this.finishBaseShapeDraw);
 
 
 
@@ -72,7 +67,7 @@ export default {
     /**
      * 画布中节点选中事件
      */
-    this.graph.on("node:selected", ({ node, options }) => {
+    this.graph.on("node:selected", ({ node }) => {
       const EdgesArr = this.graph.getConnectedEdges(node);
       EdgesArr.forEach(ele => {
         ele.setAttrs({
@@ -81,19 +76,34 @@ export default {
           }
         })
       });
-      // 判断节点类型
-      // 1.判断节点类型
-      if (node.shape == "text-block") {
-        // 2.设置文本节点选中的样式
-        // 使用CSS变量和类名来设置样式，而不是直接操作DOM
+      if (node.shape === "vue-text-shape") {
+        node.addTools([
+          {
+            name: "boundary",
+            args: {
+              padding: 2,
+              rotate: false,
+              attrs: {
+                fill: "transparent",
+                stroke: "#3A78DB",
+                "stroke-width": 1,
+                "stroke-dasharray": "3 3",
+                rx: 0,
+                ry: 0,
+              },
+              handleAttrs: {
+                fill: "#fff",
+                stroke: "#3A78DB",
+                "stroke-width": 1,
+                r: 3,
+              },
+            },
+          },
+        ]);
         const selectionDom = document.querySelector('.x6-widget-selection-box-node');
         if (selectionDom) {
-          // 应用文本节点的特殊选择样式
-          selectionDom.style.setProperty('--text-selection-border-radius', String(topoConfig.textNode.selection.borderRadius));
-          selectionDom.style.setProperty('--text-selection-border', topoConfig.textNode.selection.border);
           selectionDom.classList.add('text-node-selection');
         }
-        // console.log('selectionDom:', selectionDom); 
       }
     })
 
@@ -109,24 +119,127 @@ export default {
           }
         })
       })
+      if (node.shape === "vue-text-shape") {
+        node.removeTools();
+      }
     })
 
-    this.graph.on("cell:change:attrs", ({ cell, current, previous }) => {
-      console.log('节点触发');
-      if (cell.isNode() && cell.shape == "text-block") {
-        const newText = current.text.text || previous.text.text;
-        console.log('文本节点内容更改为:', newText);
-        cell.setAttrs({
-          label: {
-            text: newText
-          }
-        })
+    this.graph.on("cell:change:data", ({ cell }) => {
+      if (cell.isNode() && cell.shape === "vue-text-shape") {
+        console.log('文本节点内容更改为:', cell.getData().text);
       }
     });
   },
 
   methods: {
-    ...mapMutations("titleBar", ["toggleText"]),
+    ...mapMutations("titleBar", ["toggleText", "setTextToggle"]),
+    /**
+     * 同步侧栏选择状态；基础图形绘制与文本输入模式互斥。
+     */
+    selectBaseShape(shape) {
+      this.selectedBaseShape = shape;
+      if (shape && this.$store.state.titleBar.textToggle) {
+        this.setTextToggle(false);
+      }
+    },
+
+    /**
+     * 在空白画布按下时创建临时图形，后续由 mousemove 调整几何信息。
+     */
+    startBaseShapeDraw({ x, y }) {
+      if (!this.selectedBaseShape || this.$store.state.titleBar.textToggle) {
+        return;
+      }
+
+      const stroke = getCssVar("--accent") || "#3A78DB";
+      const fill = getCssVar("--node-surface") || "transparent";
+      const { name } = this.selectedBaseShape;
+      let cell;
+
+      // 线条和箭头是 Edge；矩形和圆形使用 Node 承载尺寸。
+      if (name === "line" || name === "arrow") {
+        cell = this.graph.addEdge({
+          source: { x, y },
+          target: { x, y },
+          attrs: {
+            line: {
+              stroke,
+              strokeWidth: 2,
+              targetMarker: name === "arrow" ? { name: "classic" } : null,
+            },
+          },
+        });
+      } else {
+        cell = this.graph.addNode({
+          shape: name === "circle" ? "ellipse" : "rect",
+          x,
+          y,
+          width: 1,
+          height: 1,
+          attrs: {
+            body: {
+              fill,
+              fillOpacity: 0.85,
+              stroke,
+              strokeWidth: 2,
+              rx: name === "square" ? 10 : 0,
+              ry: name === "square" ? 10 : 0,
+            },
+          },
+        });
+      }
+
+      this.baseShapeDraft = { cell, name, startX: x, startY: y };
+    },
+
+    /**
+     * 拖动过程中实时更新图形终点或节点边界。
+     */
+    updateBaseShapeDraw({ x, y }) {
+      const draft = this.baseShapeDraft;
+      if (!draft) {
+        return;
+      }
+
+      if (draft.name === "line" || draft.name === "arrow") {
+        draft.cell.setTarget({ x, y });
+        return;
+      }
+
+      // 圆形始终保持宽高一致，并按拖拽方向确定左上角。
+      if (draft.name === "circle") {
+        const width = x - draft.startX;
+        const height = y - draft.startY;
+        const size = Math.max(Math.abs(width), Math.abs(height), 1);
+        draft.cell.position(
+          width < 0 ? draft.startX - size : draft.startX,
+          height < 0 ? draft.startY - size : draft.startY,
+        );
+        draft.cell.resize(size, size);
+        return;
+      }
+
+      draft.cell.position(Math.min(draft.startX, x), Math.min(draft.startY, y));
+      draft.cell.resize(Math.max(Math.abs(x - draft.startX), 1), Math.max(Math.abs(y - draft.startY), 1));
+    },
+
+    /**
+     * 松开鼠标后完成绘制；过短拖动视为误触，删除临时图形。
+     */
+    finishBaseShapeDraw({ x, y }) {
+      const draft = this.baseShapeDraft;
+      if (!draft) {
+        return;
+      }
+
+      const distance = Math.hypot(x - draft.startX, y - draft.startY);
+      if (distance < 4) {
+        this.graph.removeCell(draft.cell);
+      }
+      this.baseShapeDraft = null;
+      // 每次绘制操作结束后回到默认指针，避免连续误绘制。
+      this.selectedBaseShape = null;
+    },
     getGridOptions() {
       const g = topoConfig.grid;
       const color = getCssVar("--graph-grid-color") || g.args.color;
@@ -176,6 +289,17 @@ export default {
             });
           },
         },
+        embedding: {
+          enabled: true,
+          findParent: ({ node }) => {
+            if (node.shape === "vue-text-shape" && that.graph) {
+              return that.graph
+                .getNodesUnderNode(node)
+                .filter((n) => n.shape !== "vue-text-shape");
+            }
+            return [];
+          },
+        },
         highlighting: that.highlighting,
       });
       window.__x6_instances__.push(that.graph)
@@ -213,17 +337,27 @@ export default {
         return;
       }
 
-      this.graph.addNode({
-        shape: topoConfig.textNode.shape, // 使用注册的文本形状
-        // component: TextShape,
-        x: x || 100, // 默认位置
+      const node = this.graph.addNode({
+        shape: topoConfig.textNode.shape,
+        x: x || 100,
         y: y || 100,
         width: topoConfig.textNode.width,
         height: topoConfig.textNode.height,
-        attrs: topoConfig.textNode.attrs,
-        tools: [
-          topoConfig.textNode.tool
-        ]
+        attrs: {
+          body: {
+            fill: "transparent",
+            stroke: "transparent",
+            strokeWidth: 0,
+          },
+        },
+        data: { text: "", autoFocus: true },
+      });
+
+      this.$nextTick(() => {
+        const view = this.graph.findViewByCell(node);
+        if (view && view.$vm) {
+          view.$vm.enterEdit();
+        }
       });
     },
   },
@@ -231,21 +365,41 @@ export default {
     "$store.state.titleBar.theme"() {
       this.syncGraphPaperAndGrid();
     },
+    "$store.state.titleBar.textToggle"(active) {
+      const container = document.getElementById("svg-container");
+      if (container) {
+        if (active) {
+          container.classList.add("text-edit-mode");
+        } else {
+          container.classList.remove("text-edit-mode");
+        }
+      }
+    },
+  },
+  beforeDestroy() {
+    if (this.graph) {
+      this.graph.off("blank:mousedown", this.startBaseShapeDraw);
+      this.graph.off("blank:mousemove", this.updateBaseShapeDraw);
+      this.graph.off("blank:mouseup", this.finishBaseShapeDraw);
+    }
   },
 };
 </script>
 
 <template>
+  <!-- TODO:待优化，可将当前组件引用做成响应式布局.目前就一种布局 -->
   <!-- root container -->
   <div class="topology-container max-w-full min-h-screen w-screen h-screen overflow-hidden relative grid grid-rows-24 grid-cols-24">
     <!-- background container -->
     <div id="bgc-svg" class="absolute w-full h-full" style="z-index: 0;">
-      <div id="svg-container" class="relative h-full w-full"></div>
+      <div id="svg-container" class="relative h-full w-full"
+        :class="{ 'base-shape-draw-mode': selectedBaseShape }"></div>
     </div>
     <!-- titlebar component -->
     <title-bar v-if="graph" :graph="graph" />
     <!-- dragPanel component -->
-    <drag-panel v-if="graph" :graph="graph" />
+    <drag-panel v-if="graph" :graph="graph" :active-base-shape="selectedBaseShape"
+      @select-base-shape="selectBaseShape" />
     <!-- onlinePanel component -->
     <online-panel v-if="graph" :graph="graph" @handleOnlineNode="handleOnlineNode" />
     <!--  -->
@@ -259,5 +413,11 @@ export default {
   height: 100vh !important;
   min-height: 100vh !important;
   max-height: 100vh !important;
+}
+.text-edit-mode {
+  cursor: text !important;
+}
+.base-shape-draw-mode {
+  cursor: crosshair;
 }
 </style>

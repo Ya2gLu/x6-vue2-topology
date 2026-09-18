@@ -32,16 +32,26 @@ export default {
       default: () => {
         return mockDeviceTreeList
       }
+    },
+    // 由画布维护当前工具状态，确保绘制完成后侧栏选中态能同步清除。
+    activeBaseShape: {
+      type: Object,
+      default: null,
     }
   },
   data() {
     return {
+      // Dnd 仅用于拓扑设备；基础图形改由画布拖动绘制。
       dnd: null,
       status: null,
       cIndex: -1,
     };
   },
   computed: {
+    // 基础图形的选中状态由父级 Topology 统一管理。
+    selectedBaseShape() {
+      return this.activeBaseShape;
+    },
     ...mapState({
       sideState: (state) => state.titleBar.dragToggle,
     }),
@@ -61,91 +71,53 @@ export default {
       })
     },
     /**
-     * 拖拽开始时，获取被拖拽的节点 
-     * @param {object} items 拖拽元素
-     * @param {$event} e 鼠标事件
-     * @description 拖拽开始时，获取被拖拽的节点
+     * 拖拽拓扑设备到画布，基础图形不使用该交互。
      */
-    startDrag(items, e) {
-      let node = {};
-      if (items.isTopo) {
-        node = this.graph.createNode({
-          shape: 'topo-vue-node',
-          component: TopoNode,
-          width: 66,
-          height: 66,
-          data: {
-            record: items
-          },
-          ports: {
-            items: [
-              {
-                group: "top",
-                args: {
-                  dx: 1.5,
-                  dy: 2,
-                },
-              },
-              {
-                group: "bottom",
-                args: {
-                  dx: 1.5,
-                  dy: -2,
-                },
-              },
-              {
-                group: "left",
-                args: {
-                  dx: 2,
-                },
-              },
-              {
-                group: "right",
-                args: {
-                  dx: -2,
-                },
-              },
-
-            ]
-          }
-        })
-        return this.dnd.start(node, e);
-      } else {
-        //TODO: 基础形状的图形节点
-        console.log('基础形状', items);
-        return items.name == '' ? console.error('shape参数名为空！') : this.createBaseShape(items.name);
-      }
+    startTopoDrag(items, e) {
+      const node = this.graph.createNode({
+        shape: 'topo-vue-node',
+        component: TopoNode,
+        width: 66,
+        height: 66,
+        data: {
+          record: items
+        },
+        ports: {
+          items: [
+            { group: "top", args: { dx: 1.5, dy: 2 } },
+            { group: "bottom", args: { dx: 1.5, dy: -2 } },
+            { group: "left", args: { dx: 2 } },
+            { group: "right", args: { dx: -2 } },
+          ]
+        }
+      })
+      return this.dnd.start(node, e);
     },
 
-    createBaseShape(shapeName) {
-      if (shapeName == "" || shapeName.length == 0) return;
-      const that = this;
-      const ShapeType = {
-        rect: rightAngleRect,
-        square: radiusRect,
-        line: noLine,
-        arrow: ArrowLine
+    /**
+     * 选择基础图形并通知画布进入绘制模式。
+     */
+    selectBaseShape(shape) {
+      const nextShape = this.selectedBaseShape && this.selectedBaseShape.name === shape.name
+        ? null
+        : shape;
+      this.$emit("select-base-shape", nextShape);
+    },
+
+    /**
+     * 仅基础图形显示选中态，避免影响拓扑设备的拖拽样式。
+     */
+    isBaseShapeSelected(shape) {
+      return !shape.isTopo && this.selectedBaseShape && this.selectedBaseShape.name === shape.name;
+    },
+
+    /**
+     * 根据图形类型分流：拓扑设备保留直接拖拽，基础图形改为点击选择。
+     */
+    onShapeMouseDown(shape, event) {
+      if (shape.isTopo) {
+        this.startTopoDrag(shape, event);
       }
-
-      function rightAngleRect() {
-        console.log('rect..');
-        // that.graph.addNode({})
-      };
-
-      function radiusRect() {
-        console.log('square.');
-      };
-
-      function noLine() {
-        console.log('line...');
-      };
-
-      function ArrowLine() {
-        console.log('Arrow...');
-      };
-
-      const handleShape = ShapeType[shapeName]
-      return handleShape();
     },
 
     /**
@@ -194,8 +166,11 @@ export default {
             <div class="flex flex-wrap justify-start mx-2 mt-2 mb-3 min-h-20 transition-all duration-300 ease-out"
               :class="shape.status === 'open' ? 'opacity-100' : 'opacity-0'">
               <template v-if="shape.children">
-                <div v-for="i in shape.children" @mousedown="startDrag(i, $event)" :class="[
-                  'drag-panel-tile w-10 h-10 mx-2 my-2 rounded-lg flex justify-center items-center cursor-grab active:cursor-grabbing',
+                <div v-for="i in shape.children" :key="`${shape.id}-${i.id}`"
+                  @mousedown="onShapeMouseDown(i, $event)" @click="!i.isTopo && selectBaseShape(i)" :class="[
+                  'drag-panel-tile w-10 h-10 mx-2 my-2 rounded-lg flex justify-center items-center',
+                  i.isTopo ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer',
+                  isBaseShapeSelected(i) ? 'drag-panel-tile-selected' : '',
                   'transition-all duration-300 ease-out will-change-[transform,background-color,border-color,box-shadow]',
                   'hover:scale-110',
                   'active:scale-95'
@@ -274,6 +249,13 @@ export default {
 
 .drag-panel-tile-icon {
   color: var(--panel-icon);
+}
+
+.drag-panel-tile-selected {
+  background: var(--panel-tile-hover-bg);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent),
+    var(--panel-tile-hover-shadow);
 }
 
 .drag-panel-divider {

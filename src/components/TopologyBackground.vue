@@ -1,5 +1,5 @@
 <template>
-  <div class="topology-background"></div>
+  <div class="topology-background">this is topology background. you can add some dynamic effects.</div>
 </template>
 
 <script>

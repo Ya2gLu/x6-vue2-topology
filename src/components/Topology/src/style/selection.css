@@ -17,3 +17,18 @@
     border: var(--selection-inner-border);
     border-radius: 10px;
 }
+/* 文本节点被选中时：隐藏 Selection 插件的默认外框（虚线由 boundary 工具提供，避免叠影） */
+.text-node-selection {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+/* boundary 工具：只保留右下角拖拽手柄，隐藏其余 7 个方向手柄 */
+.x6-widget-boundary .x6-widget-boundary-handle {
+    display: none !important;
+}
+/* 右下角手柄同时含有 right 和 bottom 内联样式，以此精准匹配 */
+.x6-widget-boundary .x6-widget-boundary-handle[style*="right"][style*="bottom"] {
+    display: block !important;
+}
